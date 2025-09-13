@@ -1,32 +1,35 @@
-name: GitHub Pages Jekyll Build
+name: Build and Deploy Jekyll site
 
 on:
   push:
     branches:
-      - main  # 每次 push main 分支触发
+      - main
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Set up Ruby
+      - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.4.5'  # 可以改成你的版本
-          bundler-cache: true
+          ruby-version: 3.2
 
       - name: Install dependencies
-        run: bundle install
+        run: |
+          cd site
+          gem install bundler
+          bundle install
 
       - name: Build Jekyll site
-        run: bundle exec jekyll build --destination ./_site
+        run: |
+          cd site
+          bundle exec jekyll build --destination ../_site
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v6
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
-          publish_branch: gh-pages
