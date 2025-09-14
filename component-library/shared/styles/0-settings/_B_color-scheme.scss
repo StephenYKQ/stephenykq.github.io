@@ -1,29 +1,30 @@
-/* Color Scheme */
-$primary-color: #1495a7;
-$secondary-color: #003687;
-$white: #fff;
-$dark: #110E38;
-$gray: #d9d9d9;
-$light-gray: #f5f5f5;
-$blue-gray: #d5dce3;
+/* Dark Color Scheme */
+$primary-color: #5a5a6e;          // 中灰偏蓝，主色
+$secondary-color: #2f2f3f;        // 深灰偏蓝，次色
 
-$background-color: #f2f6ff;
-$background-color-alt: $white;
+$white: #e6e6e6;                  // 接近白的浅灰
+$dark: #0e0e12;                   // 几乎黑的深灰
+$gray: #888888;                   // 中性灰
+$light-gray: #444444;             // 深色模式下的“浅灰”
+$blue-gray: #3a3f4a;              // 冷灰色，边框/分隔用
 
-$text-color: $dark;
+$background-color: #121212;       // 主背景（深灰黑）
+$background-color-alt: #1e1e24;   // 次背景（卡片/区块）
 
-$heading-font-color: $text-color;
+$text-color: #e0e0e0;             // 主文字（浅灰白）
 
-$link-color: $text-color;
-$link-color-hover: $text-color;
+$heading-font-color: #f5f5f5;     // 标题更亮一些
 
-$button-color: $background-color-alt;
-$button-background-color: $primary-color;
-$button-background-hover: darken($primary-color, 5%);
+$link-color: #c0c0c0;             // 链接浅灰
+$link-color-hover: #ffffff;       // hover 纯白
+
+$button-color: $dark;
+$button-background-color: linear-gradient(135deg, $secondary-color, $primary-color);
+$button-background-hover: lighten($primary-color, 10%);
 
 $border-color: $blue-gray;
 
-$hr-color: $text-color;
-$tr-color: #f0f0f0;
+$hr-color: #333333;
+$tr-color: #1c1c1c;
 
-$syntax-highlighting-background: #f3f3f3;
+$syntax-highlighting-background: #1a1a1a;
