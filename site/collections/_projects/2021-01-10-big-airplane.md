@@ -1,7 +1,7 @@
 ---
 date: 2021-01-10 07:30:35 +0300
-title: Big airplane
-subtitle: Photography
+title: The Force Majeure
+subtitle: Cinematographer
 image: '/images/project-5.jpg'
 ---
 
