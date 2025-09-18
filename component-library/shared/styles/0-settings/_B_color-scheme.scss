@@ -1,30 +1,32 @@
 /* Dark Color Scheme */
-$primary-color: #5a5a6e;          // 中灰偏蓝，主色
-$secondary-color: #2f2f3f;        // 深灰偏蓝，次色
-
-$white: #e6e6e6;                  // 接近白的浅灰
-$dark: #0e0e12;                   // 几乎黑的深灰
+$primary-color: #320000;          // 主色
+$secondary-color: #000000;        // 次色
+$white: #fff;
+$dark: #000000;                   // 黑的
 $gray: #888888;                   // 中性灰
 $light-gray: #444444;             // 深色模式下的“浅灰”
 $blue-gray: #3a3f4a;              // 冷灰色，边框/分隔用
 
-$background-color: #121212;       // 主背景（深灰黑）
-$background-color-alt: #1e1e24;   // 次背景（卡片/区块）
+$background-color: #121212;
+$background-color-alt: $dark;
 
-$text-color: #e0e0e0;             // 主文字（浅灰白）
+$text-color: #e0e0e0;
 
-$heading-font-color: #f5f5f5;     // 标题更亮一些
+$heading-font-color: $text-color;
 
-$link-color: #c0c0c0;             // 链接浅灰
-$link-color-hover: #ffffff;       // hover 纯白
+$link-color: $text-color;
+$link-color-hover: $text-color;
 
-$button-color: $dark;
+$link-color: $text-color;
+$link-color-hover: $text-color;
+
+$button-color: $background-color-alt;
 $button-background-color: linear-gradient(135deg, $secondary-color, $primary-color);
 $button-background-hover: lighten($primary-color, 10%);
 
 $border-color: $blue-gray;
 
-$hr-color: #333333;
-$tr-color: #1c1c1c;
+$hr-color: $text-color;
+$tr-color: $blue-gray;
 
-$syntax-highlighting-background: #1a1a1a;
+$syntax-highlighting-background: $light-gray;
