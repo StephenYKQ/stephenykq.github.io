@@ -24,10 +24,8 @@ cd /Users/yangkaiqi/blog/site
 echo ">>> 构建 Jekyll"
 bundle _2.3.26_ exec jekyll build --destination ../_site
 
-echo ">>> 复制 vercel.json"
-cd /Users/yangkaiqi/blog
-cp vercel.json _site/
 
+cd /Users/yangkaiqi/blog
 echo ">>> 提交 main 分支"
 git add .
 git commit -m "Deploy site" || echo "（没有改动可提交）"
