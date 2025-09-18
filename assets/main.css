@@ -2103,7 +2103,7 @@
 }
 @media all, bookshop {
   body {
-    font-family: "Noto Sans TC", "Inter", Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-family: Helvetica Neue, Helvetica, Arial, "Noto Sans TC", "Inter", sans-serif;
     font-size: 18px;
     line-height: 1.8;
     color: #e0e0e0;
@@ -2146,7 +2146,7 @@
   h4,
   h5,
   h6 {
-    font-family: "Noto Sans TC", "Inter", Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-family: Helvetica Neue, Helvetica, Arial, "Noto Sans TC", "Inter", sans-serif;
     font-weight: 900;
     line-height: 1.2;
     letter-spacing: -1px;
@@ -2475,7 +2475,7 @@
 }
 @media all, bookshop {
   .logo__link {
-    font-family: "Noto Sans TC", "Inter", Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-family: Helvetica Neue, Helvetica, Arial, "Noto Sans TC", "Inter", sans-serif;
     font-size: 21px;
     line-height: 26px;
     letter-spacing: -1px;
