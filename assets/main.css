@@ -2136,7 +2136,7 @@
 @media all, bookshop {
   *::selection {
     color: #fff;
-    background-color: #320000;
+    background-color: rgb(135, 125, 165);
   }
 }
 @media all, bookshop {
@@ -2191,7 +2191,7 @@
     line-height: 1.3;
     font-weight: 400;
     font-style: normal;
-    border-left: 6px solid #320000;
+    border-left: 6px solid rgb(135, 125, 165);
   }
   blockquote p {
     margin-bottom: 0;
@@ -2367,7 +2367,7 @@
     margin-top: 44px;
     padding: 96px 0 60px;
     overflow: hidden;
-    background: linear-gradient(90deg, #320000 0%, #000000 167%);
+    background: linear-gradient(90deg, rgb(135, 125, 165) 0%, rgb(65, 63, 65) 167%);
   }
   .footer .social {
     margin-bottom: 40px;
@@ -2383,14 +2383,14 @@
     line-height: 40px;
     font-size: 16px;
     border-radius: 50%;
-    color: #320000;
+    color: rgb(135, 125, 165);
     background: #fff;
     transition: all 0.25s;
     will-change: transform;
   }
   .footer .social .social__link:hover {
     transform: scale(0.9);
-    color: #320000;
+    color: rgb(135, 125, 165);
   }
   .footer .social .social__link:hover::after {
     content: none;
@@ -2572,7 +2572,7 @@
     display: none;
   }
   .main-nav .nav__list .nav__item .nav__link.active-link, .main-nav .nav__list .nav__item .nav__link.cc-active {
-    color: #320000;
+    color: rgb(135, 125, 165);
   }
   .main-nav .nav__list .nav__item .nav__link.active-link::after, .main-nav .nav__list .nav__item .nav__link.cc-active::after {
     content: none;
@@ -2601,7 +2601,7 @@
     font-size: 18px;
     border-radius: 50%;
     cursor: pointer;
-    background: linear-gradient(90deg, #320000 0%, #000000 167%);
+    background: linear-gradient(90deg, rgb(135, 125, 165) 0%, rgb(65, 63, 65) 167%);
   }
   .main-nav__box .nav__icon-close:hover .ion-md-close {
     transform: rotate(90deg);
@@ -2668,7 +2668,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: #320000;
+    background-color: rgb(135, 125, 165);
   }
   .nav__list .nav__item.dropdown {
     position: relative;
@@ -2695,7 +2695,7 @@
     visibility: hidden;
     transition: all 0.25s ease;
     border-radius: 8px;
-    box-shadow: 0px 20px 20px rgba(50, 0, 0, 0.07);
+    box-shadow: 0px 20px 20px rgba(135, 125, 165, 0.07);
     background-color: #fff;
   }
   .nav__list .dropdown-menu .nav__link {
@@ -2706,10 +2706,10 @@
     will-change: transform;
   }
   .nav__list .dropdown-menu .nav__link:hover {
-    background-color: rgba(50, 0, 0, 0.1);
+    background-color: rgba(135, 125, 165, 0.1);
   }
   .nav__list .dropdown-menu .nav__link.active-link, .nav__list .dropdown-menu .nav__link.cc-active {
-    color: #320000;
+    color: rgb(135, 125, 165);
   }
   .nav__list .dropdown-menu .nav__link.active-link::after, .nav__list .dropdown-menu .nav__link.cc-active::after {
     content: none;
@@ -2775,7 +2775,7 @@
   }
   .pagination__prev.disabled,
   .pagination__next.disabled {
-    color: rgba(0, 0, 0, 0.4);
+    color: rgba(6, 6, 6, 0.4);
   }
   .pagination__prev.disabled:hover i,
   .pagination__next.disabled:hover i {
@@ -2805,7 +2805,7 @@
     margin: 0 6px;
     font-size: 15px;
     font-weight: 600;
-    color: rgba(0, 0, 0, 0.7);
+    color: rgba(6, 6, 6, 0.7);
   }
 }
 @media all, bookshop {
@@ -2820,7 +2820,7 @@
     line-height: 36px;
     text-align: center;
     border-radius: 50%;
-    background-color: #000000;
+    background-color: #060606;
     color: #e0e0e0;
     cursor: pointer;
     transition: all 0.25s ease;
@@ -2889,7 +2889,7 @@
     border-radius: 50%;
     text-align: center;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.0005);
-    background: #000000;
+    background: #060606;
     transition: 0.2s;
   }
   .section__info .section__description {
@@ -2957,7 +2957,7 @@
     height: 0;
     padding-bottom: 100%;
     border-radius: 50%;
-    background: linear-gradient(90deg, #320000 0%, #000000 167%);
+    background: linear-gradient(90deg, rgb(135, 125, 165) 0%, rgb(65, 63, 65) 167%);
     transition: all 0.25s;
   }
 }
@@ -3053,7 +3053,7 @@
     border-radius: 8px;
     overflow: hidden;
     color: #fff;
-    background: linear-gradient(90deg, #320000 0%, #000000 167%);
+    background: linear-gradient(90deg, rgb(135, 125, 165) 0%, rgb(65, 63, 65) 167%);
   }
   .post-tags .post-tags__tag:hover:before {
     opacity: 1;
@@ -3071,7 +3071,7 @@
     border-radius: 8px;
     will-change: transform;
     transition: opacity 0.35s;
-    background: linear-gradient(90deg, #320000 0%, #000000 107%);
+    background: linear-gradient(90deg, rgb(135, 125, 165) 0%, rgb(65, 63, 65) 107%);
   }
   .post-tags .post-tags__tag:last-child {
     margin: 0 0 4px 0;
@@ -3211,11 +3211,11 @@
     border-radius: 50%;
     font-size: 16px;
     border: none;
-    color: #000000;
+    color: #060606;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.07);
   }
   .post__share .share__link.share__facebook, .post__share .share__link.share__twitter, .post__share .share__link.share__linkedin, .post__share .share__link.share__pinterest {
-    background: #000000;
+    background: #060606;
   }
   .post__share .share__link.share__facebook:hover, .post__share .share__link.share__twitter:hover, .post__share .share__link.share__linkedin:hover, .post__share .share__link.share__pinterest:hover {
     color: #fff;
@@ -3262,7 +3262,7 @@
     padding: 28px;
     margin-bottom: 20px;
     border-radius: 16px;
-    background: linear-gradient(90deg, #320000 0%, #000000 167%);
+    background: linear-gradient(90deg, rgb(135, 125, 165) 0%, rgb(65, 63, 65) 167%);
     transition: transform 0.2s;
   }
   .post__navigation .post__prev:hover, .post__navigation .post__next:hover {
@@ -3473,7 +3473,7 @@
 }
 @media all, bookshop {
   .c-blog-card__image-wrap {
-    background: #000000;
+    background: #060606;
   }
 }
 @media all, bookshop {
@@ -3500,7 +3500,7 @@
     padding: 28px;
     margin-top: -20px;
     border-radius: 16px 16px 0 0;
-    background: #000000;
+    background: #060606;
   }
 }
 @media all, bookshop {
@@ -3522,7 +3522,7 @@
     border-radius: 8px;
     overflow: hidden;
     color: #fff;
-    background: linear-gradient(90deg, #320000 0%, #000000 167%);
+    background: linear-gradient(90deg, rgb(135, 125, 165) 0%, rgb(65, 63, 65) 167%);
   }
   .c-blog-card__tag:hover:before {
     opacity: 1;
@@ -3540,7 +3540,7 @@
     border-radius: 8px;
     will-change: transform;
     transition: opacity 0.35s;
-    background: linear-gradient(90deg, #320000 0%, #000000 107%);
+    background: linear-gradient(90deg, rgb(135, 125, 165) 0%, rgb(65, 63, 65) 107%);
   }
   .c-blog-card__tag:last-child {
     margin: 0 0 4px 0;
@@ -3645,7 +3645,7 @@
   }
   .c-button--primary {
     color: #fff;
-    background: linear-gradient(90deg, #320000 0%, #000000 167%);
+    background: linear-gradient(90deg, rgb(135, 125, 165) 0%, rgb(65, 63, 65) 167%);
   }
   .c-button--primary:hover {
     color: #fff !important;
@@ -3665,11 +3665,11 @@
     opacity: 0;
     will-change: transform;
     transition: opacity 0.35s;
-    background: linear-gradient(90deg, #320000 0%, #000000 107%);
+    background: linear-gradient(90deg, rgb(135, 125, 165) 0%, rgb(65, 63, 65) 107%);
   }
   .c-button--secondary {
     color: #e0e0e0;
-    background: #000000;
+    background: #060606;
   }
   .c-button--secondary:hover {
     color: #e0e0e0;
@@ -3738,15 +3738,15 @@
     transition: all 0.35s;
     resize: vertical;
     color: #e0e0e0;
-    background: #000000;
+    background: #060606;
   }
   .c-contact-form__form-input::placeholder {
     font-weight: 500;
     color: rgba(224, 224, 224, 0.3);
   }
   .c-contact-form__form-input:focus {
-    border-color: #320000;
-    box-shadow: 0px 4px 10px rgba(50, 0, 0, 0.25);
+    border-color: rgb(135, 125, 165);
+    box-shadow: 0px 4px 10px rgba(135, 125, 165, 0.25);
   }
 }
 @media all, bookshop {
@@ -3922,7 +3922,7 @@
     font-size: 14px;
     border-radius: 50%;
     will-change: transform;
-    background: linear-gradient(90deg, #320000 0%, #000000 167%);
+    background: linear-gradient(90deg, rgb(135, 125, 165) 0%, rgb(65, 63, 65) 167%);
     transition: all 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
   }
   .c-hero__btn .works-button .button-arrow {
@@ -3968,7 +3968,7 @@
     border-radius: 60px;
     object-fit: cover;
     user-select: none;
-    box-shadow: 0px 100px 80px rgba(50, 0, 0, 0.07), 0px 41.7776px 33.4221px rgba(50, 0, 0, 0.0503198), 0px 22.3363px 17.869px rgba(50, 0, 0, 0.0417275), 0px 12.5216px 10.0172px rgba(50, 0, 0, 0.035), 0px 6.6501px 5.32008px rgba(50, 0, 0, 0.0282725), 0px 2.76726px 2.21381px rgba(50, 0, 0, 0.0196802);
+    box-shadow: 0px 100px 80px rgba(135, 125, 165, 0.07), 0px 41.7776px 33.4221px rgba(135, 125, 165, 0.0503198), 0px 22.3363px 17.869px rgba(135, 125, 165, 0.0417275), 0px 12.5216px 10.0172px rgba(135, 125, 165, 0.035), 0px 6.6501px 5.32008px rgba(135, 125, 165, 0.0282725), 0px 2.76726px 2.21381px rgba(135, 125, 165, 0.0196802);
     transition: inherit;
     background: #3a3f4a;
   }
@@ -4032,7 +4032,7 @@
     border: 1px solid transparent;
     outline: 0;
     color: #e0e0e0;
-    background: #000000;
+    background: #060606;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.07);
     transition: all 0.35s;
   }
@@ -4042,8 +4042,8 @@
     opacity: 0.4;
   }
   .c-subscribe__form-email:focus {
-    border: 1px solid #320000;
-    box-shadow: 0px 4px 10px rgba(50, 0, 0, 0.25);
+    border: 1px solid rgb(135, 125, 165);
+    box-shadow: 0px 4px 10px rgba(135, 125, 165, 0.25);
   }
 }
 @media all, bookshop {
@@ -4059,7 +4059,7 @@
       color: transparent;
     }
     100% {
-      color: #320000;
+      color: rgb(135, 125, 165);
     }
   }
 }
@@ -4069,7 +4069,7 @@
       color: transparent;
     }
     100% {
-      color: #320000;
+      color: rgb(135, 125, 165);
     }
   }
 }
@@ -4186,7 +4186,7 @@
 }
 @media all, bookshop {
   .image-wrap {
-    background: #000000;
+    background: #060606;
   }
 }
 @media all, bookshop {
@@ -4213,7 +4213,7 @@
     padding: 28px;
     margin-top: -20px;
     border-radius: 16px 16px 0 0;
-    background: #000000;
+    background: #060606;
   }
 }
 @media all, bookshop {
@@ -4233,7 +4233,7 @@
     border-radius: 8px;
     overflow: hidden;
     color: #fff;
-    background: linear-gradient(90deg, #320000 0%, #000000 167%);
+    background: linear-gradient(90deg, rgb(135, 125, 165) 0%, rgb(65, 63, 65) 167%);
   }
   .article-tags__box .article__tag:hover:before {
     opacity: 1;
@@ -4251,7 +4251,7 @@
     border-radius: 8px;
     will-change: transform;
     transition: opacity 0.35s;
-    background: linear-gradient(90deg, #320000 0%, #000000 107%);
+    background: linear-gradient(90deg, rgb(135, 125, 165) 0%, rgb(65, 63, 65) 107%);
   }
   .article-tags__box .article__tag:last-child {
     margin: 0 0 4px 0;
@@ -4364,7 +4364,7 @@
     transition: all 0.4s ease 0s;
     opacity: 0;
     visibility: hidden;
-    background: linear-gradient(360deg, #320000 0%, rgba(0, 0, 0, 0.3) 120.95%);
+    background: linear-gradient(360deg, rgb(135, 125, 165) 0%, rgba(65, 63, 65, 0.3) 120.95%);
   }
   .c-project-card__image img {
     position: absolute;
@@ -4396,7 +4396,7 @@
     min-height: 280px;
     border-radius: 16px;
     transform: translate(0);
-    box-shadow: 0px 0px 30px rgba(50, 0, 0, 0.1);
+    box-shadow: 0px 0px 30px rgba(135, 125, 165, 0.1);
     overflow: hidden;
   }
 }
@@ -4464,7 +4464,7 @@
     padding: 32px;
     border-radius: 16px;
     color: #fff;
-    background: linear-gradient(90deg, #320000 0%, #000000 167%);
+    background: linear-gradient(90deg, rgb(135, 125, 165) 0%, rgb(65, 63, 65) 167%);
   }
   .c-testimonial-card__client-meta {
     display: flex;
@@ -4534,7 +4534,7 @@
     padding: 32px;
     border-radius: 16px;
     color: #fff;
-    background: linear-gradient(90deg, #320000 0%, #000000 167%);
+    background: linear-gradient(90deg, rgb(135, 125, 165) 0%, rgb(65, 63, 65) 167%);
   }
   .testimonial-item .testimonial-content .client-meta {
     display: flex;
@@ -4633,7 +4633,7 @@
     border-radius: 50%;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.07);
     color: #e0e0e0;
-    background: #000000;
+    background: #060606;
     outline: none;
     cursor: pointer;
     overflow: hidden;
@@ -4653,7 +4653,7 @@
     opacity: 0;
     visibility: hidden;
     overflow: hidden;
-    background: linear-gradient(90deg, #320000 0%, #000000 167%);
+    background: linear-gradient(90deg, rgb(135, 125, 165) 0%, rgb(65, 63, 65) 167%);
     transition: all 0.2s ease;
   }
   .controls .prev:hover,
