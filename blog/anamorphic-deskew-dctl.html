@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="ob0b-vF5pnuPBcij_2UTn3m7Kh6Pkxob0ZylZpvFaC8" />
+
+  <title>“歪”变宽校正 DCTL</title>
+  <meta name='description' content='【工具】一个用于校正变形镜头偏斜导致图像畸变的 DCTL 脚本。'>
+
+  <link rel="canonical" href="/blog/anamorphic-deskew-dctl">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="“歪”变宽校正 DCTL – STECAGE 斯特拉吉">
+  <meta name="twitter:description" content="【工具】一个用于校正变形镜头偏斜导致图像畸变的 DCTL 脚本。">
+  <meta name="twitter:image:src" content="/images/2025-12-18-dctl.png">
+
+  <!-- Facebook OpenGraph -->
+  <meta property="og:title" content="“歪”变宽校正 DCTL – STECAGE 斯特拉吉">
+  <meta property="og:description" content="【工具】一个用于校正变形镜头偏斜导致图像畸变的 DCTL 脚本。">
+  <meta property="og:image" content="/images/2025-12-18-dctl.png">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- Ionicons -->
+  <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/main.css">
+</head>
+
+
+<body>
+
+    
+
+    <!-- begin header -->
+<header class="c-header">
+  <div class="container">
+    <div class="row">
+      <div class="c-header__inner">
+
+        <div class="logo">
+          <a class="logo__link" href="/">
+          
+            <img class="logo__image" src="/images/logo.svg" alt="STECAGE 斯特拉吉">
+          
+          </a>
+        </div>
+
+        <nav class="main-nav">
+          <div class="main-nav__box">
+
+            <div class="nav__icon-close">
+              <i class="ion ion-md-close"></i>
+            </div>
+
+            <div class="nav__title">Menu</div>
+
+              <ul class="nav__list list-reset">
+
+              
+                
+                <li class="nav__item">
+                  <a href="/" class="nav__link">Home</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/projects/" class="nav__link">Projects</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/blog/" class="nav__link">Blog</a>
+                </li>
+                
+              
+                
+                <li class="nav__item dropdown">
+                  <span class="nav__link dropdown-toggle">Pages <i class="ion ion-ios-arrow-down arrow-down"></i></span>
+                  <div class="dropdown-menu">
+                    
+                      <a href="/about/" class="nav__link">About</a>
+                    
+                      <a href="/contact/" class="nav__link">Contact</a>
+                    
+                  </div>
+                </li>
+
+                
+              
+
+            </ul>
+          </div>
+
+          <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(social-link.jekyll.html) params() context() -->
+
+<div class="social">
+  <ul class="social__list list-reset">
+    
+    <li class="social__item">
+      <a class="social__link" href="https://weibo.com/StephenYKQ" target="_blank" rel="noopener" aria-label="weibo icon">
+        
+          <svg viewBox="0 0 800 649.5" width="17" height="17" fill="currentColor" class="weibo-icon" style="vertical-align: middle; position: relative;">
+            <path d="m336.6,602.3c-132.6,13-247.1-46.9-255.7-134-8.6-87,91.9-168.2,224.6-181.4,132.7-13.2,247.1,46.7,255.7,133.8,8.7,86.7-91.9,168.4-224.5,181.4h-.1Zm-34.9-103.5c-12.9,20.6-40.2,29.4-60.9,20.1-20.4-9.3-26.4-33.1-13.5-53.1,12.6-19.8,39.2-28.6,59.8-19.9,20.7,8.7,27.3,32.3,14.7,53Zm42.3-54.2c-4.7,7.8-15,11.7-22.9,8.3-7.9-3-10.5-12-6-19.5,4.7-7.6,14.6-11.5,22.4-8,7.9,3,10.5,12,6,20.1l.5-.9Zm5.9-90.8c-63.2-16.4-134.4,15.1-161.8,70.7-27.9,56.8-.9,119.6,62.8,140.2,66.1,21.4,144-11.3,171.1-72.5,26.7-59.8-6.7-121.5-72-138.4Zm252.1-40.7c-11.5-3.5-19-6-13.5-20.4,12.5-32.6,14.1-60.2,0-80.2-26-37-97.1-35-178.8-.9,0,0-25.5,10.9-19-9.1,12.5-40.5,10.6-74.1-9-93.6-44.7-44.5-162.4,1.6-262.9,102.7C43.6,287.1,0,367.2,0,436.4c0,132.7,169.9,213.2,336.2,213.2s362.9-126.7,362.9-227.3-51.6-95.1-97.1-109.4v.3Zm63.7-169.7c-25.7-28.6-63.7-39.6-98.7-32.2-14.6,3-23.6,17.1-20.6,31.1,3,13.9,17,23,31.1,20.1,17-3.5,35.6,1.4,48.1,15.5s15.5,32.6,10.6,49.1c-4.5,13.5,3,28.5,16.9,33.1,13.5,4,28.6-3.5,33.1-17.1,11.1-34,4-72.7-21.5-101.2l1,1.5Zm80.6-73.2C693.6,11.6,616-10.5,544.4,4.6c-16.5,3.4-27.1,19.5-23.6,36.1s19.5,27.1,36.1,23.6c51-11.1,106.1,4.9,143.2,46.1,37,41.5,47.7,98,31.5,147.1-5.5,16,3.5,33.6,19.5,38.5,16,5.6,33.1-3.4,38.5-19.5,22.5-69.5,8.1-149.2-44.5-207.8l1,1.6Z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://github.com/StephenYKQ" target="_blank" rel="noopener" aria-label="github icon">
+        
+          <i class="ion ion-logo-github"></i>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://instagram.com/stephenykq/" target="_blank" rel="noopener" aria-label="instagram icon">
+        
+          <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" class="instagram-icon" style="vertical-align: middle; position: relative;">
+            <path d="M20.445 5h-8.891A6.559 6.559 0 0 0 5 11.554v8.891A6.559 6.559 0 0 0 11.554 27h8.891a6.56 6.56 0 0 0 6.554-6.555v-8.891A6.557 6.557 0 0 0 20.445 5zm4.342 15.445a4.343 4.343 0 0 1-4.342 4.342h-8.891a4.341 4.341 0 0 1-4.341-4.342v-8.891a4.34 4.34 0 0 1 4.341-4.341h8.891a4.342 4.342 0 0 1 4.341 4.341l.001 8.891z"/>
+            <path d="M16 10.312c-3.138 0-5.688 2.551-5.688 5.688s2.551 5.688 5.688 5.688 5.688-2.551 5.688-5.688-2.55-5.688-5.688-5.688zm0 9.163a3.475 3.475 0 1 1-.001-6.95 3.475 3.475 0 0 1 .001 6.95zM21.7 8.991a1.363 1.363 0 1 1-1.364 1.364c0-.752.51-1.364 1.364-1.364z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://youtube.com/@stephenykq" target="_blank" rel="noopener" aria-label="youtube icon">
+        
+          <i class="ion ion-logo-youtube"></i>
+        
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+<!--bookshop-live end-->
+        </nav>
+
+        <div class="nav-button">
+          <i class="nav__icon nav__icon-menu ion ion-md-menu"></i>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</header>
+<!-- end header -->
+
+    <div class="post-top">
+  <div class="container">
+    <div class="row">
+
+      
+      <div class="col col-6 col-d-12">
+        <div class="post-image">
+          <img loading="lazy" src="/images/2025-12-18-dctl.png" alt="“歪”变宽校正 DCTL">
+        </div>
+      </div>
+      
+
+      <div class="col col-6 col-d-12">
+        <div class="post__info">
+
+          
+          <div class="post-tags">
+            
+              <a href="/tag/变形宽银幕" class="post-tags__tag">变形宽银幕</a>
+            
+              <a href="/tag/镜头光学" class="post-tags__tag">镜头光学</a>
+            
+              <a href="/tag/后期制作" class="post-tags__tag">后期制作</a>
+            
+          </div>
+          
+
+
+          <h1 class="post__title">“歪”变宽校正 DCTL</h1>
+
+          <div class="post__meta">
+            <div class="post__author-image">
+              <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+            </div>
+
+            <div class="post__meta-bottom">
+              <div class="post__author">Stephen Yang Kaiqi</div>
+              <time class="post__date" datetime="2025-12-18T20:06:00+08:00">18 Dec 2025</time>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- begin post -->
+<div class="container animate">
+
+  <article class="post">
+
+    <div class="post__content">
+      <p>上个月，我的论文《<strong>影视制作中变形镜头装配偏斜检测及画面校正方法研究</strong>》发表于《现代电影技术》。在这里再次感谢屈老师、陈老师在研究与写作过程中的指导，也感谢《现代电影技术》的老师们的专业帮助。如果你对<strong>变形宽银幕镜头</strong>感兴趣，欢迎查阅论文原文。</p>
+
+<p>而这篇推文，则希望把论文中<strong>用于制作实践的那一部分</strong>整理出来：一个用于检测和校正“变宽偏斜”的 DCTL 脚本，公开给大家尝试使用。</p>
+
+<hr />
+
+<h2 id="1-什么是变宽偏斜">1. 什么是变宽偏斜？</h2>
+
+<p>这项研究，源自一个在片场和成片中都并不少见、却长期被忽视的问题：</p>
+
+<p><strong>为什么有些变宽拍出来，看上去总是“歪的”？</strong></p>
+
+<p>需要首先明确的是，这种“歪”并非摄影机横滚轴未调平，也不是变形镜头刻意追求的风格化效果，而是源自变形镜头自身的结构问题——当变形镜头的活动轴（Active Axis）由于内部柱面镜组发生偏移，或镜头与摄影机之间存在装配误差时，其压缩（或拉伸）方向将偏离成像器件的正交轴，这一现象被称为<strong>变形镜头装配偏斜（Assembly-Induced Anamorphic Skew）</strong>。</p>
+
+<p><img src="/images/2025-12-18-what-is-skew.png" alt="What is Skew" />
+<em>左为理想情况，右为镜头偏斜</em></p>
+
+<p>一句话概括就是：</p>
+
+<p><strong>变形镜头本应只在单一轴向（通常为水平方向）对画面进行压缩（或拉伸），但在装配出现故障时，变形作用沿着错误的方向施加到了画面上。</strong></p>
+
+<p>其对画面的影响表现为：</p>
+
+<ul>
+  <li>画面整体出现倾斜或几何扭曲</li>
+  <li>变形镜头标志性的水平拉丝光晕发生倾斜</li>
+  <li>椭圆形散景的方向倾斜甚至不能维持椭圆</li>
+</ul>
+
+<p><img src="/images/2025-12-18-rebel-moon-before.jpg" alt="Rebel Moon Before" /></p>
+
+<p><img src="/images/2025-12-18-rebel-moon-after.jpg" alt="Rebel Moon After" />
+<em>电影《月球叛军：火之女》（2023）静帧，镜头顺时针方向偏斜，下图为该场景恢复正常比例的参考</em></p>
+
+<p><img src="/images/2025-12-18-girl-on-edge.jpg" alt="Girl on Edge" /></p>
+
+<p><img src="/images/2025-12-18-girl-on-edge-grid.jpg" alt="Girl on Edge Grid" />
+<em>电影《花漾少女杀人事件》（2025）静帧，镜头顺时针方向偏斜，可见场景被拉伸成了“平行四边形”</em></p>
+
+<blockquote>
+  <p>自变形镜头诞生以来，装配偏斜问题便<strong>难以避免</strong>。变形镜头结构复杂，且高度依赖光学元件的轴向对齐。即便在拍摄前进行了充分的测试，在拍摄过程中，偏斜仍可能因装配公差、环境变化或操作过程中的细微扰动而出现或加重。P.S. 我上周看了杜琪峰的《PTU》，里面有一个推镜头，不知道什么原因，拍着拍着突然柱面镜就转歪了……</p>
+</blockquote>
+
+<hr />
+
+<h2 id="2-以前的做法">2. 以前的做法</h2>
+
+<p>面对偏斜问题，业内常见的处理方式大致有两种。</p>
+
+<p>第一种是选择<strong>忽略</strong>：在后期中不对偏斜作校正，视效为 CG 合成元素施加拉伸，使其与实拍画面同步偏斜。这种做法的优势在于能够保留原本的构图，并避免校正带来的分辨率损失，但创作者未必希望画面是歪的。</p>
+
+<p><img src="/images/2025-12-18-the-creator.png" alt="The Creator" />
+<em>电影《AI 创世者》（2023）静帧</em></p>
+
+<p>第二种是<strong>手动校正</strong>：例如使用 After Effects 的 Corner Pin，或 Resolve 的 Interactive-Pins（油管老哥 Tito Ferradans 有做过视频），通过拖拽画面四角尽量将其拉成一个平行四边形。这类方法依赖目测判断，操作精度有限，结果难以复现，并且在实际操作中可能会引入额外的比例失衡——不够优雅和完美。</p>
+
+<hr />
+
+<h2 id="3-我做了什么">3. 我做了什么？</h2>
+
+<p>在论文中，我将变形镜头的装配偏斜问题拆解为两个层面：其一，如何在拍摄前期或现场更高效、可重复地识别偏斜；其二，在拍摄已经完成的前提下，后期是否存在一种可控、可量化的几何校正方式。</p>
+
+<p>论文提出了一种基于<strong>二维仿射变换模型</strong>的后期校正方法，我据此使用 DCTL 编写了配套工具，并设计了一套更便于识别偏斜的测试图样。相关理论推导与测试方法已在论文中完整展开，这里不再赘述。</p>
+
+<hr />
+
+<h2 id="4-dctl-的功能介绍">4. DCTL 的功能介绍</h2>
+
+<ul>
+  <li><strong>辅助线显示</strong>
+    <ul>
+      <li>十字线与圆形辅助线</li>
+      <li>支持位置、大小、粗细、颜色与透明度调节</li>
+      <li>用于对齐测试图样或画面中的几何参照</li>
+    </ul>
+  </li>
+  <li><strong>压缩比设置</strong>
+    <ul>
+      <li>支持 1.0–2.5× 压缩系数的变形镜头</li>
+    </ul>
+  </li>
+  <li><strong>偏斜角度校正</strong>
+    <ul>
+      <li>支持 ±45° 范围内偏斜的剪切变换</li>
+    </ul>
+  </li>
+  <li><strong>缩放</strong>
+    <ul>
+      <li>提供 0.75–2.0× 自定义调节</li>
+    </ul>
+  </li>
+  <li><strong>自动边缘裁切</strong>
+    <ul>
+      <li>基于当前校正参数计算内接矩形并进行缩放</li>
+    </ul>
+  </li>
+  <li><strong>边缘处理模式</strong>
+    <ul>
+      <li>拉伸边缘像素（适用于轻微偏斜的固定镜头，以逃过裁切）</li>
+      <li>黑色填充（#000000，布鲁斯·韦恩的最爱）</li>
+      <li>粉色填充（高亮色标示无效区域，便于判断）</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/images/2025-12-18-dctl-before.jpg" alt="DCTL Before" />
+<em>使用脚本校正前，圆是椭圆、十字不正交</em></p>
+
+<p><img src="/images/2025-12-18-dctl-after.jpg" alt="DCTL After" />
+<em>使用脚本校正后，圆是圆、十字正交</em></p>
+
+<p>需要说明的是：</p>
+
+<blockquote>
+  <p>本脚本与论文中所使用的版本略有不同，在实际使用中我发现，让 DCTL 仅执行剪切变换，而将画面整体的旋转校正交由 Resolve 原生的 <code class="language-plaintext highlighter-rouge">Input Sizing → Rotate</code> 完成，操作逻辑更加清晰，也有助于减少不必要的画面裁切。因此，当前公开的版本不包含旋转校正功能。</p>
+</blockquote>
+
+<hr />
+
+<h2 id="5-使用贴士">5. 使用贴士</h2>
+
+<ol>
+  <li>在 DCTL 中选择素材拍摄所用镜头对应的压缩比，并开启辅助线显示功能。</li>
+  <li>调节“偏斜角度”参数，尽可能使画面中的元素恢复正常比例。</li>
+  <li>上一步的调整后，画面整体可能仍存在一定倾斜，此部分不在 DCTL 中处理，而应使用 <code class="language-plaintext highlighter-rouge">Input Sizing → Rotate</code> 调整画面旋转角度。</li>
+</ol>
+
+<p><img src="/images/2025-12-18-input-sizing.png" alt="Input Sizing" />
+<em>Input Sizing 是这个</em></p>
+
+<ol>
+  <li>“偏斜角度”与“旋转”两个参数可能需要配合着，反复微调，直至画面恢复正交关系。</li>
+  <li>根据需要手动缩放画面，或开启自动裁切功能。</li>
+</ol>
+
+<blockquote>
+  <p>在使用专用测试图样，或包含明确正交或对称元素的画面作参考时，上述流程会更加直观、高效和精确。因此，在拍摄现场，如怀疑镜头产生偏斜，建议立即调用测试图样（监视器显示或实体测试卡）进行拍摄测试与记录。</p>
+</blockquote>
+
+<hr />
+
+<h2 id="6-获取及安装">6. 获取及安装</h2>
+
+<p>方式一：GitHub 搜索：<code class="language-plaintext highlighter-rouge">anamorphic-deskew-dctl</code></p>
+
+<p>方式二：公众号“STECAGE 斯特拉吉”发送关键词“不许歪”，获取网盘链接。</p>
+
+<p>将下载好的 <code class="language-plaintext highlighter-rouge">.dctl</code> 文件复制到 Resolve 的 LUT 目录，重启软件，然后进入 <code class="language-plaintext highlighter-rouge">Color Page → Effects → DCTL</code>，选择  <code class="language-plaintext highlighter-rouge">Anamorphic Deskew</code> 或简中版的 <code class="language-plaintext highlighter-rouge">Anamorphic Deskew SC</code> 。</p>
+
+<hr />
+
+<h2 id="7-局限性">7. 局限性</h2>
+
+<p>该工具属于<strong>二维几何校正</strong>范畴，无法修复真实光路中的三维偏移问题。因此，它无法校正<strong>变形光晕的歪斜</strong>，也无法处理非线性的像散或其他光学缺陷。基于这一前提，该 DCTL 既不是光学问题的替代方案，也不是万能修复工具，而是在无法重拍或更换镜头的前提下，为前期测试与后期制作提供一种<strong>可控、可量化</strong>的补救手段。</p>
+
+<hr />
+
+<h2 id="最后">最后</h2>
+
+<p>从原理上看，变宽偏斜的校正非常简单，这个 DCTL 也才百来行代码。我很遗憾的是，这个问题在行业内长期没有被当作一个需要处理的技术问题。如果各位变宽射手在使用中遇到问题，或对工具本身有改进想法，都非常欢迎你：提 issue、提更新建议或分享你的实际案例。</p>
+
+<p>这是本站的第一篇更新。后续将不定期分享与影视制作相关的技术问题和小工具，也会记录一些个人项目与创作心得。谢谢你看到这里，祝你天天开心。</p>
+
+    </div>
+
+  </article>
+</div>
+<!-- end post -->
+
+<div class="container">
+  <div class="row">
+    <div class="col col-10 col-d-12 push-d-0 push-1">
+      <div class="post__navigation animate">
+  
+
+  
+</div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- begin related posts -->
+<div class="container">
+  <section class="related-posts  animate">
+    <div class="row">
+      <div class="col col-12">
+        <div class="container__inner">
+          <div class="section__info">
+            <div class="section__head">
+              <h2 class="section__title">You may also like</h2>
+              <a class="section__link" href="/blog">
+                
+                
+                  
+                    <a href="/tags#变形宽银幕" class="section__link related-tag">See all<span> 变形宽银幕</span> <i class="ion ion-md-arrow-forward"></i></a>
+                  
+                
+                  
+                
+                  
+                
+              
+              </a>
+            </div>
+          </div>
+          <div class="row">
+
+          
+            
+            
+      
+            
+      
+            
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- end related posts -->
+
+
+
+
+
+    <!--
+        Bookshop components are accessed using the bookshop tag,
+        using the same syntax as the standard Jekyll include tag.
+    -->
+    <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(page.jekyll.html) params(content_blocks=page.content_blocks page_theme=page.page_theme) context() -->
+
+<!--bookshop-live end-->
+
+    <div class="top" title="Top"><i class="ion ion-ios-arrow-up"></i></div>
+
+    <!-- begin footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col col-12">
+
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(social-link.jekyll.html) params() context() -->
+
+<div class="social">
+  <ul class="social__list list-reset">
+    
+    <li class="social__item">
+      <a class="social__link" href="https://weibo.com/StephenYKQ" target="_blank" rel="noopener" aria-label="weibo icon">
+        
+          <svg viewBox="0 0 800 649.5" width="17" height="17" fill="currentColor" class="weibo-icon" style="vertical-align: middle; position: relative;">
+            <path d="m336.6,602.3c-132.6,13-247.1-46.9-255.7-134-8.6-87,91.9-168.2,224.6-181.4,132.7-13.2,247.1,46.7,255.7,133.8,8.7,86.7-91.9,168.4-224.5,181.4h-.1Zm-34.9-103.5c-12.9,20.6-40.2,29.4-60.9,20.1-20.4-9.3-26.4-33.1-13.5-53.1,12.6-19.8,39.2-28.6,59.8-19.9,20.7,8.7,27.3,32.3,14.7,53Zm42.3-54.2c-4.7,7.8-15,11.7-22.9,8.3-7.9-3-10.5-12-6-19.5,4.7-7.6,14.6-11.5,22.4-8,7.9,3,10.5,12,6,20.1l.5-.9Zm5.9-90.8c-63.2-16.4-134.4,15.1-161.8,70.7-27.9,56.8-.9,119.6,62.8,140.2,66.1,21.4,144-11.3,171.1-72.5,26.7-59.8-6.7-121.5-72-138.4Zm252.1-40.7c-11.5-3.5-19-6-13.5-20.4,12.5-32.6,14.1-60.2,0-80.2-26-37-97.1-35-178.8-.9,0,0-25.5,10.9-19-9.1,12.5-40.5,10.6-74.1-9-93.6-44.7-44.5-162.4,1.6-262.9,102.7C43.6,287.1,0,367.2,0,436.4c0,132.7,169.9,213.2,336.2,213.2s362.9-126.7,362.9-227.3-51.6-95.1-97.1-109.4v.3Zm63.7-169.7c-25.7-28.6-63.7-39.6-98.7-32.2-14.6,3-23.6,17.1-20.6,31.1,3,13.9,17,23,31.1,20.1,17-3.5,35.6,1.4,48.1,15.5s15.5,32.6,10.6,49.1c-4.5,13.5,3,28.5,16.9,33.1,13.5,4,28.6-3.5,33.1-17.1,11.1-34,4-72.7-21.5-101.2l1,1.5Zm80.6-73.2C693.6,11.6,616-10.5,544.4,4.6c-16.5,3.4-27.1,19.5-23.6,36.1s19.5,27.1,36.1,23.6c51-11.1,106.1,4.9,143.2,46.1,37,41.5,47.7,98,31.5,147.1-5.5,16,3.5,33.6,19.5,38.5,16,5.6,33.1-3.4,38.5-19.5,22.5-69.5,8.1-149.2-44.5-207.8l1,1.6Z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://github.com/StephenYKQ" target="_blank" rel="noopener" aria-label="github icon">
+        
+          <i class="ion ion-logo-github"></i>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://instagram.com/stephenykq/" target="_blank" rel="noopener" aria-label="instagram icon">
+        
+          <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" class="instagram-icon" style="vertical-align: middle; position: relative;">
+            <path d="M20.445 5h-8.891A6.559 6.559 0 0 0 5 11.554v8.891A6.559 6.559 0 0 0 11.554 27h8.891a6.56 6.56 0 0 0 6.554-6.555v-8.891A6.557 6.557 0 0 0 20.445 5zm4.342 15.445a4.343 4.343 0 0 1-4.342 4.342h-8.891a4.341 4.341 0 0 1-4.341-4.342v-8.891a4.34 4.34 0 0 1 4.341-4.341h8.891a4.342 4.342 0 0 1 4.341 4.341l.001 8.891z"/>
+            <path d="M16 10.312c-3.138 0-5.688 2.551-5.688 5.688s2.551 5.688 5.688 5.688 5.688-2.551 5.688-5.688-2.55-5.688-5.688-5.688zm0 9.163a3.475 3.475 0 1 1-.001-6.95 3.475 3.475 0 0 1 .001 6.95zM21.7 8.991a1.363 1.363 0 1 1-1.364 1.364c0-.752.51-1.364 1.364-1.364z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://youtube.com/@stephenykq" target="_blank" rel="noopener" aria-label="youtube icon">
+        
+          <i class="ion ion-logo-youtube"></i>
+        
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+<!--bookshop-live end-->
+
+        <ul class="footer_nav list-reset">
+          
+          <li class="footer_nav__item">
+            <a href="/" class="footer_nav__link">Home</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/projects/" class="footer_nav__link">Projects</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/contact/" class="footer_nav__link">Contact</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/about/" class="footer_nav__link">About</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/blog/" class="footer_nav__link">Blog</a>
+          </li>
+          
+        </ul>
+
+        <div class="copyright"><p> 2025 &copy; <a href="/">STECAGE 斯特拉吉</a></div>
+
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- end footer -->
+
+    <script src="/js/scripts.js"></script>
+    <script src="/js/common.js"></script>
+</body>
+</html>
