@@ -1,0 +1,7 @@
+{
+  "name": "stecage-static",
+  "private": true,
+  "scripts": {
+    "build": "echo \"static site\""
+  }
+}
