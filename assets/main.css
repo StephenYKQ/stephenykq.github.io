@@ -2377,16 +2377,25 @@
     font-size: 0;
   }
   .footer .social .social__link {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 40px;
     height: 40px;
-    line-height: 40px;
-    font-size: 16px;
     border-radius: 50%;
     color: #1b202b;
     background: #ffffff;
     transition: all 0.25s;
     will-change: transform;
+  }
+  .footer .social .social__link i, .footer .social .social__link svg {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+  .footer .social .social__link .instagram-icon {
+    width: 18px;
+    height: 18px;
   }
   .footer .social .social__link:hover {
     transform: scale(0.9);
