@@ -75,12 +75,13 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!projectLightbox) {
         projectLightbox = document.createElement("div");
         projectLightbox.className = "project-lightbox";
-        projectLightbox.innerHTML = '<div class="project-lightbox__backdrop"></div><div class="project-lightbox__panel"><button type="button" class="project-lightbox__close" aria-label="Close"><i class="ion ion-md-close"></i></button><button type="button" class="project-lightbox__nav project-lightbox__nav--prev" aria-label="Previous image"><i class="ion ion-md-arrow-back"></i></button><button type="button" class="project-lightbox__nav project-lightbox__nav--next" aria-label="Next image"><i class="ion ion-md-arrow-forward"></i></button><img class="project-lightbox__image" alt=""></div>';
+        projectLightbox.innerHTML = '<div class="project-lightbox__backdrop"></div><div class="project-lightbox__panel"><button type="button" class="project-lightbox__close" aria-label="Close"><i class="ion ion-md-close"></i></button><button type="button" class="project-lightbox__nav project-lightbox__nav--prev" aria-label="Previous image"><i class="ion ion-md-arrow-back"></i></button><button type="button" class="project-lightbox__nav project-lightbox__nav--next" aria-label="Next image"><i class="ion ion-md-arrow-forward"></i></button><div class="project-lightbox__frame"><img class="project-lightbox__image" alt=""></div></div>';
         document.body.appendChild(projectLightbox);
       }
 
       var galleryImages = [];
       var projectLightboxImage = projectLightbox.querySelector(".project-lightbox__image");
+      var projectLightboxFrame = projectLightbox.querySelector(".project-lightbox__frame");
       var projectLightboxClose = projectLightbox.querySelector(".project-lightbox__close");
       var projectLightboxBackdrop = projectLightbox.querySelector(".project-lightbox__backdrop");
       var projectLightboxPrev = projectLightbox.querySelector(".project-lightbox__nav--prev");
@@ -113,13 +114,21 @@ document.addEventListener("DOMContentLoaded", function () {
       projectLightbox.querySelector(".project-lightbox__panel").style.justifyContent = "center";
       projectLightbox.querySelector(".project-lightbox__panel").style.overflow = "visible";
 
+      projectLightboxFrame.style.display = "inline-block";
+      projectLightboxFrame.style.lineHeight = "0";
+      projectLightboxFrame.style.maxWidth = "calc(100vw - 24px)";
+      projectLightboxFrame.style.maxHeight = "calc(100vh - 24px)";
+      projectLightboxFrame.style.boxShadow = "0 30px 80px rgba(0, 0, 0, 0.5)";
+      projectLightboxFrame.style.background = "transparent";
+      projectLightboxFrame.style.overflow = "visible";
+
       projectLightboxImage.style.display = "block";
       projectLightboxImage.style.width = "auto";
       projectLightboxImage.style.height = "auto";
       projectLightboxImage.style.maxWidth = "calc(100vw - 24px)";
       projectLightboxImage.style.maxHeight = "calc(100vh - 24px)";
       projectLightboxImage.style.borderRadius = "0";
-      projectLightboxImage.style.boxShadow = "0 30px 80px rgba(0, 0, 0, 0.5)";
+      projectLightboxImage.style.boxShadow = "none";
       projectLightboxImage.style.background = "transparent";
 
       projectLightboxClose.style.position = "fixed";
@@ -165,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
 
-        var imageRect = projectLightboxImage.getBoundingClientRect();
+        var imageRect = projectLightboxFrame.getBoundingClientRect();
         var viewportWidth = window.innerWidth;
         var viewportHeight = window.innerHeight;
         var arrowGap = 72;
