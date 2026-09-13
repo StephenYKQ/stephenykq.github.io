@@ -118,7 +118,8 @@ document.addEventListener("DOMContentLoaded", function () {
       projectLightboxFrame.style.lineHeight = "0";
       projectLightboxFrame.style.maxWidth = "calc(100vw - 24px)";
       projectLightboxFrame.style.maxHeight = "calc(100vh - 24px)";
-      projectLightboxFrame.style.boxShadow = "0 30px 80px rgba(0, 0, 0, 0.5)";
+      projectLightboxFrame.style.boxShadow = "none";
+      projectLightboxFrame.style.filter = "drop-shadow(0 30px 80px rgba(0, 0, 0, 0.5))";
       projectLightboxFrame.style.background = "transparent";
       projectLightboxFrame.style.overflow = "visible";
 
