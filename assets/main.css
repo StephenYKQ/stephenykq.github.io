@@ -4800,6 +4800,177 @@
   }
 }
 @media all, bookshop {
+  .c-projects-list__filters {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    min-width: 0;
+    margin: 0 0 24px;
+    padding: 0;
+    border: 0;
+    overflow: clip;
+    overflow-clip-margin: 6px;
+  }
+  .c-projects-list__all, .c-projects-list__option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    max-width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    color: #e0e0e0;
+    background: rgba(255, 255, 255, 0.025);
+    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+  }
+  .c-projects-list__all, .c-projects-list__name, .c-projects-list__action {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 22px;
+    letter-spacing: 0;
+    cursor: pointer;
+  }
+  .c-projects-list__all:focus-visible, .c-projects-list__name:focus-visible, .c-projects-list__action:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+  }
+  .c-projects-list__all {
+    padding: 10px 18px;
+  }
+  .c-projects-list__option {
+    --actions-width: 60px;
+    flex: 0 0 auto;
+    padding-right: 8px;
+  }
+  .c-projects-list__name {
+    min-width: 0;
+    min-height: 44px;
+    padding: 10px 8px 10px 16px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+  .c-projects-list__actions {
+    display: flex;
+    flex: 0 0 auto;
+    width: 0;
+    gap: 4px;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+    transition: width 0.24s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.18s ease;
+  }
+  .c-projects-list__actions:focus-within {
+    overflow: visible;
+  }
+  .c-projects-list__action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    flex: 0 0 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    color: #e0e0e0;
+    background: rgba(255, 255, 255, 0.06);
+    transition: background-color 0.18s ease, color 0.18s ease;
+  }
+  .c-projects-list__action .ion {
+    font-size: 18px;
+  }
+  .c-projects-list__action[aria-pressed=true] {
+    color: #151515;
+    background: #e0e0e0;
+  }
+  .c-projects-list__option:hover .c-projects-list__actions, .c-projects-list__option:has(:focus-visible) .c-projects-list__actions, .c-projects-list__option.is-included .c-projects-list__actions, .c-projects-list__option.is-excluded .c-projects-list__actions {
+    width: var(--actions-width);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .c-projects-list__option.is-included, .c-projects-list__all[aria-pressed=true] {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .c-projects-list__option.is-excluded {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .c-projects-list__option.is-excluded .c-projects-list__name {
+    color: #888888;
+  }
+  .c-projects-list__all:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+  }
+}
+@media (hover: hover), bookshop and (hover: hover) {
+  .c-projects-list__all:hover, .c-projects-list__option:hover {
+    border-color: rgba(255, 255, 255, 0.65);
+    background: rgba(255, 255, 255, 0.18);
+  }
+  .c-projects-list__action:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+@media (hover: none), (pointer: coarse), bookshop and (hover: none), bookshop and (pointer: coarse) {
+  .c-projects-list__option {
+    --actions-width: 76px;
+  }
+  .c-projects-list__action {
+    width: 36px;
+    flex-basis: 36px;
+    height: 36px;
+  }
+}
+@media all, bookshop {
+  .c-projects-list__grid {
+    align-content: flex-start;
+    min-height: 50vh;
+  }
+  .c-projects-list__grid [hidden] {
+    display: none;
+  }
+}
+@media all, bookshop {
+  .c-projects-list__status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+@media all, bookshop {
+  .c-projects-list__empty {
+    width: 100%;
+    padding: 48px 20px;
+    text-align: center;
+    color: #888888;
+  }
+}
+@media only screen and (max-width: 576px) {
+  .c-projects-list__filters {
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+}
+@media (prefers-reduced-motion: reduce), bookshop and (prefers-reduced-motion: reduce) {
+  .c-projects-list__all, .c-projects-list__option, .c-projects-list__actions, .c-projects-list__action {
+    transition: none;
+  }
+}
+@media all, bookshop {
   .c-testimonial-card__content {
     width: 100%;
     padding: 32px;

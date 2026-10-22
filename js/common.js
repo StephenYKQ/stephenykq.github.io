@@ -57,6 +57,116 @@ document.addEventListener("DOMContentLoaded", function () {
   ======================= */
   reframe(".post__content iframe:not(.reframe-off), .page__content iframe:not(.reframe-off)");
 
+  /* Project Filters: union within each group, intersection across groups. */
+  document.querySelectorAll("[data-projects-list]").forEach(function (list) {
+    var filters = list.querySelector(".c-projects-list__filters");
+    if (!filters) return;
+    var options = Array.from(filters.querySelectorAll("[data-filter-value]"));
+    var allButton = filters.querySelector("[data-projects-all]");
+    var groups = Array.from(new Set(options.map(function (option) {
+      return option.dataset.filterDimension;
+    }))).map(function (dimension) {
+      return {
+        dimension: dimension,
+        options: options.filter(function (option) { return option.dataset.filterDimension === dimension; }),
+        included: new Set(),
+        excluded: new Set()
+      };
+    });
+    if (!groups.length) return;
+    var cards = Array.from(list.querySelectorAll("[data-project-type]"));
+    var status = list.querySelector('[role="status"]');
+    var empty = list.querySelector(".c-projects-list__empty");
+
+    function filterProjects() {
+      var visibleCount = 0;
+
+      cards.forEach(function (card) {
+        card.hidden = !groups.every(function (group) {
+          var value = card.getAttribute("data-project-" + group.dimension) || "";
+          return group.included.size > 0 ? group.included.has(value) : !group.excluded.has(value);
+        });
+        if (!card.hidden) visibleCount++;
+      });
+      groups.forEach(function (group) {
+        group.options.forEach(function (option) {
+          var value = option.dataset.filterValue;
+          var included = group.included.has(value);
+          option.classList.toggle("is-included", included);
+          option.classList.toggle("is-excluded", group.excluded.has(value));
+          option.querySelectorAll('[data-filter-action="include"]').forEach(function (button) {
+            button.setAttribute("aria-pressed", String(included));
+          });
+          option.querySelector('[data-filter-action="exclude"]').setAttribute("aria-pressed", String(group.excluded.has(value)));
+        });
+      });
+      allButton.setAttribute("aria-pressed", String(groups.every(function (group) {
+        return group.included.size === 0 && group.excluded.size === 0;
+      })));
+      empty.hidden = visibleCount > 0;
+      status.textContent = visibleCount + " of " + cards.length + " projects shown";
+    }
+
+      filters.addEventListener("click", function (event) {
+        var button = event.target.closest("[data-filter-action]");
+        if (!button) return;
+        var option = button.closest("[data-filter-value]");
+        var value = option.dataset.filterValue;
+        var group = groups.find(function (group) { return group.dimension === option.dataset.filterDimension; });
+
+        if (button.dataset.filterAction === "include") {
+          group.excluded.clear();
+          if (group.included.has(value)) {
+            group.included.delete(value);
+          } else {
+            group.included.add(value);
+          }
+        } else {
+          group.included.clear();
+          if (group.excluded.has(value)) {
+            group.excluded.delete(value);
+          } else {
+            group.excluded.add(value);
+          }
+        }
+        filterProjects();
+      });
+      allButton.addEventListener("click", function () {
+        groups.forEach(function (group) {
+          group.included.clear();
+          group.excluded.clear();
+        });
+        filterProjects();
+      });
+      filters.disabled = false;
+
+      // Width transitions move neighbors; animate row changes when a pill wraps.
+      if (window.ResizeObserver) {
+        var positions = new Map();
+        var motions = new Map();
+        var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+        var layoutObserver = new ResizeObserver(function () {
+          options.concat([allButton]).forEach(function (option) {
+            var next = { left: option.offsetLeft, top: option.offsetTop };
+            var previous = positions.get(option);
+            if (previous && previous.top !== next.top && !reducedMotion.matches && !body.classList.contains("resize-animation-stopper")) {
+              var transform = new DOMMatrixReadOnly(getComputedStyle(option).transform);
+              var motion = motions.get(option);
+              if (motion) motion.cancel();
+              motions.set(option, option.animate([
+                { transform: "translate(" + (previous.left - next.left + transform.m41) + "px, " + (previous.top - next.top + transform.m42) + "px)" },
+                { transform: "translate(0, 0)" }
+              ], { duration: 240, easing: "cubic-bezier(.2,.7,.2,1)" }));
+            }
+            positions.set(option, next);
+          });
+        });
+        options.forEach(function (option) { layoutObserver.observe(option); });
+        layoutObserver.observe(filters);
+      }
+    filterProjects();
+  });
+
   /* =======================
   // Project Gallery
   ======================= */
