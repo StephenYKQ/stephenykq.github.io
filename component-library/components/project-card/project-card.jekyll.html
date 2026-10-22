@@ -1,8 +1,9 @@
 {% assign c = "c-project-card" %}
-<article class="{{c}} col col-4 col-d-6 col-t-12">
+{% assign image_offset = include.project.image_offset | default: "50%" %}
+<article class="{{c}} col col-6 col-d-6 col-t-12"{% if include.project_type %} data-project-type="{{ include.project_type | escape }}" data-project-role="{{ include.project_role | escape }}"{% endif %}>
   <div class="{{c}}__content">
     <a href="{{ include.project.url }}" class="{{c}}__image">
-      <img loading="lazy" src="{{ include.project.image }}" alt="{{ include.project.title }}">
+      <img loading="lazy" src="{{ include.project.image }}" alt="{{ include.project.title }}" style="object-position: center {{ image_offset }};">
     </a>
     <div class="{{c}}__info">
       <div class="{{c}}__info-wrap">

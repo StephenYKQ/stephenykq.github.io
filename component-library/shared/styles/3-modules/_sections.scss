@@ -1,4 +1,8 @@
 /* Sections */
+.c-page--headerless {
+  padding-top: 72px;
+}
+
 .section {
   padding: 96px 0;
 
@@ -78,11 +82,11 @@
 
       .section__title {
         margin-right: 12px;
-        font-size: 28px;
+        font-size: 24px;
       }
 
       .section__link {
-        font-size: 14px;
+        font-size: 13px;
       }
     }
   }

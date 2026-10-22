@@ -15,16 +15,27 @@
     }
 
     .social__link {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       width: 40px;
       height: 40px;
-      line-height: 40px;
-      font-size: 16px;
       border-radius: 50%;
       color: $primary-color;
       background: $white;
       transition: all .25s;
       will-change: transform;
+
+      i, svg {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+      }
+
+      .instagram-icon {
+        width: 20px;
+        height: 20px;
+      }
 
       &:hover {
         transform: scale(0.9);
@@ -69,6 +80,10 @@
       .footer_nav__item {
         margin: 0 12px;
       }
+
+      .footer_nav__link {
+        font-size: 15px;
+      }
      }
   }
 }
@@ -91,6 +106,6 @@
   }
 
   @media only screen and (max-width: $mobile) {
-    font-size: 14px;
+    font-size: 13px;
   }
 }

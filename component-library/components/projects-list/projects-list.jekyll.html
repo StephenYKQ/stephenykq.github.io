@@ -1,9 +1,59 @@
 {% if include.show_projects %}
-<div class="container animate">
-  <div class="row">
-    {% for project in site.projects %}
-      {% bookshop project-card project=project %}
+<div class="container animate c-projects-list" data-projects-list>
+    {% assign projects_with_number = site.projects | where_exp: "project", "project.number" | sort: "number" %}
+    {% assign projects_without_number = site.projects | where_exp: "project", "project.number == nil" | sort: "date" | reverse %}
+    {% assign sorted_projects = projects_with_number | concat: projects_without_number %}
+    {% assign project_types = "" %}
+    {% assign project_roles = "" %}
+    {% capture project_cards %}
+    {% for project in sorted_projects %}
+      {% unless project.number == 0 %}
+        {% assign project_type = "" %}
+        {% if project.content contains '<strong>Type:</strong>' %}
+          {% assign project_type = project.content | split: '<strong>Type:</strong>' | last | split: '<br' | first | strip_html | strip %}
+        {% endif %}
+        {% if project_type != "" %}
+          {% assign project_types = project_types | append: project_type | append: '|' %}
+        {% endif %}
+        {% assign project_role = project.subtitle | default: "" | strip %}
+        {% if project_role == 'Color Assistant' %}{% assign project_role = 'Colorist' %}{% endif %}
+        {% if project_role != "" %}
+          {% assign project_roles = project_roles | append: project_role | append: '|' %}
+        {% endif %}
+        {% bookshop project-card project=project project_type=project_type project_role=project_role %}
+      {% endunless %}
     {% endfor %}
+    {% endcapture %}
+    {% assign project_types = project_types | split: '|' | uniq | sort %}
+    {% assign project_roles = project_roles | split: '|' | uniq | sort %}
+    {% assign filter_dimensions = 'type|role' | split: '|' %}
+    <fieldset class="c-projects-list__filters" aria-label="Filter projects" disabled>
+      <button type="button" class="c-projects-list__all" data-projects-all aria-pressed="true">All</button>
+    {% for dimension in filter_dimensions %}
+    {% if dimension == 'type' %}
+      {% assign filter_values = project_types %}
+    {% else %}
+      {% assign filter_values = project_roles %}
+    {% endif %}
+    {% if filter_values.size > 0 %}
+      {% for value in filter_values %}
+      {% assign filter_label = value %}
+      {% if dimension == 'type' %}{% assign filter_label = value | remove: ' Film' %}{% endif %}
+      <div class="c-projects-list__option" data-filter-dimension="{{ dimension }}" data-filter-value="{{ value | escape }}" role="group" aria-label="{{ filter_label | escape }}">
+        <button type="button" class="c-projects-list__name" data-filter-action="include" aria-pressed="false">{{ filter_label | escape }}</button>
+        <div class="c-projects-list__actions">
+          <button type="button" class="c-projects-list__action" data-filter-action="include" aria-label="Include {{ filter_label | escape }}" aria-pressed="false"><i class="ion ion-md-add" aria-hidden="true"></i></button>
+          <button type="button" class="c-projects-list__action" data-filter-action="exclude" aria-label="Exclude {{ filter_label | escape }}" aria-pressed="false"><i class="ion ion-md-remove" aria-hidden="true"></i></button>
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
+    {% endfor %}
+    </fieldset>
+    <span class="c-projects-list__status" role="status" aria-live="polite" aria-atomic="true"></span>
+  <div class="row c-projects-list__grid">
+    {{ project_cards }}
+    <p class="c-projects-list__empty" hidden>No projects match these filters.</p>
   </div>
 </div>
 {% endif %}

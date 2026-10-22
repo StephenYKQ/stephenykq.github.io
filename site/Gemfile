@@ -7,3 +7,11 @@ group :jekyll_plugins do
   gem 'jekyll-tagging', "1.1.0"
   gem "jekyll-sitemap", "1.4.0"
 end
+gem "csv"
+gem "base64"
+gem "bigdecimal"
+gem "logger"
+gem "drb"
+gem "mutex_m"
+gem "benchmark"
+gem "securerandom"

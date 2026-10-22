@@ -2,7 +2,8 @@
 layout: default
 ---
 
-<div class="container">
+<div class="project">
+  <div class="container">
 
   {% bookshop page-heading title=page.title description=page.subtitle %}
   {% assign page_image = site.baseurl | append: page.image %}
@@ -12,22 +13,30 @@ layout: default
     {{ content }}
   </div>
 
-  {% if page.previous.url %}
-  <div class="project__navigation animate">
-    <a class="project__prev" href="{{page.previous.url}}">
-      <div class="project__box">
-        <span class="project__nav__info">Next Project</span>
-        <h2 class="project__nav__title">{{page.previous.title}}<i class="ion ion-md-arrow-round-forward arrow-right"></i></h2>
-      </div>
-    </a>
-  </div>
+  {% assign projects_with_number = site.projects | where_exp: "project", "project.number" | where_exp: "project", "project.number != 0" | sort: "number" %}
+  {% assign projects_without_number = site.projects | where_exp: "project", "project.number == nil" | sort: "date" | reverse %}
+  {% assign sorted_projects = projects_with_number | concat: projects_without_number %}
+
+  {% assign current_index = -1 %}
+  {% for project in sorted_projects %}
+    {% if project.url == page.url %}
+      {% assign current_index = forloop.index0 %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+
+  {% assign next_index = current_index | plus: 1 %}
+  {% if next_index < sorted_projects.size %}
+    {% assign next_project = sorted_projects[next_index] %}
+    <div class="project__navigation animate">
+      <a class="project__prev" href="{{next_project.url}}">
+        <div class="project__box">
+          <span class="project__nav__info">Next Project</span>
+          <h2 class="project__nav__title">{{next_project.title}}<i class="ion ion-md-arrow-round-forward arrow-right"></i></h2>
+        </div>
+      </a>
+    </div>
   {% endif %}
 
+  </div>
 </div>
-
-{% bookshop
-  newsletter newsletter_title=site.data.newsletter.newsletter_title
-  newsletter_description=site.data.newsletter.newsletter_description
-  newsletter_identifier=site.data.newsletter.newsletter_identifier
-  newsletter_button=site.data.newsletter.newsletter_button
-%}

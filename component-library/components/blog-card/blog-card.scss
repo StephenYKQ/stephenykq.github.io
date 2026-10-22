@@ -115,7 +115,7 @@
     }
 
     @media only screen and (max-width: $mobile) {
-      font-size: 22px;
+      font-size: 20px;
     }
   }
 
@@ -167,6 +167,10 @@
     font-size: 16px;
     line-height: 1;
     font-weight: 600;
+
+    @media only screen and (max-width: $mobile) {
+      font-size: 15px;
+    }
   }
 
   &__date {
@@ -183,8 +187,6 @@
   
 
   
-
-
 
 
 

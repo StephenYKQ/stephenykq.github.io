@@ -2,11 +2,6 @@
 <div class="{{c}}">
   <div class="{{c}}__content">
     <div class="{{c}}__client-meta">
-      {% if include.testimonial-item.image %}
-        <div class="{{c}}__image-container">
-          <img class="{{c}}__client-avatar" src="{{ include.testimonial-item.image }}" alt="{{ include.testimonial-item.name }}">
-        </div>
-      {% endif %}
       <div class="{{c}}__client-info">
         {% if include.testimonial-item.name %}
           <h3 class="{{c}}__client-name">{{ include.testimonial-item.name }}</h3>

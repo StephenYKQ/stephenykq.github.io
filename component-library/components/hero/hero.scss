@@ -110,7 +110,7 @@
 		}
 
 		@media only screen and (max-width: $mobile) {
-			font-size: 32px;
+			font-size: 28px;
 		}
 	}
 
@@ -122,7 +122,7 @@
 			color: $text-color;
 
 			@media only screen and (max-width: $desktop) {
-				font-size: 16px;
+				font-size: 15px;
 			}
 		}
 	}
@@ -170,7 +170,7 @@
 		@media only screen and (max-width: $mobile) {
 			.cta-button,
 			.works-button {
-				font-size: 15px;
+				font-size: 14px;
 			}
 		}
 	}

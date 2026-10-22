@@ -1,41 +1,93 @@
 #!/bin/bash
-set -e  # 出错就退出
+
+set -euo pipefail
+
+export https_proxy=http://127.0.0.1:7897
+export http_proxy=http://127.0.0.1:7897
+export all_proxy=socks5://127.0.0.1:7890
+
+# 强制使用 Homebrew Ruby
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+hash -r
+
+ROOT="/Users/yangkaiqi/blog"
+SITE="$ROOT/site"
+BUILD="$ROOT/_site"
+MAIN_BRANCH="main"
+BRANCH="gh-pages"
 
 echo ">>> 检查 Ruby 和 Bundler 路径"
-RUBY_PATH=$(which ruby)
-BUNDLE_PATH=$(which bundle)
 
-echo "当前 Ruby: $RUBY_PATH"
-echo "当前 Bundle: $BUNDLE_PATH"
+echo "当前 Ruby: $(command -v ruby)"
+echo "当前 Bundle: $(command -v bundle)"
+ruby -v
 
-# 如果 ruby 来自 homebrew 而不是系统自带
-if [[ "$RUBY_PATH" == *"/opt/homebrew/"* ]]; then
-  echo "检测到 Homebrew Ruby，切换到系统 Ruby..."
-  export PATH=/usr/bin:/bin:/usr/sbin:/sbin:$PATH
-  hash -r
-  echo "切换后的 Ruby: $(which ruby)"
-  echo "切换后的 Bundle: $(which bundle)"
-fi
+cd "$ROOT"
 
-#echo ">>> 安装依赖"
-cd /Users/yangkaiqi/blog/site
-#bundle _2.3.26_ install
+echo ">>> 检查 Git 仓库"
+
+git rev-parse --show-toplevel >/dev/null
+
+echo ">>> 检查 Bundler 2.3.26"
+
+bundle _2.3.26_ -v
+
+echo ">>> 安装/检查依赖"
+
+cd "$SITE"
+bundle _2.3.26_ install
 
 echo ">>> 构建 Jekyll"
-bundle _2.3.26_ exec jekyll build --destination ../_site
 
+bundle _2.3.26_ exec jekyll build --destination "$BUILD"
 
-cd /Users/yangkaiqi/blog
-cp vercel.json _site/
+echo ">>> 复制部署配置"
+
+cp "$ROOT/vercel.json" "$BUILD/"
+cp "$ROOT/package.json" "$BUILD/"
+
 echo ">>> 提交 main 分支"
-git add .
-git commit -m "Deploy site" || echo "（没有改动可提交）"
-git push origin main --force
+
+cd "$ROOT"
+git add -A
+
+if git diff --cached --quiet; then
+    echo "（main 分支没有改动可提交）"
+else
+    git commit -m "Deploy site"
+fi
+
+git push origin "HEAD:$MAIN_BRANCH" --force
+
+echo ">>> 准备 gh-pages 部署工作目录"
+
+TMP="$(mktemp -d)"
+trap 'rm -rf "$TMP"' EXIT
+
+git clone --branch "$BRANCH" --single-branch \
+    "$(git -C "$ROOT" remote get-url origin)" \
+    "$TMP/deploy"
+
+cd "$TMP/deploy"
+
+echo ">>> 清理旧部署文件"
+
+git rm -r --ignore-unmatch .
+
+echo ">>> 复制新构建文件"
+
+# 复制所有文件，包括隐藏文件，但不复制目录本身
+rsync -a --delete --exclude='.git' "$BUILD/" "$TMP/deploy/"
 
 echo ">>> 提交 gh-pages 分支"
-cd _site
-git add .
-git commit -m "Deploy site" || echo "（没有改动可提交）"
-git push -u origin gh-pages --force
+
+git add -A
+
+if git diff --cached --quiet; then
+    echo "（网站内容没有变化，无需提交）"
+else
+    git commit -m "Deploy site"
+    git push origin "$BRANCH"
+fi
 
 echo ">>> 部署完成 ✅"

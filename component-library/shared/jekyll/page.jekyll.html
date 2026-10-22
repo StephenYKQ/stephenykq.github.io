@@ -1,5 +1,5 @@
 {% if include.content_blocks.size > 0 %}
-<div class="c-page">
+<div class="c-page{% if include.page_theme %} c-page--{{ include.page_theme }}{% endif %}">
 
 {% for block in include.content_blocks %}
     {% bookshop {{block._bookshop_name}} bind=block %}

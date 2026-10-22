@@ -15,10 +15,17 @@
 
           {% if include.show_projects %}
           <div class="row">
-            {% for project in site.projects %}
-              {% if forloop.index <= 6 %}
-                {% bookshop project-card project=project %}
-              {% endif %}
+            {% assign projects_with_number = site.projects | where_exp: "project", "project.number" | sort: "number" %}
+            {% assign projects_without_number = site.projects | where_exp: "project", "project.number == nil" | sort: "date" | reverse %}
+            {% assign sorted_projects = projects_with_number | concat: projects_without_number %}
+            {% assign display_count = 0 %}
+            {% for project in sorted_projects %}
+              {% unless project.number == 0 %}
+                {% assign display_count = display_count | plus: 1 %}
+                {% if display_count <= 4 %}
+                  {% bookshop project-card project=project %}
+                {% endif %}
+              {% endunless %}
             {% endfor %}
           </div>
           {% endif %}
