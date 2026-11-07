@@ -446,36 +446,40 @@ document.addEventListener("DOMContentLoaded", function () {
       var hdrDragging = false;
       var hdrVideoRequest = 0;
 
-      // Size both replaced elements from the same device-pixel-aligned box.
-      // Independently fitting an image and a hardware-decoded video can round
-      // fractional dimensions differently, particularly at browser zoom levels.
-      function hdrAlignMedia() {
-        var ratio = hdrSdrImage.naturalWidth && hdrSdrImage.naturalHeight
-          ? hdrSdrImage.naturalWidth / hdrSdrImage.naturalHeight
-          : 3996 / 2160;
-        var pixelRatio = window.devicePixelRatio || 1;
-        var width = Math.round(hdrStage.getBoundingClientRect().width * pixelRatio) / pixelRatio;
-        var height = Math.round(width / ratio * pixelRatio) / pixelRatio;
-        hdrStage.style.height = height + "px";
-        [hdrSdrImage, hdrHdrImage].forEach(function (media) {
-          media.style.width = width + "px";
-          media.style.height = height + "px";
-        });
-      }
-
-      hdrSdrImage.addEventListener("load", hdrAlignMedia);
-      hdrHdrImage.addEventListener("loadedmetadata", hdrAlignMedia);
-      window.addEventListener("resize", hdrAlignMedia);
-      if (window.ResizeObserver) {
-        new ResizeObserver(hdrAlignMedia).observe(hdrStage);
-      }
-
       function hdrSetSplit(clientX) {
         var bounds = hdrStage.getBoundingClientRect();
         var position = ((clientX - bounds.left) / bounds.width) * 100;
         position = Math.max(0, Math.min(100, position));
         hdrStage.style.setProperty("--split-position", position + "%");
         hdrDivider.setAttribute("aria-valuenow", Math.round(position));
+      }
+
+      function hdrLoadVideo(src, label, requestId) {
+        var nextVideo = document.createElement("video");
+        nextVideo.className = hdrHdrImage.className;
+        nextVideo.setAttribute("data-hdr-hdr", "");
+        nextVideo.setAttribute("aria-label", label);
+        nextVideo.autoplay = true;
+        nextVideo.muted = true;
+        nextVideo.defaultMuted = true;
+        nextVideo.loop = true;
+        nextVideo.playsInline = true;
+        nextVideo.preload = "auto";
+        nextVideo.src = src;
+
+        var committed = false;
+        function commit() {
+          if (committed || requestId !== hdrVideoRequest) return;
+          committed = true;
+          nextVideo.currentTime = 0;
+          hdrHdrImage.replaceWith(nextVideo);
+          hdrHdrImage = nextVideo;
+          var playback = nextVideo.play();
+          if (playback && typeof playback.catch === "function") playback.catch(function () {});
+        }
+        nextVideo.addEventListener("loadeddata", commit, { once: true });
+        nextVideo.addEventListener("canplay", commit, { once: true });
+        nextVideo.load();
       }
 
       function hdrSetMode(mode) {
@@ -494,22 +498,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var item = hdrItems[hdrIndex];
         var videoRequest = ++hdrVideoRequest;
         hdrSdrImage.src = item.sdr;
-        hdrHdrImage.muted = true;
-        hdrHdrImage.defaultMuted = true;
-        hdrHdrImage.pause();
-        hdrHdrImage.removeAttribute("src");
-        hdrHdrImage.load();
-        hdrHdrImage.src = item.hdr;
-        hdrHdrImage.load();
-        function startHDRVideo() {
-          if (videoRequest !== hdrVideoRequest) return;
-          hdrHdrImage.currentTime = 0;
-          var hdrPlayback = hdrHdrImage.play();
-          if (hdrPlayback && typeof hdrPlayback.catch === "function") hdrPlayback.catch(function () {});
-        }
-        hdrHdrImage.addEventListener("loadeddata", startHDRVideo, { once: true });
-        hdrHdrImage.addEventListener("canplay", startHDRVideo, { once: true });
-        if (hdrHdrImage.readyState >= 2) startHDRVideo();
+        hdrLoadVideo(item.hdr, "HDR frame " + item.id, videoRequest);
         hdrSdrImage.alt = "SDR frame " + item.id;
         hdrHdrImage.setAttribute("aria-label", "HDR frame " + item.id);
         hdrCurrent.textContent = String(hdrIndex + 1).padStart(2, "0");
@@ -562,7 +551,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       hdrSetMode("split");
       hdrSetFrame(0);
-      hdrAlignMedia();
     }
   }
 
