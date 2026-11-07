@@ -418,6 +418,154 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  /* =======================
+  // SDR / HDR Comparison Gallery
+  ======================= */
+  var hdrGallery = document.querySelector("[data-hdr-gallery]");
+  if (hdrGallery) {
+    var hdrDataNode = document.querySelector("[data-hdr-gallery-data]");
+    var hdrItems = [];
+    try {
+      hdrItems = JSON.parse(hdrDataNode.textContent);
+    } catch (error) {
+      hdrItems = [];
+    }
+
+    if (hdrItems.length) {
+      var hdrStage = hdrGallery.querySelector("[data-hdr-stage]");
+      var hdrSdrImage = hdrGallery.querySelector("[data-hdr-sdr]") || hdrGallery.querySelector("[data-hdr-sdr-image]");
+      var hdrHdrImage = hdrGallery.querySelector("[data-hdr-hdr]") || hdrGallery.querySelector("[data-hdr-hdr-image]");
+      var hdrCurrent = hdrGallery.querySelector("[data-hdr-current]");
+      var hdrProgress = hdrGallery.querySelector("[data-hdr-progress]");
+      var hdrPrev = hdrGallery.querySelector("[data-hdr-prev]");
+      var hdrNext = hdrGallery.querySelector("[data-hdr-next]");
+      var hdrDivider = hdrGallery.querySelector("[data-hdr-divider]");
+      var hdrModes = Array.prototype.slice.call(hdrGallery.querySelectorAll("[data-hdr-mode]"));
+      var hdrIndex = 0;
+      var hdrMode = "split";
+      var hdrDragging = false;
+      var hdrVideoRequest = 0;
+
+      // Size both replaced elements from the same device-pixel-aligned box.
+      // Independently fitting an image and a hardware-decoded video can round
+      // fractional dimensions differently, particularly at browser zoom levels.
+      function hdrAlignMedia() {
+        var ratio = hdrSdrImage.naturalWidth && hdrSdrImage.naturalHeight
+          ? hdrSdrImage.naturalWidth / hdrSdrImage.naturalHeight
+          : 3996 / 2160;
+        var pixelRatio = window.devicePixelRatio || 1;
+        var width = Math.round(hdrStage.getBoundingClientRect().width * pixelRatio) / pixelRatio;
+        var height = Math.round(width / ratio * pixelRatio) / pixelRatio;
+        hdrStage.style.height = height + "px";
+        [hdrSdrImage, hdrHdrImage].forEach(function (media) {
+          media.style.width = width + "px";
+          media.style.height = height + "px";
+        });
+      }
+
+      hdrSdrImage.addEventListener("load", hdrAlignMedia);
+      hdrHdrImage.addEventListener("loadedmetadata", hdrAlignMedia);
+      window.addEventListener("resize", hdrAlignMedia);
+      if (window.ResizeObserver) {
+        new ResizeObserver(hdrAlignMedia).observe(hdrStage);
+      }
+
+      function hdrSetSplit(clientX) {
+        var bounds = hdrStage.getBoundingClientRect();
+        var position = ((clientX - bounds.left) / bounds.width) * 100;
+        position = Math.max(0, Math.min(100, position));
+        hdrStage.style.setProperty("--split-position", position + "%");
+        hdrDivider.setAttribute("aria-valuenow", Math.round(position));
+      }
+
+      function hdrSetMode(mode) {
+        hdrMode = mode;
+        hdrStage.classList.remove("is-mode-split", "is-mode-sdr", "is-mode-hdr");
+        hdrStage.classList.add("is-mode-" + mode);
+        hdrModes.forEach(function (button) {
+          var active = button.dataset.hdrMode === mode;
+          button.classList.toggle("is-active", active);
+          button.setAttribute("aria-pressed", String(active));
+        });
+      }
+
+      function hdrSetFrame(index) {
+        hdrIndex = (index + hdrItems.length) % hdrItems.length;
+        var item = hdrItems[hdrIndex];
+        var videoRequest = ++hdrVideoRequest;
+        hdrSdrImage.src = item.sdr;
+        hdrHdrImage.muted = true;
+        hdrHdrImage.defaultMuted = true;
+        hdrHdrImage.pause();
+        hdrHdrImage.removeAttribute("src");
+        hdrHdrImage.load();
+        hdrHdrImage.src = item.hdr;
+        hdrHdrImage.load();
+        function startHDRVideo() {
+          if (videoRequest !== hdrVideoRequest) return;
+          hdrHdrImage.currentTime = 0;
+          var hdrPlayback = hdrHdrImage.play();
+          if (hdrPlayback && typeof hdrPlayback.catch === "function") hdrPlayback.catch(function () {});
+        }
+        hdrHdrImage.addEventListener("loadeddata", startHDRVideo, { once: true });
+        hdrHdrImage.addEventListener("canplay", startHDRVideo, { once: true });
+        if (hdrHdrImage.readyState >= 2) startHDRVideo();
+        hdrSdrImage.alt = "SDR frame " + item.id;
+        hdrHdrImage.setAttribute("aria-label", "HDR frame " + item.id);
+        hdrCurrent.textContent = String(hdrIndex + 1).padStart(2, "0");
+        hdrProgress.value = String(hdrIndex + 1);
+        hdrPrev.disabled = hdrIndex === 0;
+        hdrNext.disabled = hdrIndex === hdrItems.length - 1;
+        var nextItem = hdrItems[hdrIndex + 1];
+        if (nextItem) {
+          var nextSdr = new Image();
+          var nextHdr = new Image();
+          nextSdr.src = nextItem.sdr;
+          nextHdr.src = nextItem.hdr;
+        }
+      }
+
+      hdrModes.forEach(function (button) {
+        button.addEventListener("click", function () {
+          hdrSetMode(button.dataset.hdrMode);
+        });
+      });
+
+      hdrPrev.addEventListener("click", function () { hdrSetFrame(hdrIndex - 1); });
+      hdrNext.addEventListener("click", function () { hdrSetFrame(hdrIndex + 1); });
+      hdrProgress.addEventListener("input", function () {
+        hdrSetFrame(Number(hdrProgress.value) - 1);
+      });
+
+      hdrDivider.addEventListener("pointerdown", function (event) {
+        hdrDragging = true;
+        hdrStage.classList.add("is-dragging");
+        hdrDivider.setPointerCapture(event.pointerId);
+        hdrSetSplit(event.clientX);
+        event.preventDefault();
+      });
+      hdrDivider.addEventListener("pointermove", function (event) {
+        if (hdrDragging) hdrSetSplit(event.clientX);
+      });
+      hdrDivider.addEventListener("pointerup", function () {
+        hdrDragging = false;
+        hdrStage.classList.remove("is-dragging");
+      });
+      hdrDivider.addEventListener("keydown", function (event) {
+        var current = Number(hdrDivider.getAttribute("aria-valuenow")) || 50;
+        if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+          event.preventDefault();
+          var step = event.key === "ArrowLeft" ? -5 : 5;
+          hdrSetSplit(hdrStage.getBoundingClientRect().left + hdrStage.getBoundingClientRect().width * ((current + step) / 100));
+        }
+      });
+
+      hdrSetMode("split");
+      hdrSetFrame(0);
+      hdrAlignMedia();
+    }
+  }
+
 
   /* =======================
   // Zoom Image

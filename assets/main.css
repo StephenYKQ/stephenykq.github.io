@@ -5229,5 +5229,311 @@
     margin-right: 4px;
   }
 }
+/* HDR comparison post ----------------------------------------------------- */
+.hdr-post {
+  padding-bottom: 80px;
+}
+
+.hdr-post__header {
+  padding-top: 88px;
+  padding-bottom: 42px;
+}
+
+.hdr-post__body {
+  margin-top: 56px;
+}
+
+.hdr-post__body .post__content {
+  text-align: left;
+}
+
+.hdr-gallery {
+  position: relative;
+}
+
+.hdr-gallery__toolbar,
+.hdr-gallery__navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hdr-gallery__toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  min-height: 48px;
+  margin-bottom: 14px;
+}
+
+.hdr-gallery__counter {
+  color: #e0e0e0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.hdr-gallery__counter-separator {
+  margin: 0 5px;
+  color: rgba(224, 224, 224, 0.3);
+}
+
+.hdr-gallery__modes {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid rgba(224, 224, 224, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.hdr-gallery__mode {
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 999px;
+  color: rgba(224, 224, 224, 0.54);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.hdr-gallery__mode:hover,
+.hdr-gallery__mode:focus-visible {
+  color: #e0e0e0;
+}
+
+.hdr-gallery__mode.is-active {
+  color: #151515;
+  background: #e0e0e0;
+}
+
+.hdr-gallery__stage {
+  position: relative;
+  aspect-ratio: 3996/2160;
+  overflow: hidden;
+  background: #08090b;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+  isolation: auto;
+}
+
+.hdr-gallery__stage > .hdr-gallery__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-sizing: border-box;
+  display: block;
+  object-fit: fill;
+  object-position: 0 0;
+  vertical-align: top;
+  user-select: none;
+}
+
+/* Keep the PQ video in the display's native dynamic range when
+   the browser and screen support HDR. Browsers that do not support this
+   property safely ignore it and tone-map the image as usual. */
+.hdr-gallery__hdr-layer,
+.hdr-gallery__image--hdr {
+  -webkit-dynamic-range-limit: no-limit;
+  dynamic-range-limit: no-limit;
+}
+
+.hdr-gallery__hdr-layer {
+  z-index: 2;
+  overflow: hidden;
+  clip-path: inset(0 0 0 var(--split-position));
+}
+
+.hdr-gallery__stage.is-dragging .hdr-gallery__hdr-layer {
+  transition: none;
+}
+
+.hdr-gallery__divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--split-position);
+  z-index: 4;
+  width: 36px;
+  padding: 0;
+  border: 0;
+  transform: translateX(-50%);
+  background: transparent;
+  cursor: ew-resize;
+  touch-action: none;
+}
+
+.hdr-gallery__divider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.18);
+}
+
+.hdr-gallery__divider-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 50%;
+  color: #111;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.24);
+  transform: translate(-50%, -50%);
+  font-size: 15px;
+}
+
+.hdr-gallery__labels {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hdr-gallery__stage.is-mode-split .hdr-gallery__labels--sdr {
+  clip-path: inset(0 calc(100% - var(--split-position)) 0 0);
+}
+
+.hdr-gallery__stage.is-mode-split .hdr-gallery__labels--hdr {
+  clip-path: inset(0 0 0 var(--split-position));
+}
+
+.hdr-gallery__badge {
+  position: absolute;
+  top: 18px;
+  z-index: 3;
+  padding: 6px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.86);
+  background: rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(8px);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+}
+
+.hdr-gallery__badge--sdr {
+  left: 18px;
+}
+
+.hdr-gallery__badge--hdr {
+  right: 18px;
+}
+
+.hdr-gallery__stage.is-mode-sdr .hdr-gallery__hdr-layer,
+.hdr-gallery__stage.is-mode-sdr .hdr-gallery__divider,
+.hdr-gallery__stage.is-mode-sdr .hdr-gallery__badge--hdr,
+.hdr-gallery__stage.is-mode-hdr > .hdr-gallery__image--sdr,
+.hdr-gallery__stage.is-mode-hdr .hdr-gallery__divider,
+.hdr-gallery__stage.is-mode-hdr .hdr-gallery__badge--sdr {
+  display: none;
+}
+
+.hdr-gallery__stage.is-mode-hdr .hdr-gallery__hdr-layer {
+  overflow: visible;
+  clip-path: none;
+}
+
+.hdr-gallery__navigation {
+  gap: 20px;
+  padding-top: 20px;
+}
+
+.hdr-gallery__arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 98px;
+  padding: 8px 0;
+  border: 0;
+  color: #e0e0e0;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.hdr-gallery__arrow:last-child {
+  justify-content: flex-end;
+}
+
+.hdr-gallery__arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.hdr-gallery__arrow:not(:disabled):hover {
+  color: #a38dff;
+}
+
+.hdr-gallery__progress {
+  width: 100%;
+  height: 2px;
+  accent-color: #e0e0e0;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  .hdr-post__header {
+    padding-top: 55px;
+  }
+  .hdr-gallery__toolbar {
+    gap: 8px;
+  }
+}
+@media only screen and (max-width: 576px) {
+  .hdr-post {
+    padding-bottom: 48px;
+  }
+  .hdr-post__header {
+    padding-top: 40px;
+    padding-bottom: 28px;
+  }
+  .hdr-post__body {
+    margin-top: 36px;
+  }
+  .hdr-gallery__badge {
+    top: 10px;
+  }
+  .hdr-gallery__badge--sdr {
+    left: 10px;
+  }
+  .hdr-gallery__badge--hdr {
+    right: 10px;
+  }
+  .hdr-gallery__navigation {
+    gap: 10px;
+  }
+  .hdr-gallery__arrow {
+    min-width: 76px;
+    font-size: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hdr-gallery__hdr-layer,
+  .hdr-gallery__mode,
+  .hdr-gallery__progress {
+    transition: none;
+  }
+}
 
 /*# sourceMappingURL=main.css.map */
