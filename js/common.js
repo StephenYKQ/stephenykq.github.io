@@ -445,6 +445,8 @@ document.addEventListener("DOMContentLoaded", function () {
       var hdrMode = "split";
       var hdrDragging = false;
       var hdrVideoRequest = 0;
+      var hdrVideoCache = Object.create(null);
+      hdrVideoCache[hdrItems[0].hdr] = hdrHdrImage;
 
       function hdrSetSplit(clientX) {
         var bounds = hdrStage.getBoundingClientRect();
@@ -454,7 +456,7 @@ document.addEventListener("DOMContentLoaded", function () {
         hdrDivider.setAttribute("aria-valuenow", Math.round(position));
       }
 
-      function hdrLoadVideo(src, label, requestId) {
+      function hdrCreateVideo(src, label) {
         var nextVideo = document.createElement("video");
         nextVideo.className = hdrHdrImage.className;
         nextVideo.setAttribute("data-hdr-hdr", "");
@@ -466,20 +468,26 @@ document.addEventListener("DOMContentLoaded", function () {
         nextVideo.playsInline = true;
         nextVideo.preload = "auto";
         nextVideo.src = src;
+        nextVideo.load();
+        return nextVideo;
+      }
+
+      function hdrLoadVideo(src, label, requestId, onReady) {
+        var nextVideo = hdrVideoCache[src] || hdrCreateVideo(src, label);
+        hdrVideoCache[src] = nextVideo;
 
         var committed = false;
         function commit() {
           if (committed || requestId !== hdrVideoRequest) return;
           committed = true;
           nextVideo.currentTime = 0;
-          hdrHdrImage.replaceWith(nextVideo);
-          hdrHdrImage = nextVideo;
+          onReady(nextVideo);
           var playback = nextVideo.play();
           if (playback && typeof playback.catch === "function") playback.catch(function () {});
         }
         nextVideo.addEventListener("loadeddata", commit, { once: true });
         nextVideo.addEventListener("canplay", commit, { once: true });
-        nextVideo.load();
+        if (nextVideo.readyState >= 2) commit();
       }
 
       function hdrSetMode(mode) {
@@ -494,24 +502,34 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       function hdrSetFrame(index) {
-        hdrIndex = (index + hdrItems.length) % hdrItems.length;
-        var item = hdrItems[hdrIndex];
+        var targetIndex = (index + hdrItems.length) % hdrItems.length;
+        var item = hdrItems[targetIndex];
         var videoRequest = ++hdrVideoRequest;
-        hdrSdrImage.src = item.sdr;
-        hdrLoadVideo(item.hdr, "HDR frame " + item.id, videoRequest);
-        hdrSdrImage.alt = "SDR frame " + item.id;
-        hdrHdrImage.setAttribute("aria-label", "HDR frame " + item.id);
-        hdrCurrent.textContent = String(hdrIndex + 1).padStart(2, "0");
-        hdrProgress.value = String(hdrIndex + 1);
-        hdrPrev.disabled = hdrIndex === 0;
-        hdrNext.disabled = hdrIndex === hdrItems.length - 1;
-        var nextItem = hdrItems[hdrIndex + 1];
-        if (nextItem) {
-          var nextSdr = new Image();
-          var nextHdr = new Image();
-          nextSdr.src = nextItem.sdr;
-          nextHdr.src = nextItem.hdr;
-        }
+        hdrLoadVideo(item.hdr, "HDR frame " + item.id, videoRequest, function (nextVideo) {
+          if (videoRequest !== hdrVideoRequest) return;
+          hdrIndex = targetIndex;
+          hdrSdrImage.src = item.sdr;
+          hdrSdrImage.alt = "SDR frame " + item.id;
+          hdrHdrImage.replaceWith(nextVideo);
+          hdrHdrImage = nextVideo;
+          hdrHdrImage.setAttribute("aria-label", "HDR frame " + item.id);
+          hdrCurrent.textContent = String(targetIndex + 1).padStart(2, "0");
+          hdrProgress.value = String(targetIndex + 1);
+          hdrPrev.disabled = targetIndex === 0;
+          hdrNext.disabled = targetIndex === hdrItems.length - 1;
+        });
+        // Prime the adjacent frame so normal left/right browsing does not
+        // wait for a fresh HEVC decode on every click.
+        [targetIndex - 1, targetIndex + 1].forEach(function (candidate) {
+          if (candidate >= 0 && candidate < hdrItems.length) {
+            var preloadItem = hdrItems[candidate];
+            if (!hdrVideoCache[preloadItem.hdr]) {
+              hdrVideoCache[preloadItem.hdr] = hdrCreateVideo(preloadItem.hdr, "HDR frame " + preloadItem.id);
+            }
+            var preloadSdr = new Image();
+            preloadSdr.src = preloadItem.sdr;
+          }
+        });
       }
 
       hdrModes.forEach(function (button) {
