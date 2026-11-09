@@ -440,13 +440,31 @@ document.addEventListener("DOMContentLoaded", function () {
       var hdrPrev = hdrGallery.querySelector("[data-hdr-prev]");
       var hdrNext = hdrGallery.querySelector("[data-hdr-next]");
       var hdrDivider = hdrGallery.querySelector("[data-hdr-divider]");
+      var hdrLoading = hdrGallery.querySelector("[data-hdr-loading]");
       var hdrModes = Array.prototype.slice.call(hdrGallery.querySelectorAll("[data-hdr-mode]"));
       var hdrIndex = 0;
       var hdrMode = "split";
       var hdrDragging = false;
       var hdrVideoRequest = 0;
-      var hdrVideoCache = Object.create(null);
-      hdrVideoCache[hdrItems[0].hdr] = hdrHdrImage;
+      var hdrPendingVideo = null;
+      var hdrLoadingTimer = null;
+
+      function hdrShowLoading(requestId) {
+        clearTimeout(hdrLoadingTimer);
+        hdrLoading.setAttribute("aria-hidden", "true");
+        hdrLoadingTimer = setTimeout(function () {
+          if (requestId === hdrVideoRequest) {
+            hdrStage.classList.add("is-loading");
+            hdrLoading.setAttribute("aria-hidden", "false");
+          }
+        }, 180);
+      }
+
+      function hdrHideLoading() {
+        clearTimeout(hdrLoadingTimer);
+        hdrStage.classList.remove("is-loading");
+        hdrLoading.setAttribute("aria-hidden", "true");
+      }
 
       function hdrSetSplit(clientX) {
         var bounds = hdrStage.getBoundingClientRect();
@@ -468,18 +486,24 @@ document.addEventListener("DOMContentLoaded", function () {
         nextVideo.playsInline = true;
         nextVideo.preload = "auto";
         nextVideo.src = src;
-        nextVideo.load();
         return nextVideo;
       }
 
       function hdrLoadVideo(src, label, requestId, onReady) {
-        var nextVideo = hdrVideoCache[src] || hdrCreateVideo(src, label);
-        hdrVideoCache[src] = nextVideo;
+        if (hdrPendingVideo) {
+          hdrPendingVideo.pause();
+          hdrPendingVideo.removeAttribute("src");
+          hdrPendingVideo.load();
+        }
+        var nextVideo = hdrCreateVideo(src, label);
+        hdrPendingVideo = nextVideo;
 
         var committed = false;
         function commit() {
           if (committed || requestId !== hdrVideoRequest) return;
           committed = true;
+          hdrPendingVideo = null;
+          hdrHideLoading();
           nextVideo.currentTime = 0;
           onReady(nextVideo);
           var playback = nextVideo.play();
@@ -487,7 +511,29 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         nextVideo.addEventListener("loadeddata", commit, { once: true });
         nextVideo.addEventListener("canplay", commit, { once: true });
+        nextVideo.addEventListener("error", function () {
+          if (requestId !== hdrVideoRequest) return;
+          // Retry a failed mobile HEVC request once without changing the
+          // visible pair, so SDR and HDR can never become mismatched.
+          nextVideo.load();
+        }, { once: true });
+        nextVideo.load();
         if (nextVideo.readyState >= 2) commit();
+      }
+
+      function hdrApplyFrame(item, targetIndex, nextVideo) {
+        hdrIndex = targetIndex;
+        if (nextVideo && nextVideo !== hdrHdrImage) {
+          hdrHdrImage.replaceWith(nextVideo);
+          hdrHdrImage = nextVideo;
+        }
+        hdrSdrImage.src = item.sdr;
+        hdrSdrImage.alt = "SDR frame " + item.id;
+        hdrHdrImage.setAttribute("aria-label", "HDR frame " + item.id);
+        hdrCurrent.textContent = String(targetIndex + 1).padStart(2, "0");
+        hdrProgress.value = String(targetIndex + 1);
+        hdrPrev.disabled = targetIndex === 0;
+        hdrNext.disabled = targetIndex === hdrItems.length - 1;
       }
 
       function hdrSetMode(mode) {
@@ -504,31 +550,15 @@ document.addEventListener("DOMContentLoaded", function () {
       function hdrSetFrame(index) {
         var targetIndex = (index + hdrItems.length) % hdrItems.length;
         var item = hdrItems[targetIndex];
+        if (targetIndex === hdrIndex && hdrHdrImage.readyState >= 2) {
+          hdrApplyFrame(item, targetIndex, hdrHdrImage);
+          return;
+        }
         var videoRequest = ++hdrVideoRequest;
+        hdrShowLoading(videoRequest);
         hdrLoadVideo(item.hdr, "HDR frame " + item.id, videoRequest, function (nextVideo) {
           if (videoRequest !== hdrVideoRequest) return;
-          hdrIndex = targetIndex;
-          hdrSdrImage.src = item.sdr;
-          hdrSdrImage.alt = "SDR frame " + item.id;
-          hdrHdrImage.replaceWith(nextVideo);
-          hdrHdrImage = nextVideo;
-          hdrHdrImage.setAttribute("aria-label", "HDR frame " + item.id);
-          hdrCurrent.textContent = String(targetIndex + 1).padStart(2, "0");
-          hdrProgress.value = String(targetIndex + 1);
-          hdrPrev.disabled = targetIndex === 0;
-          hdrNext.disabled = targetIndex === hdrItems.length - 1;
-        });
-        // Prime the adjacent frame so normal left/right browsing does not
-        // wait for a fresh HEVC decode on every click.
-        [targetIndex - 1, targetIndex + 1].forEach(function (candidate) {
-          if (candidate >= 0 && candidate < hdrItems.length) {
-            var preloadItem = hdrItems[candidate];
-            if (!hdrVideoCache[preloadItem.hdr]) {
-              hdrVideoCache[preloadItem.hdr] = hdrCreateVideo(preloadItem.hdr, "HDR frame " + preloadItem.id);
-            }
-            var preloadSdr = new Image();
-            preloadSdr.src = preloadItem.sdr;
-          }
+          hdrApplyFrame(item, targetIndex, nextVideo);
         });
       }
 

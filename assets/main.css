@@ -5319,6 +5319,35 @@
   isolation: auto;
 }
 
+.hdr-gallery__loading {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.16s ease;
+}
+
+.hdr-gallery__stage.is-loading .hdr-gallery__loading {
+  opacity: 1;
+}
+
+.hdr-gallery__loading-spinner {
+  width: 28px;
+  height: 28px;
+  border: 2px solid rgba(255, 255, 255, 0.28);
+  border-top-color: rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
+  animation: hdr-gallery-spin 0.7s linear infinite;
+}
+
+@keyframes hdr-gallery-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 .hdr-gallery__stage > .hdr-gallery__image {
   position: absolute;
   inset: 0;
@@ -5533,6 +5562,9 @@
   .hdr-gallery__mode,
   .hdr-gallery__progress {
     transition: none;
+  }
+  .hdr-gallery__loading-spinner {
+    animation: none;
   }
 }
 
