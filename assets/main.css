@@ -5312,7 +5312,7 @@
 
 .hdr-gallery__stage {
   position: relative;
-  aspect-ratio: 3996/2160;
+  aspect-ratio: 1998/1080;
   overflow: hidden;
   background: #08090b;
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
@@ -5321,11 +5321,16 @@
 
 .hdr-gallery__loading {
   position: absolute;
-  right: 0;
-  top: -25px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 5;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  padding: 8px 11px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.78);
+  pointer-events: none;
   color: #e0e0e0;
   font-size: 12px;
 }
@@ -5485,7 +5490,7 @@
 
 .hdr-gallery__navigation {
   gap: 20px;
-  padding-top: 32px;
+  padding-top: 20px;
 }
 
 .hdr-gallery__progress-wrap {
