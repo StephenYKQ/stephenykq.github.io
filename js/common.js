@@ -448,16 +448,17 @@ document.addEventListener("DOMContentLoaded", function () {
       var hdrVideoRequest = 0;
       var hdrPendingVideo = null;
       var hdrPendingImage = null;
+      var hdrPendingIndex = null;
       var hdrLoadingTimer = null;
 
       function hdrShowLoading(requestId) {
         clearTimeout(hdrLoadingTimer);
         hdrStage.classList.remove("is-loading");
-        hdrLoading.setAttribute("aria-hidden", "true");
+        hdrLoading.hidden = true;
         hdrLoadingTimer = setTimeout(function () {
           if (requestId === hdrVideoRequest) {
             hdrStage.classList.add("is-loading");
-            hdrLoading.setAttribute("aria-hidden", "false");
+            hdrLoading.hidden = false;
           }
         }, 180);
       }
@@ -465,7 +466,7 @@ document.addEventListener("DOMContentLoaded", function () {
       function hdrHideLoading() {
         clearTimeout(hdrLoadingTimer);
         hdrStage.classList.remove("is-loading");
-        hdrLoading.setAttribute("aria-hidden", "true");
+        hdrLoading.hidden = true;
       }
 
       function hdrSetSplit(clientX) {
@@ -491,8 +492,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return nextVideo;
       }
 
-      function hdrLoadVideo(src, label, requestId, onReady) {
-        var nextVideo = hdrCreateVideo(src, label);
+      function hdrLoadVideo(src, label, requestId, onReady, existingVideo) {
+        var nextVideo = existingVideo || hdrCreateVideo(src, label);
         hdrPendingVideo = nextVideo;
 
         var committed = false;
@@ -509,12 +510,13 @@ document.addEventListener("DOMContentLoaded", function () {
           // visible pair, so SDR and HDR can never become mismatched.
           nextVideo.load();
         }, { once: true });
-        nextVideo.load();
+        // The initial <video> is already loading through its HTML src.
+        if (!existingVideo) nextVideo.load();
         if (nextVideo.readyState >= 2) commit();
       }
 
-      function hdrLoadImage(item, requestId, onReady) {
-        var nextImage = new Image();
+      function hdrLoadImage(item, requestId, onReady, existingImage) {
+        var nextImage = existingImage || new Image();
         nextImage.className = hdrSdrImage.className;
         nextImage.setAttribute("data-hdr-sdr", "");
         nextImage.alt = "SDR frame " + item.id;
@@ -548,21 +550,24 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         nextImage.addEventListener("load", loaded);
         nextImage.addEventListener("error", retry);
-        nextImage.src = item.sdr;
+        if (!existingImage) nextImage.src = item.sdr;
         if (nextImage.complete) loaded();
       }
 
       function hdrCancelPending() {
         if (hdrPendingVideo) {
-          hdrPendingVideo.pause();
-          hdrPendingVideo.removeAttribute("src");
-          hdrPendingVideo.load();
+          if (hdrPendingVideo !== hdrHdrImage) {
+            hdrPendingVideo.pause();
+            hdrPendingVideo.removeAttribute("src");
+            hdrPendingVideo.load();
+          }
           hdrPendingVideo = null;
         }
         if (hdrPendingImage) {
-          hdrPendingImage.removeAttribute("src");
+          if (hdrPendingImage !== hdrSdrImage) hdrPendingImage.removeAttribute("src");
           hdrPendingImage = null;
         }
+        hdrPendingIndex = null;
       }
 
       function hdrApplyFrame(item, targetIndex, nextVideo, nextImage) {
@@ -586,6 +591,7 @@ document.addEventListener("DOMContentLoaded", function () {
         hdrNext.disabled = targetIndex === hdrItems.length - 1;
         hdrPendingVideo = null;
         hdrPendingImage = null;
+        hdrPendingIndex = null;
         hdrHideLoading();
         var playback = hdrHdrImage.play();
         if (playback && typeof playback.catch === "function") playback.catch(function () {});
@@ -609,6 +615,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       function hdrSetFrame(index) {
         var targetIndex = (index + hdrItems.length) % hdrItems.length;
+        // Repeated clicks on Next while it is loading must not restart the
+        // same downloads or keep postponing the loading indicator.
+        if (targetIndex === hdrPendingIndex) return;
         var item = hdrItems[targetIndex];
         var videoRequest = ++hdrVideoRequest;
         hdrCancelPending();
@@ -617,6 +626,8 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
         hdrShowLoading(videoRequest);
+        hdrPendingIndex = targetIndex;
+        var useExisting = targetIndex === hdrIndex;
         var nextImage = null;
         var nextVideo = null;
         var applied = false;
@@ -628,11 +639,11 @@ document.addEventListener("DOMContentLoaded", function () {
         hdrLoadImage(item, videoRequest, function (image) {
           nextImage = image;
           applyPair();
-        });
+        }, useExisting ? hdrSdrImage : null);
         hdrLoadVideo(item.hdr, "HDR frame " + item.id, videoRequest, function (video) {
           nextVideo = video;
           applyPair();
-        });
+        }, useExisting ? hdrHdrImage : null);
       }
 
       hdrModes.forEach(function (button) {
