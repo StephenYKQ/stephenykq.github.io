@@ -447,10 +447,12 @@ document.addEventListener("DOMContentLoaded", function () {
       var hdrDragging = false;
       var hdrVideoRequest = 0;
       var hdrPendingVideo = null;
+      var hdrPendingImage = null;
       var hdrLoadingTimer = null;
 
       function hdrShowLoading(requestId) {
         clearTimeout(hdrLoadingTimer);
+        hdrStage.classList.remove("is-loading");
         hdrLoading.setAttribute("aria-hidden", "true");
         hdrLoadingTimer = setTimeout(function () {
           if (requestId === hdrVideoRequest) {
@@ -490,11 +492,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       function hdrLoadVideo(src, label, requestId, onReady) {
-        if (hdrPendingVideo) {
-          hdrPendingVideo.pause();
-          hdrPendingVideo.removeAttribute("src");
-          hdrPendingVideo.load();
-        }
         var nextVideo = hdrCreateVideo(src, label);
         hdrPendingVideo = nextVideo;
 
@@ -502,12 +499,7 @@ document.addEventListener("DOMContentLoaded", function () {
         function commit() {
           if (committed || requestId !== hdrVideoRequest) return;
           committed = true;
-          hdrPendingVideo = null;
-          hdrHideLoading();
-          nextVideo.currentTime = 0;
           onReady(nextVideo);
-          var playback = nextVideo.play();
-          if (playback && typeof playback.catch === "function") playback.catch(function () {});
         }
         nextVideo.addEventListener("loadeddata", commit, { once: true });
         nextVideo.addEventListener("canplay", commit, { once: true });
@@ -521,19 +513,87 @@ document.addEventListener("DOMContentLoaded", function () {
         if (nextVideo.readyState >= 2) commit();
       }
 
-      function hdrApplyFrame(item, targetIndex, nextVideo) {
+      function hdrLoadImage(item, requestId, onReady) {
+        var nextImage = new Image();
+        nextImage.className = hdrSdrImage.className;
+        nextImage.setAttribute("data-hdr-sdr", "");
+        nextImage.alt = "SDR frame " + item.id;
+        nextImage.draggable = false;
+        hdrPendingImage = nextImage;
+        var decoding = false;
+        var ready = false;
+        var retried = false;
+
+        function retry() {
+          if (requestId !== hdrVideoRequest || retried) return;
+          retried = true;
+          decoding = false;
+          nextImage.src = item.sdr;
+        }
+        function loaded() {
+          if (requestId !== hdrVideoRequest || decoding || ready || !nextImage.naturalWidth) return;
+          decoding = true;
+          function decoded() {
+            if (requestId !== hdrVideoRequest || ready) return;
+            ready = true;
+            onReady(nextImage);
+          }
+          // A load event alone does not guarantee that the JPEG is decoded
+          // for the next paint. Insert this very element after decode resolves.
+          if (typeof nextImage.decode === "function") {
+            nextImage.decode().then(decoded, retry);
+          } else {
+            decoded();
+          }
+        }
+        nextImage.addEventListener("load", loaded);
+        nextImage.addEventListener("error", retry);
+        nextImage.src = item.sdr;
+        if (nextImage.complete) loaded();
+      }
+
+      function hdrCancelPending() {
+        if (hdrPendingVideo) {
+          hdrPendingVideo.pause();
+          hdrPendingVideo.removeAttribute("src");
+          hdrPendingVideo.load();
+          hdrPendingVideo = null;
+        }
+        if (hdrPendingImage) {
+          hdrPendingImage.removeAttribute("src");
+          hdrPendingImage = null;
+        }
+      }
+
+      function hdrApplyFrame(item, targetIndex, nextVideo, nextImage) {
         hdrIndex = targetIndex;
+        var previousVideo = hdrHdrImage;
+        // Both media are ready. These synchronous replacements are painted
+        // together; never assign a new URL to an on-screen image here.
+        if (nextImage && nextImage !== hdrSdrImage) {
+          hdrSdrImage.replaceWith(nextImage);
+          hdrSdrImage = nextImage;
+        }
         if (nextVideo && nextVideo !== hdrHdrImage) {
           hdrHdrImage.replaceWith(nextVideo);
           hdrHdrImage = nextVideo;
         }
-        hdrSdrImage.src = item.sdr;
         hdrSdrImage.alt = "SDR frame " + item.id;
         hdrHdrImage.setAttribute("aria-label", "HDR frame " + item.id);
         hdrCurrent.textContent = String(targetIndex + 1).padStart(2, "0");
         hdrProgress.value = String(targetIndex + 1);
         hdrPrev.disabled = targetIndex === 0;
         hdrNext.disabled = targetIndex === hdrItems.length - 1;
+        hdrPendingVideo = null;
+        hdrPendingImage = null;
+        hdrHideLoading();
+        var playback = hdrHdrImage.play();
+        if (playback && typeof playback.catch === "function") playback.catch(function () {});
+        if (previousVideo !== hdrHdrImage) {
+          previousVideo.pause();
+          previousVideo.removeAttribute("src");
+          previousVideo.load();
+        }
       }
 
       function hdrSetMode(mode) {
@@ -550,15 +610,28 @@ document.addEventListener("DOMContentLoaded", function () {
       function hdrSetFrame(index) {
         var targetIndex = (index + hdrItems.length) % hdrItems.length;
         var item = hdrItems[targetIndex];
-        if (targetIndex === hdrIndex && hdrHdrImage.readyState >= 2) {
-          hdrApplyFrame(item, targetIndex, hdrHdrImage);
+        var videoRequest = ++hdrVideoRequest;
+        hdrCancelPending();
+        if (targetIndex === hdrIndex && hdrHdrImage.readyState >= 2 && hdrSdrImage.complete && hdrSdrImage.naturalWidth) {
+          hdrHideLoading();
           return;
         }
-        var videoRequest = ++hdrVideoRequest;
         hdrShowLoading(videoRequest);
-        hdrLoadVideo(item.hdr, "HDR frame " + item.id, videoRequest, function (nextVideo) {
-          if (videoRequest !== hdrVideoRequest) return;
-          hdrApplyFrame(item, targetIndex, nextVideo);
+        var nextImage = null;
+        var nextVideo = null;
+        var applied = false;
+        function applyPair() {
+          if (applied || videoRequest !== hdrVideoRequest || !nextImage || !nextVideo) return;
+          applied = true;
+          hdrApplyFrame(item, targetIndex, nextVideo, nextImage);
+        }
+        hdrLoadImage(item, videoRequest, function (image) {
+          nextImage = image;
+          applyPair();
+        });
+        hdrLoadVideo(item.hdr, "HDR frame " + item.id, videoRequest, function (video) {
+          nextVideo = video;
+          applyPair();
         });
       }
 
