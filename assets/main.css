@@ -5319,10 +5319,12 @@
   isolation: auto;
 }
 
-.hdr-gallery__loading {
+.hdr-gallery__stage > .hdr-gallery__loading {
   position: absolute;
-  right: 14px;
-  bottom: 14px;
+  inset: auto 14px 14px auto;
+  width: auto;
+  margin: 0;
+  transform: none;
   z-index: 5;
   display: inline-flex;
   align-items: center;
@@ -5335,7 +5337,7 @@
   font-size: 12px;
 }
 
-.hdr-gallery__loading[hidden] {
+.hdr-gallery__stage > .hdr-gallery__loading[hidden] {
   display: none;
 }
 

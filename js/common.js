@@ -446,22 +446,22 @@ document.addEventListener("DOMContentLoaded", function () {
       var hdrMode = "split";
       var hdrDragging = false;
       var hdrVideoRequest = 0;
-      var hdrPendingVideo = null;
-      var hdrPendingImage = null;
-      var hdrPendingIndex = null;
-      // Keep only the previously displayed pair. Returning to it should not
-      // create another HEVC player, download, or decode all over again.
+      var hdrCurrentPair = null;
       var hdrPreviousPair = null;
-      var hdrPrefetch = null;
-      var hdrPendingPrefetch = null;
+      var hdrNextPair = null;
+      var hdrPendingPair = null;
       var hdrLoadingTimer = null;
+
+      // Keep the status inside the picture even if an older page placed it
+      // beside the navigation controls.
+      if (hdrLoading.parentNode !== hdrStage) hdrStage.appendChild(hdrLoading);
 
       function hdrShowLoading(requestId) {
         clearTimeout(hdrLoadingTimer);
         hdrStage.classList.remove("is-loading");
         hdrLoading.hidden = true;
         hdrLoadingTimer = setTimeout(function () {
-          if (requestId === hdrVideoRequest) {
+          if (requestId === hdrVideoRequest && hdrPendingPair) {
             hdrStage.classList.add("is-loading");
             hdrLoading.hidden = false;
           }
@@ -474,34 +474,6 @@ document.addEventListener("DOMContentLoaded", function () {
         hdrLoading.hidden = true;
       }
 
-      function hdrStopPrefetch() {
-        if (hdrPrefetch) {
-          hdrPrefetch.controller.abort();
-          hdrPrefetch = null;
-        }
-      }
-
-      function hdrPrefetchNext(index) {
-        // Fetch only the next pair's bytes, not another video decoder.
-        // Do this after the visible pair is complete, never alongside its load.
-        if (typeof fetch !== "function" || typeof AbortController !== "function" || typeof URL === "undefined" || !URL.createObjectURL) return;
-        if (typeof navigator !== "undefined" && navigator.connection && navigator.connection.saveData) return;
-        var nextIndex = index + 1;
-        if (hdrPrefetch && hdrPrefetch.index === nextIndex) return;
-        hdrStopPrefetch();
-        if (nextIndex >= hdrItems.length) return;
-        if (hdrPreviousPair && hdrPreviousPair.index === nextIndex) return;
-        var controller = new AbortController();
-        var item = hdrItems[nextIndex];
-        var ready = Promise.all([item.sdr, item.hdr].map(function (src) {
-          return fetch(src, { signal: controller.signal, cache: "force-cache", priority: "low" }).then(function (response) {
-            if (!response.ok) throw new Error("Prefetch failed");
-            return response.blob();
-          });
-        })).then(function (blobs) { return { image: blobs[0], video: blobs[1] }; }, function () { return null; });
-        hdrPrefetch = { index: nextIndex, controller: controller, ready: ready };
-      }
-
       function hdrSetSplit(clientX) {
         var bounds = hdrStage.getBoundingClientRect();
         var position = ((clientX - bounds.left) / bounds.width) * 100;
@@ -510,156 +482,142 @@ document.addEventListener("DOMContentLoaded", function () {
         hdrDivider.setAttribute("aria-valuenow", Math.round(position));
       }
 
-      function hdrSetMediaSource(media, src, blob) {
-        if (blob) {
-          media.hdrObjectURL = URL.createObjectURL(blob);
-          media.src = media.hdrObjectURL;
-        } else {
-          media.src = src;
-        }
+      function hdrReleasePair(pair) {
+        if (!pair || pair.disposed) return;
+        pair.disposed = true;
+        pair.video.pause();
+        pair.video.removeAttribute("src");
+        pair.video.load();
+        pair.image.removeAttribute("src");
       }
 
-      function hdrReleaseMedia(media) {
-        if (media.tagName === "VIDEO") media.pause();
-        media.removeAttribute("src");
-        if (media.tagName === "VIDEO") media.load();
-        if (media.hdrObjectURL) {
-          URL.revokeObjectURL(media.hdrObjectURL);
-          media.hdrObjectURL = null;
+      function hdrPreparePair(index, image, video) {
+        var item = hdrItems[index];
+        var initial = !!image;
+        var pair = {
+          index: index, image: image || new Image(), video: video || document.createElement("video"),
+          imageReady: false, videoReady: false, decoding: false, disposed: false,
+          imageRetries: 0, videoRetries: 0
+        };
+        pair.image.className = hdrSdrImage.className;
+        pair.image.setAttribute("data-hdr-sdr", "");
+        pair.image.alt = "SDR frame " + item.id;
+        pair.image.draggable = false;
+        pair.video.className = hdrHdrImage.className;
+        pair.video.setAttribute("data-hdr-hdr", "");
+        pair.video.setAttribute("aria-label", "HDR frame " + item.id);
+        pair.video.muted = true;
+        pair.video.defaultMuted = true;
+        pair.video.playsInline = true;
+        pair.video.preload = "auto";
+        // A single-frame clip can hold its final frame. Looping repeatedly
+        // seeks and decodes the same HEVC frame, including while off screen.
+        pair.video.loop = false;
+        if (!initial) pair.video.autoplay = false;
+
+        function retryImage() {
+          if (pair.disposed || pair.imageRetries >= 1) return;
+          pair.imageRetries++;
+          pair.decoding = false;
+          pair.image.src = item.sdr;
         }
-      }
-
-      function hdrCreateVideo(src, label, blob) {
-        var nextVideo = document.createElement("video");
-        nextVideo.className = hdrHdrImage.className;
-        nextVideo.setAttribute("data-hdr-hdr", "");
-        nextVideo.setAttribute("aria-label", label);
-        nextVideo.autoplay = true;
-        nextVideo.muted = true;
-        nextVideo.defaultMuted = true;
-        nextVideo.loop = true;
-        nextVideo.playsInline = true;
-        nextVideo.preload = "auto";
-        hdrSetMediaSource(nextVideo, src, blob);
-        return nextVideo;
-      }
-
-      function hdrLoadVideo(src, label, requestId, onReady, existingVideo, blob) {
-        var nextVideo = existingVideo || hdrCreateVideo(src, label, blob);
-        hdrPendingVideo = nextVideo;
-
-        var committed = false;
-        function commit() {
-          if (committed || requestId !== hdrVideoRequest) return;
-          committed = true;
-          onReady(nextVideo);
-        }
-        nextVideo.addEventListener("loadeddata", commit, { once: true });
-        nextVideo.addEventListener("canplay", commit, { once: true });
-        nextVideo.addEventListener("error", function () {
-          if (requestId !== hdrVideoRequest) return;
-          // Retry a failed mobile HEVC request once without changing the
-          // visible pair, so SDR and HDR can never become mismatched.
-          nextVideo.load();
-        }, { once: true });
-        // The initial <video> is already loading through its HTML src. A
-        // retained video may need data restored after mobile memory eviction.
-        if (!existingVideo || (existingVideo !== hdrHdrImage && existingVideo.readyState < 2)) nextVideo.load();
-        if (nextVideo.readyState >= 2) commit();
-      }
-
-      function hdrLoadImage(item, requestId, onReady, existingImage, blob) {
-        var nextImage = existingImage || new Image();
-        nextImage.className = hdrSdrImage.className;
-        nextImage.setAttribute("data-hdr-sdr", "");
-        nextImage.alt = "SDR frame " + item.id;
-        nextImage.draggable = false;
-        hdrPendingImage = nextImage;
-        var decoding = false;
-        var ready = false;
-        var retried = false;
-
-        function retry() {
-          if (requestId !== hdrVideoRequest || retried) return;
-          retried = true;
-          decoding = false;
-          nextImage.src = item.sdr;
-        }
-        function loaded() {
-          if (requestId !== hdrVideoRequest || decoding || ready || !nextImage.naturalWidth) return;
-          decoding = true;
+        function imageLoaded() {
+          if (pair.disposed || pair.decoding || pair.imageReady || !pair.image.naturalWidth) return;
+          pair.decoding = true;
           function decoded() {
-            if (requestId !== hdrVideoRequest || ready) return;
-            ready = true;
-            onReady(nextImage);
+            if (pair.disposed) return;
+            pair.decoding = false;
+            pair.imageReady = true;
+            hdrCommitPair(pair);
           }
-          // A load event alone does not guarantee that the JPEG is decoded
-          // for the next paint. Insert this very element after decode resolves.
-          if (typeof nextImage.decode === "function") {
-            nextImage.decode().then(decoded, retry);
+          if (typeof pair.image.decode === "function") {
+            pair.image.decode().then(decoded, retryImage);
           } else {
             decoded();
           }
         }
-        nextImage.addEventListener("load", loaded);
-        nextImage.addEventListener("error", retry);
-        if (!existingImage) hdrSetMediaSource(nextImage, item.sdr, blob);
-        if (nextImage.complete) loaded();
-      }
-
-      function hdrCancelPending() {
-        if (hdrPendingPrefetch) {
-          hdrPendingPrefetch.controller.abort();
-          hdrPendingPrefetch = null;
+        function videoLoaded() {
+          if (pair.disposed || pair.video.readyState < 2) return;
+          pair.videoReady = true;
+          hdrCommitPair(pair);
         }
-        if (hdrPendingVideo) {
-          if (hdrPendingVideo !== hdrHdrImage && (!hdrPreviousPair || hdrPendingVideo !== hdrPreviousPair.video)) {
-            hdrReleaseMedia(hdrPendingVideo);
+        pair.refreshImage = function () {
+          pair.imageReady = false;
+          imageLoaded();
+        };
+        pair.retryFailures = function () {
+          if (!pair.imageReady && !pair.decoding && pair.image.complete && !pair.image.naturalWidth) {
+            pair.imageRetries = 0;
+            retryImage();
           }
-          hdrPendingVideo = null;
+          if (!pair.videoReady && pair.video.error) {
+            pair.videoRetries = 0;
+            pair.video.load();
+          }
+        };
+        pair.image.addEventListener("load", imageLoaded);
+        pair.image.addEventListener("error", retryImage);
+        pair.video.addEventListener("loadeddata", videoLoaded);
+        pair.video.addEventListener("canplay", videoLoaded);
+        pair.video.addEventListener("error", function () {
+          if (pair.disposed || pair.videoRetries >= 1) return;
+          pair.videoRetries++;
+          pair.videoReady = false;
+          pair.video.load();
+        });
+        // Native media loading decodes each resource as it arrives. There is
+        // no fetch -> two complete blobs -> new players/decode sequence.
+        if (!initial) {
+          pair.image.src = item.sdr;
+          pair.video.src = item.hdr;
+          pair.video.load();
         }
-        if (hdrPendingImage) {
-          if (hdrPendingImage !== hdrSdrImage && (!hdrPreviousPair || hdrPendingImage !== hdrPreviousPair.image)) hdrReleaseMedia(hdrPendingImage);
-          hdrPendingImage = null;
-        }
-        hdrPendingIndex = null;
+        if (pair.image.complete) imageLoaded();
+        if (pair.video.readyState >= 2) videoLoaded();
+        return pair;
       }
 
-      function hdrApplyFrame(item, targetIndex, nextVideo, nextImage) {
-        var previousPair = { index: hdrIndex, image: hdrSdrImage, video: hdrHdrImage };
-        hdrIndex = targetIndex;
-        var previousVideo = hdrHdrImage;
-        // Both media are ready. These synchronous replacements are painted
-        // together; never assign a new URL to an on-screen image here.
-        if (nextImage && nextImage !== hdrSdrImage) {
-          hdrSdrImage.replaceWith(nextImage);
-          hdrSdrImage = nextImage;
-        }
-        if (nextVideo && nextVideo !== hdrHdrImage) {
-          hdrHdrImage.replaceWith(nextVideo);
-          hdrHdrImage = nextVideo;
-        }
-        hdrSdrImage.alt = "SDR frame " + item.id;
-        hdrHdrImage.setAttribute("aria-label", "HDR frame " + item.id);
-        hdrCurrent.textContent = String(targetIndex + 1).padStart(2, "0");
-        hdrProgress.value = String(targetIndex + 1);
-        hdrPrev.disabled = targetIndex === 0;
-        hdrNext.disabled = targetIndex === hdrItems.length - 1;
-        hdrPendingVideo = null;
-        hdrPendingImage = null;
-        hdrPendingIndex = null;
+      function hdrPrepareNext() {
+        var nextIndex = hdrIndex + 1;
+        if (hdrNextPair && hdrNextPair.index === nextIndex) return;
+        hdrReleasePair(hdrNextPair);
+        hdrNextPair = null;
+        if (nextIndex >= hdrItems.length || (hdrPreviousPair && hdrPreviousPair.index === nextIndex)) return;
+        if (typeof navigator !== "undefined" && navigator.connection && navigator.connection.saveData) return;
+        // At 1080p, keep exactly one upcoming pair downloaded AND decoded.
+        // Selecting it reuses these exact elements with no new media request.
+        hdrNextPair = hdrPreparePair(nextIndex);
+      }
+
+      function hdrCommitPair(pair) {
+        if (pair !== hdrPendingPair || pair.disposed || !pair.imageReady || !pair.videoReady) return;
+        var oldPair = hdrCurrentPair;
+        // Both decoded elements are replaced in one task, so a paint cannot
+        // show two different frame numbers during either loading order.
+        if (pair.image !== hdrSdrImage) hdrSdrImage.replaceWith(pair.image);
+        if (pair.video !== hdrHdrImage) hdrHdrImage.replaceWith(pair.video);
+        hdrSdrImage = pair.image;
+        hdrHdrImage = pair.video;
+        hdrCurrentPair = pair;
+        hdrIndex = pair.index;
+        hdrPendingPair = null;
+        if (hdrNextPair === pair) hdrNextPair = null;
+        hdrCurrent.textContent = String(hdrIndex + 1).padStart(2, "0");
+        hdrProgress.value = String(hdrIndex + 1);
+        hdrPrev.disabled = hdrIndex === 0;
+        hdrNext.disabled = hdrIndex === hdrItems.length - 1;
         hdrHideLoading();
-        var playback = hdrHdrImage.play();
-        if (playback && typeof playback.catch === "function") playback.catch(function () {});
-        if (previousVideo !== hdrHdrImage) {
-          previousVideo.pause();
-          if (hdrPreviousPair && hdrPreviousPair.video !== hdrHdrImage) {
-            hdrReleaseMedia(hdrPreviousPair.video);
-            hdrReleaseMedia(hdrPreviousPair.image);
-          }
-          hdrPreviousPair = previousPair;
+        // Reusing a clip that has ended must not seek back to its beginning.
+        if (!pair.video.ended) {
+          var playback = pair.video.play();
+          if (playback && typeof playback.catch === "function") playback.catch(function () {});
         }
-        hdrPrefetchNext(targetIndex);
+        if (oldPair && oldPair !== pair) {
+          oldPair.video.pause();
+          if (hdrPreviousPair !== pair) hdrReleasePair(hdrPreviousPair);
+          hdrPreviousPair = oldPair;
+        }
+        hdrPrepareNext();
       }
 
       function hdrSetMode(mode) {
@@ -675,56 +633,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
       function hdrSetFrame(index) {
         var targetIndex = (index + hdrItems.length) % hdrItems.length;
-        // Repeated clicks on Next while it is loading must not restart the
-        // same downloads or keep postponing the loading indicator.
-        if (targetIndex === hdrPendingIndex) return;
-        var item = hdrItems[targetIndex];
-        var videoRequest = ++hdrVideoRequest;
-        hdrCancelPending();
-        if (targetIndex === hdrIndex && hdrHdrImage.readyState >= 2 && hdrSdrImage.complete && hdrSdrImage.naturalWidth) {
-          hdrHideLoading();
-          hdrPrefetchNext(targetIndex);
-          return;
+        // Repeat clicks must not restart a request or postpone the spinner.
+        if (hdrPendingPair && hdrPendingPair.index === targetIndex) return;
+        var requestId = ++hdrVideoRequest;
+        var abandoned = hdrPendingPair;
+        hdrPendingPair = null;
+        if (abandoned && abandoned !== hdrCurrentPair && abandoned !== hdrPreviousPair && abandoned !== hdrNextPair) hdrReleasePair(abandoned);
+        var pair = targetIndex === hdrCurrentPair.index ? hdrCurrentPair
+          : hdrPreviousPair && targetIndex === hdrPreviousPair.index ? hdrPreviousPair
+          : hdrNextPair && targetIndex === hdrNextPair.index ? hdrNextPair : null;
+        if (hdrNextPair && hdrNextPair !== pair) {
+          hdrReleasePair(hdrNextPair);
+          hdrNextPair = null;
         }
-        hdrShowLoading(videoRequest);
-        hdrPendingIndex = targetIndex;
-        var existingPair = targetIndex === hdrIndex ? { image: hdrSdrImage, video: hdrHdrImage }
-          : hdrPreviousPair && targetIndex === hdrPreviousPair.index ? hdrPreviousPair : null;
-        var nextImage = null;
-        var nextVideo = null;
-        var applied = false;
-        function applyPair() {
-          if (applied || videoRequest !== hdrVideoRequest || !nextImage || !nextVideo) return;
-          applied = true;
-          hdrApplyFrame(item, targetIndex, nextVideo, nextImage);
+        if (!pair) pair = hdrPreparePair(targetIndex);
+        if (pair === hdrNextPair) hdrNextPair = null;
+        hdrPendingPair = pair;
+        hdrShowLoading(requestId);
+        pair.image.fetchPriority = "high";
+        // A mobile browser may evict a retained video's decoded frame.
+        // Restore only that video; do not redownload the decoded JPEG too.
+        if (pair.videoReady && pair.video.readyState < 2) {
+          pair.videoReady = false;
+          pair.video.load();
         }
-        function loadPair(prefetchedBytes) {
-          if (videoRequest !== hdrVideoRequest) return;
-          hdrLoadImage(item, videoRequest, function (image) {
-            nextImage = image;
-            applyPair();
-          }, existingPair ? existingPair.image : null, prefetchedBytes && prefetchedBytes.image);
-          hdrLoadVideo(item.hdr, "HDR frame " + item.id, videoRequest, function (video) {
-            nextVideo = video;
-            applyPair();
-          }, existingPair ? existingPair.video : null, prefetchedBytes && prefetchedBytes.video);
-        }
-        if (hdrPrefetch && hdrPrefetch.index === targetIndex && !existingPair) {
-          var prefetched = hdrPrefetch;
-          hdrPrefetch = null;
-          hdrPendingPrefetch = prefetched;
-          // Consume the in-flight prefetch instead of starting a second
-          // request for the same MP4. Reuse the bytes directly even when the
-          // hosting server requires HTTP cache revalidation.
-          prefetched.ready.then(function (bytes) {
-            if (videoRequest !== hdrVideoRequest) return;
-            hdrPendingPrefetch = null;
-            loadPair(bytes);
-          });
-        } else {
-          hdrStopPrefetch();
-          loadPair();
-        }
+        pair.retryFailures();
+        if (pair === hdrPreviousPair) pair.refreshImage();
+        hdrCommitPair(pair);
       }
 
       hdrModes.forEach(function (button) {
@@ -762,6 +697,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
 
+      hdrCurrentPair = hdrPreparePair(0, hdrSdrImage, hdrHdrImage);
       hdrSetMode("split");
       hdrSetFrame(0);
     }
