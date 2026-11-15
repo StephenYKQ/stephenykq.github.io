@@ -435,6 +435,13 @@ document.addEventListener("DOMContentLoaded", function () {
       var hdrStage = hdrGallery.querySelector("[data-hdr-stage]");
       var hdrSdrImage = hdrGallery.querySelector("[data-hdr-sdr]") || hdrGallery.querySelector("[data-hdr-sdr-image]");
       var hdrHdrImage = hdrGallery.querySelector("[data-hdr-hdr]") || hdrGallery.querySelector("[data-hdr-hdr-image]");
+      var hdrIsImagePair = hdrHdrImage.tagName === "IMG";
+      var hdrLeftLabel = hdrModesLabel("sdr", "SDR");
+      var hdrRightLabel = hdrModesLabel("hdr", "HDR");
+      function hdrModesLabel(mode, fallback) {
+        var button = hdrGallery.querySelector('[data-hdr-mode="' + mode + '"]');
+        return button ? button.textContent.trim() : fallback;
+      }
       var hdrCurrent = hdrGallery.querySelector("[data-hdr-current]");
       var hdrProgress = hdrGallery.querySelector("[data-hdr-progress]");
       var hdrPrev = hdrGallery.querySelector("[data-hdr-prev]");
@@ -485,9 +492,9 @@ document.addEventListener("DOMContentLoaded", function () {
       function hdrReleasePair(pair) {
         if (!pair || pair.disposed) return;
         pair.disposed = true;
-        pair.video.pause();
+        if (!hdrIsImagePair) pair.video.pause();
         pair.video.removeAttribute("src");
-        pair.video.load();
+        if (!hdrIsImagePair) pair.video.load();
         pair.image.removeAttribute("src");
       }
 
@@ -495,17 +502,21 @@ document.addEventListener("DOMContentLoaded", function () {
         var item = hdrItems[index];
         var initial = !!image;
         var pair = {
-          index: index, image: image || new Image(), video: video || document.createElement("video"),
+          index: index, image: image || new Image(), video: video || (hdrIsImagePair ? new Image() : document.createElement("video")),
           imageReady: false, videoReady: false, decoding: false, disposed: false,
           imageRetries: 0, videoRetries: 0
         };
         pair.image.className = hdrSdrImage.className;
         pair.image.setAttribute("data-hdr-sdr", "");
-        pair.image.alt = "SDR frame " + item.id;
+        pair.image.alt = hdrLeftLabel + " frame " + item.id;
         pair.image.draggable = false;
         pair.video.className = hdrHdrImage.className;
         pair.video.setAttribute("data-hdr-hdr", "");
-        pair.video.setAttribute("aria-label", "HDR frame " + item.id);
+        pair.video.setAttribute("aria-label", hdrRightLabel + " frame " + item.id);
+        if (hdrIsImagePair) {
+          pair.video.alt = hdrRightLabel + " frame " + item.id;
+          pair.video.draggable = false;
+        }
         pair.video.muted = true;
         pair.video.defaultMuted = true;
         pair.video.playsInline = true;
@@ -550,30 +561,73 @@ document.addEventListener("DOMContentLoaded", function () {
             pair.imageRetries = 0;
             retryImage();
           }
-          if (!pair.videoReady && pair.video.error) {
+          if (!hdrIsImagePair && !pair.videoReady && pair.video.error) {
             pair.videoRetries = 0;
             pair.video.load();
           }
         };
         pair.image.addEventListener("load", imageLoaded);
         pair.image.addEventListener("error", retryImage);
-        pair.video.addEventListener("loadeddata", videoLoaded);
-        pair.video.addEventListener("canplay", videoLoaded);
-        pair.video.addEventListener("error", function () {
-          if (pair.disposed || pair.videoRetries >= 1) return;
-          pair.videoRetries++;
-          pair.videoReady = false;
-          pair.video.load();
-        });
+        // Declare this in the pair scope: cached images call it below the
+        // conditional, and this controller runs in strict mode.
+        var afterImageLoaded;
+        if (hdrIsImagePair) {
+          var afterDecoding = false;
+          function retryAfterImage() {
+            if (pair.disposed || pair.videoRetries >= 1) return;
+            pair.videoRetries++;
+            afterDecoding = false;
+            pair.video.src = item.hdr;
+          }
+          afterImageLoaded = function () {
+            if (pair.disposed || afterDecoding || pair.videoReady || !pair.video.naturalWidth) return;
+            afterDecoding = true;
+            function decoded() {
+              if (pair.disposed) return;
+              afterDecoding = false;
+              pair.videoReady = true;
+              hdrCommitPair(pair);
+            }
+            if (typeof pair.video.decode === "function") pair.video.decode().then(decoded, retryAfterImage);
+            else decoded();
+          };
+          pair.video.addEventListener("load", afterImageLoaded);
+          pair.video.addEventListener("error", retryAfterImage);
+          var retryBefore = pair.retryFailures;
+          pair.retryFailures = function () {
+            retryBefore();
+            if (!pair.videoReady && !afterDecoding && pair.video.complete && !pair.video.naturalWidth) {
+              pair.videoRetries = 0;
+              retryAfterImage();
+            }
+          };
+          var refreshBefore = pair.refreshImage;
+          pair.refreshImage = function () {
+            pair.videoReady = false;
+            afterImageLoaded();
+            refreshBefore();
+          };
+        } else {
+          pair.video.addEventListener("loadeddata", videoLoaded);
+          pair.video.addEventListener("canplay", videoLoaded);
+          pair.video.addEventListener("error", function () {
+            if (pair.disposed || pair.videoRetries >= 1) return;
+            pair.videoRetries++;
+            pair.videoReady = false;
+            pair.video.load();
+          });
+        }
         // Native media loading decodes each resource as it arrives. There is
         // no fetch -> two complete blobs -> new players/decode sequence.
         if (!initial) {
           pair.image.src = item.sdr;
           pair.video.src = item.hdr;
-          pair.video.load();
+          if (!hdrIsImagePair) pair.video.load();
         }
         if (pair.image.complete) imageLoaded();
-        if (pair.video.readyState >= 2) videoLoaded();
+        if (hdrIsImagePair) {
+          if (pair.video.complete) afterImageLoaded();
+        } else if (pair.video.readyState >= 2) videoLoaded();
         return pair;
       }
 
@@ -608,12 +662,12 @@ document.addEventListener("DOMContentLoaded", function () {
         hdrNext.disabled = hdrIndex === hdrItems.length - 1;
         hdrHideLoading();
         // Reusing a clip that has ended must not seek back to its beginning.
-        if (!pair.video.ended) {
+        if (!hdrIsImagePair && !pair.video.ended) {
           var playback = pair.video.play();
           if (playback && typeof playback.catch === "function") playback.catch(function () {});
         }
         if (oldPair && oldPair !== pair) {
-          oldPair.video.pause();
+          if (!hdrIsImagePair) oldPair.video.pause();
           if (hdrPreviousPair !== pair) hdrReleasePair(hdrPreviousPair);
           hdrPreviousPair = oldPair;
         }
@@ -653,7 +707,7 @@ document.addEventListener("DOMContentLoaded", function () {
         pair.image.fetchPriority = "high";
         // A mobile browser may evict a retained video's decoded frame.
         // Restore only that video; do not redownload the decoded JPEG too.
-        if (pair.videoReady && pair.video.readyState < 2) {
+        if (!hdrIsImagePair && pair.videoReady && pair.video.readyState < 2) {
           pair.videoReady = false;
           pair.video.load();
         }
