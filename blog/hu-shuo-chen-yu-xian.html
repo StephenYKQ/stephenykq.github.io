@@ -8,19 +8,21 @@
   <meta name="google-site-verification" content="ob0b-vF5pnuPBcij_2UTn3m7Kh6Pkxob0ZylZpvFaC8" />
 
   <title>《狐说臣与仙》AIGC 调色手记</title>
-  <meta name='description' content='【分享】AI 动画调色前后对比，8-bit Rec.709 生成素材的处理思路。'>
+  <meta name='description' content='Welcome to the home of Stephen Yang Kaiqi! :)'>
 
   <link rel="canonical" href="/blog/hu-shuo-chen-yu-xian">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="《狐说臣与仙》AIGC 调色手记 – STECAGE 斯特拉吉">
-  <meta name="twitter:description" content="【分享】AI 动画调色前后对比，8-bit Rec.709 生成素材的处理思路。">
+  <meta name="twitter:description" content="这次分享 AI 动画《音乐剧〈狐说臣与仙〉先导动画》的调色前后对比。项目由脑特执导，直接调色提供调色及完片服务，我担任调色师。
+">
   <meta name="twitter:image:src" content="/images/lz-after_13.jpg">
 
   <!-- Facebook OpenGraph -->
   <meta property="og:title" content="《狐说臣与仙》AIGC 调色手记 – STECAGE 斯特拉吉">
-  <meta property="og:description" content="【分享】AI 动画调色前后对比，8-bit Rec.709 生成素材的处理思路。">
+  <meta property="og:description" content="这次分享 AI 动画《音乐剧〈狐说臣与仙〉先导动画》的调色前后对比。项目由脑特执导，直接调色提供调色及完片服务，我担任调色师。
+">
   <meta property="og:image" content="/images/lz-after_13.jpg">
 
   <!-- Fonts -->
@@ -32,7 +34,7 @@
   <!-- Ionicons -->
   <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="/assets/main.css?v=1794786447">
+  <link rel="stylesheet" href="/assets/main.css?v=1794938978">
 </head>
 
 
@@ -188,7 +190,7 @@
       </div>
       <div class="post__meta-bottom">
         <div class="post__author">Stephen Yang Kaiqi</div>
-        <time class="post__date" datetime="2026-11-15T00:00:00+08:00">15 Nov 2026</time>
+        <time class="post__date" datetime="2026-11-15T12:00:00+08:00">15 Nov 2026</time>
       </div>
     </div>
   </header>
@@ -239,13 +241,13 @@
     <article class="post">
       <div class="post__content"><p>这次分享 AI 动画《音乐剧〈狐说臣与仙〉先导动画》的调色前后对比。项目由脑特执导，直接调色提供调色及完片服务，我担任调色师。</p>
 
-<p>项目采用逐镜头生成的方式，通过反复提供参考素材，维持角色、场景和画面风格的连续性。虽然最终生成的画面已经有很好的统一性，但进入调色后，还是遇到了一些问题。</p>
+<p>项目采用逐镜头生成的方式，通过反复提供参考素材，维持角色、场景和画面风格的连续性。最终生成的统一性很好，但进入调色后，还是遇到了一些问题。</p>
 
 <p>传统实拍素材可以通过摄影机的色彩科学和传递函数，建立场景光与最终图像之间的对应关系，并在 Scene-referred 工作流程中还原至场景线性光空间。而 AI 生成的图像，是模型根据训练数据中学习到的视觉特征合成的结果，并非对真实场景光照的直接记录。画面中的光源、材质和明暗关系虽然在视觉上合理，却不一定对应物理上自洽的场景——乍看之下十分统一，但实际码值分布可能存在不小的差异。调整过程中，经常会发现画面内部的光源强度、局部照明与整体光照关系并不合理，镜头之间的连续性问题也随之凸显。因此，很难像处理实拍素材一样，沿用 Scene-referred 工作流程，或将一套统一的调整方案应用于所有镜头。</p>
 
 <p>此外，AI 生成的素材只有 8-bit 的精度，生成过程中还可能包含渐变不连续等问题。使用 Color Warper、Qualifier 等工具进行局部选色和色彩映射时，很容易出现断层。因此，我更多地回归 Lift、Gamma、Gain 这些传统工具。它们的作用范围相对宽泛，曲线比较平滑。色彩偏移也尽量避免做复杂的局部映射进一步放大素材本身的缺陷。</p>
 
-<p>另一个重要的工作是控制画面的空域细节。AI 生成的图像普遍存在较强的锐化感，边缘和纹理过于突出。通过调节不同频域的锐度、添加胶片颗粒以及光学滤镜等效果，可以重新组织画面的纹理和细节，削弱“AI 感”。</p>
+<p>另一个重要的工作是控制画面的空域细节。AI 生成的图像普遍存在较强的锐化感，边缘和纹理过于突出。通过调节不同频域的锐度、添加胶片颗粒以及光学滤镜等效果，可以重新组织画面的纹理，削弱“AI 感”。</p>
 
 <p>AI 生成留下的穿帮，我也在调色过程中进行了相应的局部修正。例如第 5 张对比图的左侧，在原始画面中，角色尚未举起灯笼靠近木雕，它就已经出现了受光效果。</p>
 
@@ -404,6 +406,6 @@
 <!-- end footer -->
 
     <script src="/js/scripts.js"></script>
-    <script src="/js/common.js?v=1794786447"></script>
+    <script src="/js/common.js?v=1794938978"></script>
 </body>
 </html>

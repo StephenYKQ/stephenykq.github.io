@@ -844,3 +844,44 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 });
+
+// Reusable bilingual regions. Each scope can contain one or more shared controls.
+document.querySelectorAll('[data-language-scope]').forEach(function (scope) {
+  var controls = scope.querySelectorAll('[data-language-controls]');
+  var buttons = scope.querySelectorAll('[data-language]');
+  function setLanguage(language) {
+    scope.querySelectorAll('[data-language-panel]').forEach(function (panel) {
+      panel.hidden = panel.getAttribute('data-language-panel') !== language;
+    });
+    buttons.forEach(function (button) {
+      button.setAttribute('aria-pressed', String(button.getAttribute('data-language') === language));
+    });
+  }
+  var language = 'en';
+  try { language = localStorage.getItem('site-language') === 'zh' ? 'zh' : 'en'; } catch (error) {}
+  setLanguage(language);
+  controls.forEach(function (control) { control.hidden = false; });
+  buttons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      var selected = button.getAttribute('data-language');
+      setLanguage(selected);
+      try { localStorage.setItem('site-language', selected); } catch (error) {}
+    });
+  });
+});
+
+document.querySelectorAll('[data-copy]').forEach(function (button) {
+  button.addEventListener('click', async function () {
+    var scope = button.closest('[data-language-scope]');
+    var chinese = scope && scope.querySelector('[data-language="zh"][aria-pressed="true"]');
+    var status = button.parentNode.querySelector('[role="status"]');
+    try {
+      await navigator.clipboard.writeText(button.getAttribute('data-copy'));
+      status.textContent = chinese ? '已复制微信号' : 'WeChat ID copied';
+    } catch (error) {
+      status.textContent = chinese ? '请手动复制微信号：stephenykq' : 'Please copy manually: stephenykq';
+    }
+    clearTimeout(button.copyStatusTimer);
+    button.copyStatusTimer = setTimeout(function () { status.textContent = ''; }, 4000);
+  });
+});
