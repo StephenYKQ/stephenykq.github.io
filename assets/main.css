@@ -5367,13 +5367,6 @@
   line-height: 1.4;
 }
 
-.profile-caption__spark {
-  display: inline-block;
-  font-size: clamp(24px, 3.2cqw, 38px);
-  font-weight: 400;
-  line-height: 1;
-}
-
 .profile-caption__type {
   display: flex;
   flex-direction: column;
@@ -5430,9 +5423,6 @@
 }
 .profile-caption[data-state=enter] .profile-caption__eyebrow, .profile-caption[data-state=enter] .profile-caption__footer {
   animation: profile-caption-in 0.7s 0.16s both;
-}
-.profile-caption[data-state=enter] .profile-caption__spark {
-  animation: profile-caption-spark 1s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .profile-caption[data-state=hold] .profile-caption__progress::after {
@@ -5515,14 +5505,6 @@
     opacity: 0;
     transform: translate3d(0, -20px, 0);
     filter: blur(6px);
-  }
-}
-@keyframes profile-caption-spark {
-  from {
-    transform: rotate(-150deg) scale(0.5);
-  }
-  to {
-    transform: rotate(0) scale(1);
   }
 }
 @keyframes profile-caption-progress {
