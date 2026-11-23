@@ -207,6 +207,32 @@ document.addEventListener("DOMContentLoaded", function () {
     filterProjects();
   });
 
+  /* Reveal project captions only while a card passes through the mobile focus area. */
+  var projectCards = Array.from(document.querySelectorAll(".c-project-card"));
+  var projectFocusQuery = window.matchMedia("(hover: none), (pointer: coarse), (max-width: 768px)");
+  if (projectCards.length && "IntersectionObserver" in window) {
+    var projectFocusObserver;
+    function updateProjectFocusMode() {
+      if (projectFocusObserver) projectFocusObserver.disconnect();
+      projectCards.forEach(function (card) { card.classList.remove("is-focused"); });
+      var enabled = projectFocusQuery.matches;
+      document.body.classList.toggle("has-project-focus", enabled);
+      if (!enabled) return;
+      projectFocusObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          entry.target.classList.toggle("is-focused", entry.isIntersecting);
+        });
+      }, { rootMargin: "-40% 0px -40% 0px", threshold: 0 });
+      projectCards.forEach(function (card) { projectFocusObserver.observe(card); });
+    }
+    updateProjectFocusMode();
+    if (projectFocusQuery.addEventListener) {
+      projectFocusQuery.addEventListener("change", updateProjectFocusMode);
+    } else if (projectFocusQuery.addListener) {
+      projectFocusQuery.addListener(updateProjectFocusMode);
+    }
+  }
+
   /* =======================
   // Project Gallery
   ======================= */

@@ -4616,6 +4616,33 @@
   .c-project-card__info {
     padding: 20px 24px;
   }
+  body.has-project-focus .c-project-card .c-project-card__image::before {
+    opacity: 0;
+    visibility: hidden;
+  }
+  body.has-project-focus .c-project-card .c-project-card__title {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  body.has-project-focus .c-project-card .c-project-card__subtitle {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+  body.has-project-focus .c-project-card.is-focused .c-project-card__image::before, body.has-project-focus .c-project-card:focus-within .c-project-card__image::before {
+    opacity: 1;
+    visibility: visible;
+  }
+  body.has-project-focus .c-project-card.is-focused .c-project-card__title, body.has-project-focus .c-project-card.is-focused .c-project-card__subtitle, body.has-project-focus .c-project-card:focus-within .c-project-card__title, body.has-project-focus .c-project-card:focus-within .c-project-card__subtitle {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+@media (hover: none) and (prefers-reduced-motion: reduce), (pointer: coarse) and (prefers-reduced-motion: reduce), (max-width: 768px) and (prefers-reduced-motion: reduce), bookshop and (hover: none) and (prefers-reduced-motion: reduce), bookshop and (pointer: coarse) and (prefers-reduced-motion: reduce), bookshop and (max-width: 768px) and (prefers-reduced-motion: reduce) {
+  body.has-project-focus .c-project-card .c-project-card__image::before,
+  body.has-project-focus .c-project-card .c-project-card__title,
+  body.has-project-focus .c-project-card .c-project-card__subtitle {
+    transition: none;
+  }
 }
 @media only screen and (max-width: 576px) {
   .c-project-card__title {
