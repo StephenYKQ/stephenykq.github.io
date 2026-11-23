@@ -4636,6 +4636,9 @@
     opacity: 1;
     transform: translateZ(0);
   }
+  body.has-project-focus .c-project-card.is-focused .c-project-card__title, body.has-project-focus .c-project-card.is-focused .c-project-card__subtitle {
+    transition-delay: 0.2s;
+  }
 }
 @media (hover: none) and (prefers-reduced-motion: reduce), (pointer: coarse) and (prefers-reduced-motion: reduce), (max-width: 768px) and (prefers-reduced-motion: reduce), bookshop and (hover: none) and (prefers-reduced-motion: reduce), bookshop and (pointer: coarse) and (prefers-reduced-motion: reduce), bookshop and (max-width: 768px) and (prefers-reduced-motion: reduce) {
   body.has-project-focus .c-project-card .c-project-card__image::before,

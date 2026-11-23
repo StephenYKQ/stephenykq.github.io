@@ -212,15 +212,48 @@ document.addEventListener("DOMContentLoaded", function () {
   var projectFocusQuery = window.matchMedia("(hover: none), (pointer: coarse), (max-width: 768px)");
   if (projectCards.length && "IntersectionObserver" in window) {
     var projectFocusObserver;
+    var projectFocusTimers = new Map();
+    var projectFocusStarted = new Map();
+    var projectFocusPending = new Set();
     function updateProjectFocusMode() {
       if (projectFocusObserver) projectFocusObserver.disconnect();
-      projectCards.forEach(function (card) { card.classList.remove("is-focused"); });
+      projectCards.forEach(function (card) {
+        clearTimeout(projectFocusTimers.get(card));
+        projectFocusTimers.delete(card);
+        projectFocusStarted.delete(card);
+        projectFocusPending.delete(card);
+        card.classList.remove("is-focused");
+      });
       var enabled = projectFocusQuery.matches;
       document.body.classList.toggle("has-project-focus", enabled);
       if (!enabled) return;
       projectFocusObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-          entry.target.classList.toggle("is-focused", entry.isIntersecting);
+          var card = entry.target;
+          clearTimeout(projectFocusTimers.get(card));
+          projectFocusTimers.delete(card);
+          if (entry.isIntersecting) {
+            projectFocusPending.add(card);
+            projectFocusTimers.set(card, setTimeout(function () {
+              projectFocusPending.delete(card);
+              card.classList.add("is-focused");
+              projectFocusStarted.set(card, performance.now());
+              projectFocusTimers.delete(card);
+            }, reducedMotion.matches ? 0 : 120));
+          } else {
+            if (projectFocusPending.has(card)) {
+              projectFocusPending.delete(card);
+              return;
+            }
+            if (!card.classList.contains("is-focused")) return;
+            // Let the desktop-matched entrance finish, then hold the caption briefly before reversing.
+            var elapsed = performance.now() - (projectFocusStarted.get(card) || 0);
+            projectFocusTimers.set(card, setTimeout(function () {
+              card.classList.remove("is-focused");
+              projectFocusStarted.delete(card);
+              projectFocusTimers.delete(card);
+            }, reducedMotion.matches ? 0 : Math.max(0, 600 - elapsed) + 300));
+          }
         });
       }, { rootMargin: "-40% 0px -40% 0px", threshold: 0 });
       projectCards.forEach(function (card) { projectFocusObserver.observe(card); });
