@@ -14,12 +14,18 @@
   var label = caption.querySelector('[data-caption-label]');
   var toggle = hero.querySelector('[data-caption-toggle]');
   var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var tones = ['lime', 'coral', 'lilac', 'ice'];
+  var theme = getComputedStyle(document.documentElement);
+  var captionStyle = getComputedStyle(caption);
+  var enterDuration = (parseFloat(theme.getPropertyValue('--motion-reveal')) || 560) +
+    (parseFloat(captionStyle.getPropertyValue('--caption-stagger')) || 80);
+  var leaveDuration = parseFloat(theme.getPropertyValue('--motion-base')) || 280;
+  var holdDuration = parseFloat(captionStyle.getPropertyValue('--caption-hold')) || 4200;
   var directions = ['left', 'right', 'up'];
+  var tones = ['indigo', 'iris', 'violet', 'mist'];
+  var tone = Math.floor(Math.random() * tones.length);
   var queue = [];
   var recentPhrases = [];
   var recentLimit = Math.min(5, phrases.length - 1);
-  var lastTone = -1;
   var userPaused = false;
   var inView = !window.IntersectionObserver;
   var timer = null;
@@ -53,13 +59,9 @@
     label.lang = phrase.lang === 'en' ? 'zh-CN' : 'en';
     caption.lang = phrase.lang || 'zh-CN';
     caption.dataset.layout = phrase.layout || 'right';
-    caption.classList.toggle('is-single', phrase.lines.length === 1);
-    // Pick a new accent each time, with no immediate color repeats.
-    lastTone = lastTone < 0 ? Math.floor(Math.random() * tones.length) :
-      (lastTone + 1 + Math.floor(Math.random() * (tones.length - 1))) % tones.length;
-    caption.dataset.tone = tones[lastTone];
+    caption.dataset.tone = tones[tone];
+    tone = (tone + 1 + Math.floor(Math.random() * (tones.length - 1))) % tones.length;
     caption.dataset.motion = directions[Math.floor(Math.random() * directions.length)];
-    caption.style.setProperty('--caption-hold', '4200ms');
     caption.hidden = false;
     hero.classList.add('has-captions');
     started = true;
@@ -84,11 +86,11 @@
 
   function advance() {
     timer = null;
-    if (phase === 'enter') setPhase('hold', 4200);
-    else if (phase === 'hold') setPhase('leave', 480);
+    if (phase === 'enter') setPhase('hold', holdDuration);
+    else if (phase === 'hold') setPhase('leave', leaveDuration);
     else {
       showPhrase();
-      setPhase('enter', 920);
+      setPhase('enter', enterDuration);
     }
   }
 
@@ -107,10 +109,10 @@
       // Keep one random title still when the visitor requests less motion.
       phase = 'hold';
       caption.dataset.state = 'hold';
-      remaining = 4200;
+      remaining = holdDuration;
     } else if (inView && !started) {
       showPhrase();
-      setPhase('enter', 920);
+      setPhase('enter', enterDuration);
     }
     schedule();
   }

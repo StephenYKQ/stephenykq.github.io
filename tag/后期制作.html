@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121212">
   <meta name="google-site-verification" content="ob0b-vF5pnuPBcij_2UTn3m7Kh6Pkxob0ZylZpvFaC8" />
 
   <title>STECAGE 斯特拉吉</title>
@@ -54,12 +55,12 @@
           </a>
         </div>
 
-        <nav class="main-nav">
+        <nav class="main-nav" id="main-navigation" aria-label="Main navigation">
           <div class="main-nav__box">
 
-            <div class="nav__icon-close">
-              <i class="ion ion-md-close"></i>
-            </div>
+            <button type="button" class="nav__icon-close" aria-label="Close menu">
+              <i class="ion ion-md-close" aria-hidden="true"></i>
+            </button>
 
             <div class="nav__title">Menu</div>
 
@@ -86,7 +87,7 @@
               
                 
                 <li class="nav__item dropdown">
-                  <span class="nav__link dropdown-toggle">Pages <i class="ion ion-ios-arrow-down arrow-down"></i></span>
+                  <span class="nav__link dropdown-toggle" tabindex="0">Pages <i class="ion ion-ios-arrow-down arrow-down" aria-hidden="true"></i></span>
                   <div class="dropdown-menu">
                     
                       <a href="/about/" class="nav__link">About</a>
@@ -153,7 +154,7 @@
         </nav>
 
         <div class="nav-button">
-          <i class="nav__icon nav__icon-menu ion ion-md-menu"></i>
+          <button type="button" class="nav__icon nav__icon-menu ion ion-md-menu" aria-label="Open menu" aria-controls="main-navigation" aria-expanded="false"></button>
         </div>
 
       </div>
@@ -161,6 +162,7 @@
   </div>
 </header>
 <!-- end header -->
+
 
     
 <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
@@ -174,207 +176,221 @@
 </div>
 <!--bookshop-live end-->
 
-<div class="container">
+<div class="container animate">
   <div class="row">
-    <div class="col col-12">
-      <div class="contaniner__inner animate">
-        <div class="row">
-          
-          <div class="article col col-4 col-d-6 col-t-12">
-            <div class="article__inner">
-          
-              
-              <div class="image-wrap">
-                <a class="article__image" href="/blog/tie-dyeing">
-                  <img loading="lazy" src="/images/td-after_1.jpg" alt="《扎染 Tie-Dyeing》调色手记">
-                </a>
-              </div>
-              
-          
-              <div class="article__content">
-          
-                
-                <div class="article-tags__box">
-                  
-                  <a href="/tag/调色" class="article__tag">调色</a>
-                  
-                  <a href="/tag/后期制作" class="article__tag">后期制作</a>
-                  
-                </div>
-                
-          
-                <h2 class="article__title">
-                  <a href="/blog/tie-dyeing">《扎染 Tie-Dyeing》调色手记</a>
-                </h2>
-          
-                <p class="article__excerpt">
-                  这次分享 MV《黄之仪 Kyra Zilver - 扎染 Tie-Dyeing》的调色前后对比。项目由杨翰执导，庄富洲担任摄影指导，我担任调色师。
+    
+      <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=page.posts[0]) -->
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/tie-dyeing">
+        <img loading="lazy" src="/images/td-after_1.jpg" alt="《扎染 Tie-Dyeing》调色手记">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/调色" class="c-blog-card__tag">调色</a>
+        
+        <a href="/tag/后期制作" class="c-blog-card__tag">后期制作</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/tie-dyeing">《扎染 Tie-Dyeing》调色手记</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        这次分享 MV《黄之仪 Kyra Zilver - 扎染 Tie-Dyeing》的调色前后对比。项目由杨翰执导，庄富洲担任摄影指导，我担任调色师。
 
 这支片子的摄影底子很好，前期已经建立了鲜明的风格。导演希望在原有基础上进一步做风格化...
-                </p>
-          
-                <div class="article__meta">
-                  <div class="article__author-image">
-                    <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
-                  </div>
-                  <div class="article-info">
-                    <div class="article__author-name">Stephen Yang Kaiqi</div>
-                    <span class="article__date"><time datetime="2026-11-17T00:00:00+08:00">17 Nov 2026</time></span>
-                  </div>
-                </div>
-          
-              </div>
-            </div>
-          </div>
-          
-          <div class="article col col-4 col-d-6 col-t-12">
-            <div class="article__inner">
-          
-              
-              <div class="image-wrap">
-                <a class="article__image" href="/blog/hu-shuo-chen-yu-xian">
-                  <img loading="lazy" src="/images/lz-after_13.jpg" alt="《狐说臣与仙》AIGC 调色手记">
-                </a>
-              </div>
-              
-          
-              <div class="article__content">
-          
-                
-                <div class="article-tags__box">
-                  
-                  <a href="/tag/调色" class="article__tag">调色</a>
-                  
-                  <a href="/tag/aigc" class="article__tag">AIGC</a>
-                  
-                  <a href="/tag/后期制作" class="article__tag">后期制作</a>
-                  
-                </div>
-                
-          
-                <h2 class="article__title">
-                  <a href="/blog/hu-shuo-chen-yu-xian">《狐说臣与仙》AIGC 调色手记</a>
-                </h2>
-          
-                <p class="article__excerpt">
-                  这次分享 AI 动画《音乐剧〈狐说臣与仙〉先导动画》的调色前后对比。项目由脑特执导，直接调色提供调色及完片服务，我担任调色师。
+      </p>
 
-项目采用逐镜头生成的方式，通过反复提供参考素材，维持角色、场景和画面风格的连续性。最终生成的统一性很好，...
-                </p>
-          
-                <div class="article__meta">
-                  <div class="article__author-image">
-                    <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
-                  </div>
-                  <div class="article-info">
-                    <div class="article__author-name">Stephen Yang Kaiqi</div>
-                    <span class="article__date"><time datetime="2026-11-15T12:00:00+08:00">15 Nov 2026</time></span>
-                  </div>
-                </div>
-          
-              </div>
-            </div>
-          </div>
-          
-          <div class="article col col-4 col-d-6 col-t-12">
-            <div class="article__inner">
-          
-              
-              <div class="image-wrap">
-                <a class="article__image" href="/blog/whose-home-hdr">
-                  <img loading="lazy" src="/images/zc-g1961_1.jpg" alt="《转厝》HDR 调色手记">
-                </a>
-              </div>
-              
-          
-              <div class="article__content">
-          
-                
-                <div class="article-tags__box">
-                  
-                  <a href="/tag/调色" class="article__tag">调色</a>
-                  
-                  <a href="/tag/hdr" class="article__tag">HDR</a>
-                  
-                  <a href="/tag/后期制作" class="article__tag">后期制作</a>
-                  
-                </div>
-                
-          
-                <h2 class="article__title">
-                  <a href="/blog/whose-home-hdr">《转厝》HDR 调色手记</a>
-                </h2>
-          
-                <p class="article__excerpt">
-                  《转厝》是黄多嘉导演的北京电影学院毕业联合作业。很幸运，在完成 P3-D65 Gamma 2.6 的 SDR 版本半年后，我有机会重新为这部作品制作 HDR 版本。
-
-这次分别制作了两个版本：1000 nits 的杜比视界家庭版和 3...
-                </p>
-          
-                <div class="article__meta">
-                  <div class="article__author-image">
-                    <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
-                  </div>
-                  <div class="article-info">
-                    <div class="article__author-name">Stephen Yang Kaiqi</div>
-                    <span class="article__date"><time datetime="2026-11-04T12:00:00+08:00">04 Nov 2026</time></span>
-                  </div>
-                </div>
-          
-              </div>
-            </div>
-          </div>
-          
-          <div class="article col col-4 col-d-6 col-t-12">
-            <div class="article__inner">
-          
-              
-              <div class="image-wrap">
-                <a class="article__image" href="/blog/anamorphic-deskew-dctl">
-                  <img loading="lazy" src="/images/2025-12-18-dctl.png" alt="“歪”变宽校正 DCTL">
-                </a>
-              </div>
-              
-          
-              <div class="article__content">
-          
-                
-                <div class="article-tags__box">
-                  
-                  <a href="/tag/变形宽银幕" class="article__tag">变形宽银幕</a>
-                  
-                  <a href="/tag/镜头光学" class="article__tag">镜头光学</a>
-                  
-                  <a href="/tag/后期制作" class="article__tag">后期制作</a>
-                  
-                </div>
-                
-          
-                <h2 class="article__title">
-                  <a href="/blog/anamorphic-deskew-dctl">“歪”变宽校正 DCTL</a>
-                </h2>
-          
-                <p class="article__excerpt">
-                  上个月，我的论文《影视制作中变形镜头装配偏斜检测及画面校正方法研究》发表于《现代电影技术》。在这里再次感谢屈老师、陈老师在研究与写作过程中的指导，也感谢《现代电影技术》的老师们的专业帮助。如果你对变形宽银幕镜头感兴趣，欢迎查阅论文原文...
-                </p>
-          
-                <div class="article__meta">
-                  <div class="article__author-image">
-                    <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
-                  </div>
-                  <div class="article-info">
-                    <div class="article__author-name">Stephen Yang Kaiqi</div>
-                    <span class="article__date"><time datetime="2025-12-18T12:06:00+08:00">18 Dec 2025</time></span>
-                  </div>
-                </div>
-          
-              </div>
-            </div>
-          </div>
-          
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2026-11-17T00:00:00+08:00">17 Nov 2026</time></span>
         </div>
       </div>
+
     </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+    
+      <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=page.posts[1]) -->
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/hu-shuo-chen-yu-xian">
+        <img loading="lazy" src="/images/lz-after_13.jpg" alt="《狐说臣与仙》AIGC 调色手记">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/调色" class="c-blog-card__tag">调色</a>
+        
+        <a href="/tag/后期制作" class="c-blog-card__tag">后期制作</a>
+        
+        <a href="/tag/aigc" class="c-blog-card__tag">AIGC</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/hu-shuo-chen-yu-xian">《狐说臣与仙》AIGC 调色手记</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        这次分享 AI 动画《音乐剧〈狐说臣与仙〉先导动画》的调色前后对比。项目由脑特执导，直接调色提供调色及完片服务，我担任调色师。
+
+项目采用逐镜头生成的方式，通过反复提供参考素材，维持角色、场景和画面风格的连续性。最终生成的统一性很好，...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2026-11-15T12:00:00+08:00">15 Nov 2026</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+    
+      <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=page.posts[2]) -->
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/whose-home-hdr">
+        <img loading="lazy" src="/images/zc-g1961_1.jpg" alt="《转厝》HDR 调色手记">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/调色" class="c-blog-card__tag">调色</a>
+        
+        <a href="/tag/后期制作" class="c-blog-card__tag">后期制作</a>
+        
+        <a href="/tag/hdr" class="c-blog-card__tag">HDR</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/whose-home-hdr">《转厝》HDR 调色手记</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        《转厝》是黄多嘉导演的北京电影学院毕业联合作业。很幸运，在完成 P3-D65 Gamma 2.6 的 SDR 版本半年后，我有机会重新为这部作品制作 HDR 版本。
+
+这次分别制作了两个版本：1000 nits 的杜比视界家庭版和 3...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2026-11-04T12:00:00+08:00">04 Nov 2026</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+    
+      <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=page.posts[3]) -->
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/anamorphic-deskew-dctl">
+        <img loading="lazy" src="/images/2025-12-18-dctl.png" alt="“歪”变宽校正 DCTL">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/变形宽银幕" class="c-blog-card__tag">变形宽银幕</a>
+        
+        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        
+        <a href="/tag/后期制作" class="c-blog-card__tag">后期制作</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/anamorphic-deskew-dctl">“歪”变宽校正 DCTL</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        上个月，我的论文《影视制作中变形镜头装配偏斜检测及画面校正方法研究》发表于《现代电影技术》。在这里再次感谢屈老师、陈老师在研究与写作过程中的指导，也感谢《现代电影技术》的老师们的专业帮助。如果你对变形宽银幕镜头感兴趣，欢迎查阅论文原文...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2025-12-18T12:06:00+08:00">18 Dec 2025</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+    
   </div>
 </div>
 
@@ -417,6 +433,7 @@
 </script>
 <!--bookshop-live end-->
 
+
     <!--
         Bookshop components are accessed using the bookshop tag,
         using the same syntax as the standard Jekyll include tag.
@@ -427,7 +444,9 @@
 
 <!--bookshop-live end-->
 
-    <div class="top" title="Top"><i class="ion ion-ios-arrow-up"></i></div>
+    
+
+    <button class="top" type="button" aria-label="Back to top"><i class="ion ion-ios-arrow-up" aria-hidden="true"></i></button>
 
     <!-- begin footer -->
 <footer class="footer">

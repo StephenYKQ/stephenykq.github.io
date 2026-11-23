@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121212">
   <meta name="google-site-verification" content="ob0b-vF5pnuPBcij_2UTn3m7Kh6Pkxob0ZylZpvFaC8" />
 
   <title>Blog</title>
@@ -54,12 +55,12 @@
           </a>
         </div>
 
-        <nav class="main-nav">
+        <nav class="main-nav" id="main-navigation" aria-label="Main navigation">
           <div class="main-nav__box">
 
-            <div class="nav__icon-close">
-              <i class="ion ion-md-close"></i>
-            </div>
+            <button type="button" class="nav__icon-close" aria-label="Close menu">
+              <i class="ion ion-md-close" aria-hidden="true"></i>
+            </button>
 
             <div class="nav__title">Menu</div>
 
@@ -86,7 +87,7 @@
               
                 
                 <li class="nav__item dropdown">
-                  <span class="nav__link dropdown-toggle">Pages <i class="ion ion-ios-arrow-down arrow-down"></i></span>
+                  <span class="nav__link dropdown-toggle" tabindex="0">Pages <i class="ion ion-ios-arrow-down arrow-down" aria-hidden="true"></i></span>
                   <div class="dropdown-menu">
                     
                       <a href="/about/" class="nav__link">About</a>
@@ -153,7 +154,7 @@
         </nav>
 
         <div class="nav-button">
-          <i class="nav__icon nav__icon-menu ion ion-md-menu"></i>
+          <button type="button" class="nav__icon nav__icon-menu ion ion-md-menu" aria-label="Open menu" aria-controls="main-navigation" aria-expanded="false"></button>
         </div>
 
       </div>
@@ -161,6 +162,7 @@
   </div>
 </header>
 <!-- end header -->
+
 
     
 
@@ -176,10 +178,170 @@
 
     <!--bookshop-live name(posts-list/posts-list.jekyll.html) params(bind=block) context(block=content_blocks[0]) -->
 
-<div class="container animate">
-  <div class="row" data-pagebreak="6">
+<div class="container animate c-posts-list" data-collection-list data-collection-step="9" data-collection-name="posts">
+  <div class="row" id="posts-grid" data-collection-grid>
     
       <!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[0]) -->
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/anamorphic-optical-principles">
+        <img loading="lazy" src="/images/anamorphic-1-3-1-2.jpg" alt="毕业论文分享（三）：变形镜头的光学原理">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/变形宽银幕" class="c-blog-card__tag">变形宽银幕</a>
+        
+        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/anamorphic-optical-principles">毕业论文分享（三）：变形镜头的光学原理</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        同样是变形镜头，前置、后置和中置变形镜组的成像为什么会不同？这一篇继续分享毕业论文第 1.3 节“光学原理”，从柱面透镜与棱镜系统的工作方式入手，梳理变形镜组的位置如何影响视场角、散景和其他光学特性。
+
+1.3 光学原理
+
+最早的变形...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2026-11-20T00:01:00+08:00">20 Nov 2026</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+    
+      <!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[1]) -->
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/anamorphic-imaging-characteristics">
+        <img loading="lazy" src="/images/anamorphic-1-2-5-1.jpg" alt="毕业论文分享（二）：变形镜头的成像特性">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/变形宽银幕" class="c-blog-card__tag">变形宽银幕</a>
+        
+        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/anamorphic-imaging-characteristics">毕业论文分享（二）：变形镜头的成像特性</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        变形镜头带来的视觉风格，远不止更宽的画幅。接着上一篇的历史回顾，这一篇分享毕业论文的 1.2 节“成像特性”：从双平面对称性出发，讨论视场角、景深与散景，再看光晕、畸变、呼吸效应和锐度如何共同塑造变形镜头的影像。
+
+1.2 成像特性
+...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2026-11-20T00:00:00+08:00">20 Nov 2026</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+    
+      <!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[2]) -->
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/anamorphic-lens-history">
+        <img loading="lazy" src="/images/anamorphic-1-1-1.jpg" alt="毕业论文分享（一）：变形镜头的历史发展">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/变形宽银幕" class="c-blog-card__tag">变形宽银幕</a>
+        
+        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/anamorphic-lens-history">毕业论文分享（一）：变形镜头的历史发展</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        这是我的本科毕业论文《电影制作中变形镜头的应用流程优化研究》。我准备把论文正文按章节整理成几篇文章，在这里分次分享给大家。这一篇是第一章“变形镜头概述”的第一小节。
+
+1. 变形镜头概述
+
+1.1 历史发展
+
+20 世纪 50 年代，...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2026-11-19T00:00:00+08:00">19 Nov 2026</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+    
+      <!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[3]) -->
 
 <div class="c-blog-card col col-4 col-d-6 col-t-12">
   <div class="c-blog-card__inner">
@@ -227,9 +389,10 @@
     </div>
   </div>
 </div>
+
 <!--bookshop-live end-->
     
-      <!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[1]) -->
+      <!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[4]) -->
 
 <div class="c-blog-card col col-4 col-d-6 col-t-12">
   <div class="c-blog-card__inner">
@@ -249,9 +412,9 @@
         
         <a href="/tag/调色" class="c-blog-card__tag">调色</a>
         
-        <a href="/tag/aigc" class="c-blog-card__tag">AIGC</a>
-        
         <a href="/tag/后期制作" class="c-blog-card__tag">后期制作</a>
+        
+        <a href="/tag/aigc" class="c-blog-card__tag">AIGC</a>
         
       </div>
       
@@ -279,9 +442,10 @@
     </div>
   </div>
 </div>
+
 <!--bookshop-live end-->
     
-      <!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[2]) -->
+      <!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[5]) -->
 
 <div class="c-blog-card col col-4 col-d-6 col-t-12">
   <div class="c-blog-card__inner">
@@ -301,9 +465,9 @@
         
         <a href="/tag/调色" class="c-blog-card__tag">调色</a>
         
-        <a href="/tag/hdr" class="c-blog-card__tag">HDR</a>
-        
         <a href="/tag/后期制作" class="c-blog-card__tag">后期制作</a>
+        
+        <a href="/tag/hdr" class="c-blog-card__tag">HDR</a>
         
       </div>
       
@@ -331,9 +495,10 @@
     </div>
   </div>
 </div>
+
 <!--bookshop-live end-->
     
-      <!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[3]) -->
+      <!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[6]) -->
 
 <div class="c-blog-card col col-4 col-d-6 col-t-12">
   <div class="c-blog-card__inner">
@@ -381,38 +546,22 @@
     </div>
   </div>
 </div>
+
 <!--bookshop-live end-->
     
   </div>
+  <!--bookshop-live name(collection-more.jekyll.html) params(grid_id="posts-grid" label="See more posts") context() -->
+<div class="collection-more">
+  <span class="collection-more__status" data-collection-status role="status" aria-live="polite" aria-atomic="true"></span>
+  <button class="c-button c-button--secondary c-button--small collection-more__button" type="button" data-collection-more aria-controls="posts-grid" hidden>
+    See more posts
+    <svg class="c-button__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </button>
 </div>
 
-<!--bookshop-live name(pagination.jekyll.html) params() context() -->
-<!-- begin pagination -->
-<nav class="pagination">
-  <div class="container">
-    <div class="pagination__inner">
-
-      <div class="pagination__list">
-        
-        
-        <span data-pagebreak-control="!prev" class="pagination__prev disabled"><i class="ion ion-ios-arrow-back"></i> Prev</span>
-
-        <div class="pagination__count">
-          Page <span data-pagebreak-label="current">1</span>
-          of <span data-pagebreak-label="total">1</span>
-        </div>
-
-        
-        
-        <span data-pagebreak-control="!next" class="pagination__next disabled">Next <i class="ion ion-ios-arrow-forward"></i></span>
-      </div>
-
-    </div>
-  </div>
-</nav>
-<!-- end pagination -->
-
 <!--bookshop-live end-->
+</div>
+
 
 <!--bookshop-live end-->
 
@@ -422,7 +571,9 @@
 
 <!--bookshop-live end-->
 
-    <div class="top" title="Top"><i class="ion ion-ios-arrow-up"></i></div>
+    
+
+    <button class="top" type="button" aria-label="Back to top"><i class="ion ion-ios-arrow-up" aria-hidden="true"></i></button>
 
     <!-- begin footer -->
 <footer class="footer">

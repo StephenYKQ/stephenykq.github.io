@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121212">
   <meta name="google-site-verification" content="ob0b-vF5pnuPBcij_2UTn3m7Kh6Pkxob0ZylZpvFaC8" />
 
   <title>Evidence of Presence</title>
@@ -56,12 +57,12 @@
           </a>
         </div>
 
-        <nav class="main-nav">
+        <nav class="main-nav" id="main-navigation" aria-label="Main navigation">
           <div class="main-nav__box">
 
-            <div class="nav__icon-close">
-              <i class="ion ion-md-close"></i>
-            </div>
+            <button type="button" class="nav__icon-close" aria-label="Close menu">
+              <i class="ion ion-md-close" aria-hidden="true"></i>
+            </button>
 
             <div class="nav__title">Menu</div>
 
@@ -88,7 +89,7 @@
               
                 
                 <li class="nav__item dropdown">
-                  <span class="nav__link dropdown-toggle">Pages <i class="ion ion-ios-arrow-down arrow-down"></i></span>
+                  <span class="nav__link dropdown-toggle" tabindex="0">Pages <i class="ion ion-ios-arrow-down arrow-down" aria-hidden="true"></i></span>
                   <div class="dropdown-menu">
                     
                       <a href="/about/" class="nav__link">About</a>
@@ -155,7 +156,7 @@
         </nav>
 
         <div class="nav-button">
-          <i class="nav__icon nav__icon-menu ion ion-md-menu"></i>
+          <button type="button" class="nav__icon nav__icon-menu ion ion-md-menu" aria-label="Open menu" aria-controls="main-navigation" aria-expanded="false"></button>
         </div>
 
       </div>
@@ -163,6 +164,7 @@
   </div>
 </header>
 <!-- end header -->
+
 
     <div class="project">
   <div class="container">
@@ -218,6 +220,7 @@
 <p><strong>Type:</strong> Narrative Short Film<br />
 <strong>Runtime:</strong> 21min<br />
 <strong>Aspect Ratio:</strong> 2.39:1 (Anamorphic)<br />
+<strong>Master Color Spcae:</strong> P3-D65 Gamma 2.6<br />
 <strong>Camera:</strong> Sony VENICE 2 8K</p>
 </blockquote>
 
@@ -334,7 +337,9 @@
 
 <!--bookshop-live end-->
 
-    <div class="top" title="Top"><i class="ion ion-ios-arrow-up"></i></div>
+    
+
+    <button class="top" type="button" aria-label="Back to top"><i class="ion ion-ios-arrow-up" aria-hidden="true"></i></button>
 
     <!-- begin footer -->
 <footer class="footer">
