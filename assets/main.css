@@ -4576,7 +4576,7 @@
   .c-project-card__title, .c-project-card__subtitle {
     color: #ffffff;
     opacity: 0;
-    transition: transform 0.4s cubic-bezier(0.165, 0.85, 0.45, 1), opacity 0.4s cubic-bezier(0.165, 0.85, 0.45, 1);
+    transition: transform 0.6s cubic-bezier(0.165, 0.85, 0.45, 1), opacity 0.6s cubic-bezier(0.165, 0.85, 0.45, 1);
   }
 }
 @media (hover: hover) and (pointer: fine), bookshop and (hover: hover) and (pointer: fine) {
@@ -5883,12 +5883,6 @@
   color: #ffd166;
 }
 
-.hdr-gallery__stage > .hdr-gallery__loading {
-  padding: 8px 11px;
-  border-radius: 6px;
-  background: #202020;
-}
-
 .hdr-gallery__stage > .hdr-gallery__loading[hidden],
 .hdr-gallery__stage .hdr-gallery__display-notice[hidden] {
   display: none;
@@ -5910,7 +5904,8 @@
     transform: rotate(360deg);
   }
 }
-.hdr-gallery__stage > .hdr-gallery__image {
+.hdr-gallery__stage > .hdr-gallery__image,
+.hdr-gallery__hdr-layer > .hdr-gallery__image {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -5939,6 +5934,8 @@
 }
 
 .hdr-gallery__hdr-layer {
+  position: absolute;
+  inset: 0;
   z-index: 2;
   overflow: hidden;
   clip-path: inset(0 0 0 var(--split-position));
@@ -6157,6 +6154,11 @@
 .lightense-backdrop {
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
+}
+
+/* Use the rendered-size multiplier calculated in common.js, not the image's source dimensions. */
+.lightense-target.lightense-open {
+  transform: scale(var(--lightense-zoom-scale, 1)) !important;
 }
 
 /*# sourceMappingURL=main.css.map */

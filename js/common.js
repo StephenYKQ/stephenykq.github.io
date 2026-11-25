@@ -246,13 +246,13 @@ document.addEventListener("DOMContentLoaded", function () {
               return;
             }
             if (!card.classList.contains("is-focused")) return;
-            // Let the desktop-matched entrance finish, then hold the caption briefly before reversing.
+            // Let the 200ms pause and 600ms entrance finish, then hold briefly before reversing.
             var elapsed = performance.now() - (projectFocusStarted.get(card) || 0);
             projectFocusTimers.set(card, setTimeout(function () {
               card.classList.remove("is-focused");
               projectFocusStarted.delete(card);
               projectFocusTimers.delete(card);
-            }, reducedMotion.matches ? 0 : Math.max(0, 600 - elapsed) + 300));
+            }, reducedMotion.matches ? 0 : Math.max(0, 800 - elapsed) + 300));
           }
         });
       }, { rootMargin: "-40% 0px -40% 0px", threshold: 0 });
@@ -821,6 +821,19 @@ document.addEventListener("DOMContentLoaded", function () {
     background: "rgba(10, 10, 14, .96)",
     padding: 60,
     offset: 30
+    });
+
+    // Scale from the rendered size: at most 1.5x and at most +240 CSS px on the longest edge.
+    document.querySelectorAll(".page img.lightense-target, .post img.lightense-target").forEach(function (image) {
+      image.addEventListener("click", function () {
+        if (image.classList.contains("lightense-open")) return;
+
+        var longestEdge = Math.max(image.offsetWidth, image.offsetHeight);
+        if (!longestEdge) return;
+
+        var scale = Math.min(1.5, 1 + 240 / longestEdge);
+        image.style.setProperty("--lightense-zoom-scale", scale.toFixed(3));
+      });
     });
   }
 
