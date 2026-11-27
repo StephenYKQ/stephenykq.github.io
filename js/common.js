@@ -43,7 +43,11 @@ document.addEventListener("DOMContentLoaded", function () {
   // Stop Animations During Window Resizing
   ====================================== */
   let resizeTimer;
+  var animationViewportWidth = window.innerWidth;
   window.addEventListener("resize", () => {
+    // Mobile browser chrome changes height while scrolling; keep transitions running.
+    if (window.innerWidth === animationViewportWidth) return;
+    animationViewportWidth = window.innerWidth;
     document.body.classList.add("resize-animation-stopper");
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
@@ -98,7 +102,8 @@ document.addEventListener("DOMContentLoaded", function () {
     button.addEventListener("click", function (event) {
       limit += step;
       var revealed = refresh(false, true);
-      if (revealed.length && (event.detail === 0 || button.hidden)) {
+      // Keep keyboard navigation in the new batch without leaving touch cards focused.
+      if (revealed.length && event.detail === 0) {
         revealed[0].querySelector("a").focus({ preventScroll: true });
       }
     });
@@ -213,14 +218,12 @@ document.addEventListener("DOMContentLoaded", function () {
   if (projectCards.length && "IntersectionObserver" in window) {
     var projectFocusObserver;
     var projectFocusTimers = new Map();
-    var projectFocusStarted = new Map();
     var projectFocusPending = new Set();
     function updateProjectFocusMode() {
       if (projectFocusObserver) projectFocusObserver.disconnect();
       projectCards.forEach(function (card) {
         clearTimeout(projectFocusTimers.get(card));
         projectFocusTimers.delete(card);
-        projectFocusStarted.delete(card);
         projectFocusPending.delete(card);
         card.classList.remove("is-focused");
       });
@@ -233,11 +236,12 @@ document.addEventListener("DOMContentLoaded", function () {
           clearTimeout(projectFocusTimers.get(card));
           projectFocusTimers.delete(card);
           if (entry.isIntersecting) {
+            // Re-entry cancels dismissal without restarting an already visible caption.
+            if (card.classList.contains("is-focused")) return;
             projectFocusPending.add(card);
             projectFocusTimers.set(card, setTimeout(function () {
               projectFocusPending.delete(card);
               card.classList.add("is-focused");
-              projectFocusStarted.set(card, performance.now());
               projectFocusTimers.delete(card);
             }, reducedMotion.matches ? 0 : 120));
           } else {
@@ -246,13 +250,11 @@ document.addEventListener("DOMContentLoaded", function () {
               return;
             }
             if (!card.classList.contains("is-focused")) return;
-            // Let the 200ms pause and 600ms entrance finish, then hold briefly before reversing.
-            var elapsed = performance.now() - (projectFocusStarted.get(card) || 0);
+            // Hold for one second after leaving; this also lets the entrance finish.
             projectFocusTimers.set(card, setTimeout(function () {
               card.classList.remove("is-focused");
-              projectFocusStarted.delete(card);
               projectFocusTimers.delete(card);
-            }, reducedMotion.matches ? 0 : Math.max(0, 800 - elapsed) + 300));
+            }, reducedMotion.matches ? 0 : 1000));
           }
         });
       }, { rootMargin: "-40% 0px -40% 0px", threshold: 0 });
@@ -816,24 +818,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (lightense) {
     Lightense(".page img:not(.no-lightense), .post img:not(.no-lightense)", {
-    time: reducedMotion.matches ? 0 : motionBase,
-    cubicBezier: motionEase,
-    background: "rgba(10, 10, 14, .96)",
-    padding: 60,
-    offset: 30
-    });
+      time: reducedMotion.matches ? 0 : motionBase,
+      cubicBezier: motionEase,
+      background: "rgba(10, 10, 14, .96)",
+      padding: 60,
+      offset: 30,
+      beforeShow: function (zoom) {
+        // Double the in-page dimensions, limited only by the viewport, not source pixels.
+        // Measure before Lightense wraps the image so paired figures retain their own scale.
+        var bounds = zoom.target.getBoundingClientRect();
+        if (!bounds.width || !bounds.height) return;
 
-    // Scale from the rendered size: at most 1.5x and at most +240 CSS px on the longest edge.
-    document.querySelectorAll(".page img.lightense-target, .post img.lightense-target").forEach(function (image) {
-      image.addEventListener("click", function () {
-        if (image.classList.contains("lightense-open")) return;
-
-        var longestEdge = Math.max(image.offsetWidth, image.offsetHeight);
-        if (!longestEdge) return;
-
-        var scale = Math.min(1.5, 1 + 240 / longestEdge);
-        image.style.setProperty("--lightense-zoom-scale", scale.toFixed(3));
-      });
+        var viewportWidth = document.documentElement.clientWidth;
+        var gutter = viewportWidth <= 768 ? 12 : 32;
+        var scale = Math.min(2,
+          (viewportWidth - gutter * 2) / bounds.width,
+          (window.innerHeight - gutter * 2) / bounds.height);
+        zoom.target.style.setProperty("--lightense-zoom-scale", Math.max(1, scale));
+      }
     });
   }
 

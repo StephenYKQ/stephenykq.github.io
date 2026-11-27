@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121212">
+  <meta name="google-site-verification" content="ob0b-vF5pnuPBcij_2UTn3m7Kh6Pkxob0ZylZpvFaC8" />
+
+  <title>制作影片对白字幕时，那些容易漏掉的小问题</title>
+  <meta name='description' content='Welcome to the home of Stephen Yang Kaiqi! :)'>
+
+  <link rel="canonical" href="/blog/subtitle-quality">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="制作影片对白字幕时，那些容易漏掉的小问题 – STECAGE 斯特拉吉">
+  <meta name="twitter:description" content="影片对白字幕的校对，除了文字内容，还包括标点体例、全半角、空格和双语结构的一致性。这些也是我年初在制作字幕小警察（Subtitle Inspector）时，根据实际工作需求设置的检查项目。本文以常见的中英双语字幕为例：中文在上、英文在下，各占一行；体例说明以实际制作场景为背景，具体项目仍以甲方爸爸的要求为准。下面按检查类别介绍一些具体问题。
+">
+  <meta name="twitter:image:src" content="/images/inspector-icon.png">
+
+  <!-- Facebook OpenGraph -->
+  <meta property="og:title" content="制作影片对白字幕时，那些容易漏掉的小问题 – STECAGE 斯特拉吉">
+  <meta property="og:description" content="影片对白字幕的校对，除了文字内容，还包括标点体例、全半角、空格和双语结构的一致性。这些也是我年初在制作字幕小警察（Subtitle Inspector）时，根据实际工作需求设置的检查项目。本文以常见的中英双语字幕为例：中文在上、英文在下，各占一行；体例说明以实际制作场景为背景，具体项目仍以甲方爸爸的要求为准。下面按检查类别介绍一些具体问题。
+">
+  <meta property="og:image" content="/images/inspector-icon.png">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- Ionicons -->
+  <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/main.css">
+</head>
+
+
+<body>
+
+    
+
+    <!-- begin header -->
+<header class="c-header">
+  <div class="container">
+    <div class="row">
+      <div class="c-header__inner">
+
+        <div class="logo">
+          <a class="logo__link" href="/">
+          
+            <img class="logo__image" src="/images/logo.svg" alt="STECAGE 斯特拉吉">
+          
+          </a>
+        </div>
+
+        <nav class="main-nav" id="main-navigation" aria-label="Main navigation">
+          <div class="main-nav__box">
+
+            <button type="button" class="nav__icon-close" aria-label="Close menu">
+              <i class="ion ion-md-close" aria-hidden="true"></i>
+            </button>
+
+            <div class="nav__title">Menu</div>
+
+              <ul class="nav__list list-reset">
+
+              
+                
+                <li class="nav__item">
+                  <a href="/" class="nav__link">Home</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/projects/" class="nav__link">Projects</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/blog/" class="nav__link">Blog</a>
+                </li>
+                
+              
+                
+                <li class="nav__item dropdown">
+                  <span class="nav__link dropdown-toggle" tabindex="0">Pages <i class="ion ion-ios-arrow-down arrow-down" aria-hidden="true"></i></span>
+                  <div class="dropdown-menu">
+                    
+                      <a href="/about/" class="nav__link">About</a>
+                    
+                      <a href="/contact/" class="nav__link">Contact</a>
+                    
+                  </div>
+                </li>
+
+                
+              
+
+            </ul>
+          </div>
+
+          <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(social-link.jekyll.html) params() context() -->
+
+<div class="social">
+  <ul class="social__list list-reset">
+    
+    <li class="social__item">
+      <a class="social__link" href="https://weibo.com/StephenYKQ" target="_blank" rel="noopener" aria-label="weibo icon">
+        
+          <svg viewBox="0 0 800 649.5" width="17" height="17" fill="currentColor" class="weibo-icon" style="vertical-align: middle; position: relative;">
+            <path d="m336.6,602.3c-132.6,13-247.1-46.9-255.7-134-8.6-87,91.9-168.2,224.6-181.4,132.7-13.2,247.1,46.7,255.7,133.8,8.7,86.7-91.9,168.4-224.5,181.4h-.1Zm-34.9-103.5c-12.9,20.6-40.2,29.4-60.9,20.1-20.4-9.3-26.4-33.1-13.5-53.1,12.6-19.8,39.2-28.6,59.8-19.9,20.7,8.7,27.3,32.3,14.7,53Zm42.3-54.2c-4.7,7.8-15,11.7-22.9,8.3-7.9-3-10.5-12-6-19.5,4.7-7.6,14.6-11.5,22.4-8,7.9,3,10.5,12,6,20.1l.5-.9Zm5.9-90.8c-63.2-16.4-134.4,15.1-161.8,70.7-27.9,56.8-.9,119.6,62.8,140.2,66.1,21.4,144-11.3,171.1-72.5,26.7-59.8-6.7-121.5-72-138.4Zm252.1-40.7c-11.5-3.5-19-6-13.5-20.4,12.5-32.6,14.1-60.2,0-80.2-26-37-97.1-35-178.8-.9,0,0-25.5,10.9-19-9.1,12.5-40.5,10.6-74.1-9-93.6-44.7-44.5-162.4,1.6-262.9,102.7C43.6,287.1,0,367.2,0,436.4c0,132.7,169.9,213.2,336.2,213.2s362.9-126.7,362.9-227.3-51.6-95.1-97.1-109.4v.3Zm63.7-169.7c-25.7-28.6-63.7-39.6-98.7-32.2-14.6,3-23.6,17.1-20.6,31.1,3,13.9,17,23,31.1,20.1,17-3.5,35.6,1.4,48.1,15.5s15.5,32.6,10.6,49.1c-4.5,13.5,3,28.5,16.9,33.1,13.5,4,28.6-3.5,33.1-17.1,11.1-34,4-72.7-21.5-101.2l1,1.5Zm80.6-73.2C693.6,11.6,616-10.5,544.4,4.6c-16.5,3.4-27.1,19.5-23.6,36.1s19.5,27.1,36.1,23.6c51-11.1,106.1,4.9,143.2,46.1,37,41.5,47.7,98,31.5,147.1-5.5,16,3.5,33.6,19.5,38.5,16,5.6,33.1-3.4,38.5-19.5,22.5-69.5,8.1-149.2-44.5-207.8l1,1.6Z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://github.com/StephenYKQ" target="_blank" rel="noopener" aria-label="github icon">
+        
+          <i class="ion ion-logo-github"></i>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://instagram.com/stephenykq/" target="_blank" rel="noopener" aria-label="instagram icon">
+        
+          <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" class="instagram-icon" style="vertical-align: middle; position: relative;">
+            <path d="M20.445 5h-8.891A6.559 6.559 0 0 0 5 11.554v8.891A6.559 6.559 0 0 0 11.554 27h8.891a6.56 6.56 0 0 0 6.554-6.555v-8.891A6.557 6.557 0 0 0 20.445 5zm4.342 15.445a4.343 4.343 0 0 1-4.342 4.342h-8.891a4.341 4.341 0 0 1-4.341-4.342v-8.891a4.34 4.34 0 0 1 4.341-4.341h8.891a4.342 4.342 0 0 1 4.341 4.341l.001 8.891z"/>
+            <path d="M16 10.312c-3.138 0-5.688 2.551-5.688 5.688s2.551 5.688 5.688 5.688 5.688-2.551 5.688-5.688-2.55-5.688-5.688-5.688zm0 9.163a3.475 3.475 0 1 1-.001-6.95 3.475 3.475 0 0 1 .001 6.95zM21.7 8.991a1.363 1.363 0 1 1-1.364 1.364c0-.752.51-1.364 1.364-1.364z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://youtube.com/@stephenykq" target="_blank" rel="noopener" aria-label="youtube icon">
+        
+          <i class="ion ion-logo-youtube"></i>
+        
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+<!--bookshop-live end-->
+        </nav>
+
+        <div class="nav-button">
+          <button type="button" class="nav__icon nav__icon-menu ion ion-md-menu" aria-label="Open menu" aria-controls="main-navigation" aria-expanded="false"></button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</header>
+<!-- end header -->
+
+
+    <header class="post-top post-top--article animate">
+  <div class="container">
+    <div class="post-heading">
+        <div class="post__info">
+
+          
+          <div class="post-tags">
+            
+              <a href="/tag/后期制作" class="post-tags__tag">后期制作</a>
+            
+              <a href="/tag/工具分享" class="post-tags__tag">工具分享</a>
+            
+          </div>
+          
+
+
+          <h1 class="post__title">制作影片对白字幕时，那些容易漏掉的小问题</h1>
+
+          <div class="post__meta">
+            <div class="post__author-image">
+              <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+            </div>
+
+            <div class="post__meta-bottom">
+              <div class="post__author">Stephen Yang Kaiqi</div>
+              <time class="post__date" datetime="2026-11-25T12:00:00+08:00">25 Nov 2026</time>
+            </div>
+          </div>
+
+        </div>
+      
+      <div class="post-image">
+        <img fetchpriority="high" src="/images/inspector-icon.png" alt="制作影片对白字幕时，那些容易漏掉的小问题">
+      </div>
+      
+    </div>
+  </div>
+</header>
+
+<!-- begin post -->
+<div class="container animate">
+
+  <article class="post">
+
+    <div class="post__content">
+      <p>影片对白字幕的校对，除了文字内容，还包括标点体例、全半角、空格和双语结构的一致性。这些也是我年初在制作<strong>字幕小警察（Subtitle Inspector）</strong>时，根据实际工作需求设置的检查项目。本文以常见的中英双语字幕为例：中文在上、英文在下，各占一行；体例说明以实际制作场景为背景，具体项目仍以甲方爸爸的要求为准。下面按检查类别介绍一些具体问题。</p>
+
+<p><strong>字幕小警察</strong>目前已经发布 v0.1.0 版本，可在 <a href="https://github.com/StephenYKQ/subtitle-inspector/">GitHub 仓库页面</a>查看安装包及对应说明。</p>
+
+<h2 id="一排版与双语检查">一、排版与双语检查</h2>
+
+<h3 id="1-中文标点问题">1. 中文标点问题</h3>
+
+<p>在内地院线电影采用的字幕体例中，中文通常不包含标点符号；港澳台及海外发行版本、流媒体版本的标点要求有所不同，部分版本会保留逗号、问号等符号。Netflix 的简体中文指南明确规定不用逗号和句号，疑问句需要问号，必要时使用全角感叹号，并对引号另作规定。<sup><a href="#ref-1" id="citation-1">[1]</a></sup></p>
+
+<div class="sq-pair">
+  <div class="sq-sample"><span class="sq-label">内地常见体例</span><span class="sq-zh" lang="zh-CN">好 你明天来吗</span><span class="sq-en" lang="en">Okay, are you coming tomorrow?</span></div>
+  <div class="sq-sample"><span class="sq-label">香港常见体例</span><span class="sq-zh sq-tc" lang="zh-HK">好，你明天來嗎？</span><span class="sq-en" lang="en">Okay, are you coming tomorrow?</span></div>
+</div>
+
+<p>针对不同要求，在<strong>字幕小警察</strong>中可以调用或创建相应的检查预设。</p>
+
+<h3 id="2-全半角标点问题">2. 全半角标点问题</h3>
+
+<p>中英双语字幕需要分别遵循两种语言的标点规范。英文行中的逗号、句号、问号等标点符号应使用相应的半角字符；中文版本若保留标点，则按中文体例处理。</p>
+
+<div class="sq-pair">
+  <div class="sq-sample"><span class="sq-label">问题示例 · 英文混入全角标点</span><span class="sq-zh" lang="zh-CN">等等 雨还没停</span><span class="sq-en" lang="en">Wait<u class="sq-error">，</u>it's still raining<u class="sq-error">！</u></span></div>
+  <div class="sq-sample"><span class="sq-label">修改后 · 英文使用半角标点</span><span class="sq-zh" lang="zh-CN">等等 雨还没停</span><span class="sq-en" lang="en">Wait, it's still raining!</span></div>
+</div>
+
+<p><strong>“半角/全角标点混用”</strong>检查会根据行语言标记不一致的字符，便于统一处理。</p>
+
+<h3 id="3-标点配对问题">3. 标点配对问题</h3>
+
+<p>引号应成对出现，前后样式也应一致。下面的开引号是弯双引号，闭引号却用了直双引号。</p>
+
+<div class="sq-pair">
+  <div class="sq-sample"><span class="sq-label">问题示例 · 前后引号不匹配</span><span class="sq-zh" lang="zh-CN">他说 明天见</span><span class="sq-en" lang="en">He said, “See you tomorrow.<u class="sq-error">"</u></span></div>
+  <div class="sq-sample"><span class="sq-label">修改后 · 统一为成对弯双引号</span><span class="sq-zh" lang="zh-CN">他说 明天见</span><span class="sq-en" lang="en">He said, “See you tomorrow.”</span></div>
+</div>
+
+<p>软件的<strong>“英文标点检查”</strong>会提示单、双引号缺失或样式不符，并跟踪跨字幕延续的引语；能够确定配对关系的闭引号可自动修正。中文引号「」、『』、书名号《》以及圆、方、花括号，则由独立的<strong>“括号/书名号配对”</strong>选项检查。缺失符号只作提示，补在哪里仍需对照原文。</p>
+
+<h3 id="4-英文大小写问题">4. 英文大小写问题</h3>
+
+<p>大小写也需按句子和项目体例核对。下例同时展示句首小写和缩写格式不统一：假设项目其他条目已统一采用大写的 <code class="language-plaintext highlighter-rouge">P.M.</code>，这一条也应保持一致。注：<code class="language-plaintext highlighter-rouge">p.m.</code> 本身也是有效写法。</p>
+
+<div class="sq-pair">
+  <div class="sq-sample"><span class="sq-label">问题示例 · 句首及缩写体例</span><span class="sq-zh" lang="zh-CN">我们下午三点放映</span><span class="sq-en" lang="en"><u class="sq-error">w</u>e screen at 3 <u class="sq-error">p.m.</u></span></div>
+  <div class="sq-sample"><span class="sq-label">修改后 · 按项目体例统一</span><span class="sq-zh" lang="zh-CN">我们下午三点放映</span><span class="sq-en" lang="en">We screen at 3 P.M.</span></div>
+</div>
+
+<p><strong>“大小写检查”</strong>会提示独立句首小写、部分句中异常大写，以及同一份字幕里 <code class="language-plaintext highlighter-rouge">A.M.</code>/<code class="language-plaintext highlighter-rouge">a.m.</code>、<code class="language-plaintext highlighter-rouge">P.M.</code>/<code class="language-plaintext highlighter-rouge">p.m.</code> 的混用。单独采用其中一种写法不会因此报错，混用时则提醒按项目体例统一。</p>
+
+<h3 id="5-空格问题">5. 空格问题</h3>
+
+<h4 id="英文空格">英文空格</h4>
+
+<p>英文需要检查词间和标点前后的空格，也要留意缩写内部被拆开的情况。</p>
+
+<div class="sq-pair">
+  <div class="sq-sample"><span class="sq-label">问题示例 · 缩写及标点间距</span><span class="sq-zh" lang="zh-CN">她在做饭 等她一会儿</span><span class="sq-en" lang="en">She<u class="sq-error"> </u>'s cooking<u class="sq-error">.</u>Wait for her<u class="sq-error"> </u>!</span></div>
+  <div class="sq-sample"><span class="sq-label">修改后</span><span class="sq-zh" lang="zh-CN">她在做饭 等她一会儿</span><span class="sq-en" lang="en">She's cooking. Wait for her!</span></div>
+</div>
+
+<p>这一例中，缩写内和感叹号前多了空格，句号后缺了空格。<strong>“英文空格”</strong>检查可定位部分标点间距和单词粘连问题；缩写或所有格内部的多余空格由<strong>“连续/多余空格”</strong>检查标记。</p>
+
+<h4 id="连续多余空格">连续/多余空格</h4>
+
+<p>这项检查作用于中文行和英文行，包括连续空格、行首行尾空格，以及标点前不需要的空格。行首、行尾空格在部分渲染流程中会影响居中结果，连续空格则造成不一致的间距。</p>
+
+<div class="sq-pair">
+  <div class="sq-sample"><span class="sq-label">问题示例 · 中英文均有连续空格</span><span class="sq-zh" lang="zh-CN">等等<u class="sq-error">  </u>我还没准备好</span><span class="sq-en" lang="en">Wait!<u class="sq-error">  </u>I'm not ready yet.</span></div>
+  <div class="sq-sample"><span class="sq-label">修改后 · 保留单个分隔空格</span><span class="sq-zh" lang="zh-CN">等等 我还没准备好</span><span class="sq-en" lang="en">Wait! I'm not ready yet.</span></div>
+</div>
+
+<h4 id="中英文混排空格">中英文混排空格</h4>
+
+<p>中文与拉丁字母、数字之间是否插入空格，取决于项目选择，但同一项目内需要统一。</p>
+
+<div class="sq-pair">
+  <div class="sq-sample"><span class="sq-label">不插入空格</span><span class="sq-zh" lang="zh-CN">检查ABS和2号传感器</span><span class="sq-en" lang="en">Check the ABS and sensor 2.</span></div>
+  <div class="sq-sample"><span class="sq-label">插入空格</span><span class="sq-zh" lang="zh-CN">检查 ABS 和 2 号传感器</span><span class="sq-en" lang="en">Check the ABS and sensor 2.</span></div>
+</div>
+
+<h3 id="6-双语结构与重复文本">6. 双语结构与重复文本</h3>
+
+<p>中英文字幕合并、替换或更新后，除了看文字，也要核对每条是否仍有对应的中英文行。</p>
+
+<div class="sq-pair">
+  <div class="sq-sample"><span class="sq-label">问题示例 · 英文行缺失</span><span class="sq-zh" lang="zh-CN">喂</span><span class="sq-en sq-missing"><u class="sq-error">（英文行缺失）</u></span></div>
+  <div class="sq-sample"><span class="sq-label">修改后 · 恢复双语结构</span><span class="sq-zh" lang="zh-CN">喂</span><span class="sq-en" lang="en">Hey!</span></div>
+</div>
+
+<p>双语模式中的<strong>“行数检查”</strong>按语言分别统计字幕行数，提示缺行、多行等结构异常；双语不平衡则根据中英文文本长度比例，筛查可能存在的部分内容复制、内容缺失或混入其他条目等情况。如果中英文字幕分别保存在两个文件中，可以使用<strong>“合并双语字幕”</strong>，根据时间码容差匹配对应条目，并提示未匹配项，方便核对中英文字幕的时间码是否对应。合并后，中英文共用一组时间码。完成编辑后，可以使用<strong>“拆分双语字幕”</strong>将双语字幕重新拆分为两个独立文件。</p>
+
+<p><strong>“重复文本检查”</strong>用来查找一条字幕中的意外重复：</p>
+
+<div class="sq-pair">
+  <div class="sq-sample"><span class="sq-label">问题示例</span><span class="sq-zh" lang="zh-CN">这版先保留<u class="sq-error">这版先保留</u></span><span class="sq-en" lang="en">Keep this cut.</span></div>
+  <div class="sq-sample"><span class="sq-label">核对后</span><span class="sq-zh" lang="zh-CN">这版先保留</span><span class="sq-en" lang="en">Keep this cut.</span></div>
+</div>
+
+<p>原片中有意的重复、口吃和强调应保留。对“待确认”等交付前必须处理的标记，或本项目需要集中复核的写法，可以使用<strong>特别指定检查</strong>，并分别设置全部、仅中文或仅英文的标注词。</p>
+
+<h2 id="二文件与文字检查">二、文件与文字检查</h2>
+
+<p>排版之外，软件也检查 <strong>SRT 文件结构与时间码</strong>：非法或重复序号、字幕块缺少空行、正文缺失、时间字段越界、结束早于开始等。时长、字幕重叠和间隔按项目参数提示。</p>
+
+<p><strong>“字数上限与 CPS”</strong> 用于筛出文字过长、显示过密的条目。中文和英文可分别设置上限；CPS 使用应用自己的中英加权计数，作为筛查指标，不直接代替平台验收值。</p>
+
+<p>中文高级检查包括<strong>“的、地、得”</strong>、<strong>“本地词典疑似错字”</strong>、<strong>“用词一致性”</strong>、<strong>“简繁混用”</strong>和<strong>“非 GB2312 字符提示”</strong>。其中，非 GB2312 只是兼容性复核线索，不等于错字或字体缺字。</p>
+
+<h2 id="三检查之后怎样修订">三、检查之后怎样修订</h2>
+
+<p>先按交付版本选择检查预设，确认单语/双语模式、标点和空格方案，再按类别处理提示。点击问题卡片可以定位原文；确认无需改动的提示可忽略，明确的空格、标点问题可批量修复。</p>
+
+<figure class="sq-shot">
+  <img src="/images/inspector-layout.jpg" alt="字幕小警察 GUI 窗口" loading="lazy" />
+  <figcaption>字幕小警察 GUI 窗口</figcaption>
+</figure>
+
+<p>自动修复结果会在新标签页中打开。要确认这一轮具体改了什么，可以使用<strong>“字幕比对”</strong>查看两个版本的文字、增删和时间差异；最后再将导出文件放回剪辑软件或播放器复核。</p>
+
+<h2 id="四pngxml-图片字幕输出">四、PNG/XML 图片字幕输出</h2>
+
+<p>IMAX DMR 的物料交付要求，是我开发 <strong>SRT 转 PNG/XML</strong> 子程序的原因：<sup><a href="#ref-3" id="citation-3">[3]</a></sup></p>
+
+<blockquote>
+  <p>XML 字幕交付必须符合 CineCanvas 2.0 INTEROP 标准格式</p>
+
+  <p>2D 电影中，接收 4K PNG XML 字幕文件</p>
+
+  <p>若画面中同时出现多种语言字幕（如中文和英文），两种语言需要包含在同一个 PNG 文件中</p>
+</blockquote>
+
+<figure class="sq-shot">
+  <img src="/images/pngxml-layout.jpg" alt="SRT 转 PNG/XML 子程序 GUI 窗口" loading="lazy" />
+  <figcaption>SRT 转 PNG/XML 子程序 GUI 窗口</figcaption>
+</figure>
+
+<p>这类交付由字幕图片和配套 XML 组成。PNG 保存字幕的实际字形与排版，XML 引用图片并描述其显示区间及位置。配套子程序可以从文字字幕生成逐条透明背景 PNG 和 CineCanvas 格式 XML。中文与英文可分别设置字体、字号、字距、行距、描边和位置，并通过参考画面、安全框及遮幅检查版式。可按 2K/4K 的 Scope/Flat/Container 画布导出全画面 PNG，也可导出为字幕区域 PNG 并在 XML 中记录 X/Y 轴位置。</p>
+
+<h2 id="参考文献">参考文献</h2>
+
+<ol class="references">
+  <li id="ref-1">Netflix. Chinese (Simplified) Timed Text Style Guide [EB/OL]. <a href="https://partnerhelp.netflixstudios.com/hc/en-us/articles/215986007-Chinese-Simplified-Timed-Text-Style-Guide">原文链接</a>。§12–13. <a href="#citation-1" aria-label="返回正文">↩</a></li>
+  <li id="ref-2">Netflix. English (USA) Timed Text Style Guide [EB/OL]. <a href="https://partnerhelp.netflixstudios.com/hc/en-us/articles/217350977-English-USA-Timed-Text-Style-Guide">原文链接</a>。§II.15. <a href="#citation-2" aria-label="返回正文">↩</a></li>
+  <li id="ref-3">IMAX. DMR 转制素材交付清单 [R]. <a href="#citation-3" aria-label="返回正文">↩</a></li>
+</ol>
+
+    </div>
+
+  </article>
+</div>
+<!-- end post -->
+
+
+    <!--
+        Bookshop components are accessed using the bookshop tag,
+        using the same syntax as the standard Jekyll include tag.
+    -->
+    <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(page.jekyll.html) params(content_blocks=page.content_blocks page_theme=page.page_theme) context() -->
+
+
+<!--bookshop-live end-->
+
+    
+      <div class="container">
+        <div class="row">
+          <div class="col col-10 col-d-12 push-d-0 push-1">
+            <div class="post__navigation animate">
+  
+  <a class="post__prev" href="/blog/anamorphic-optical-principles">
+    <div class="prev__image">
+      <img loading="lazy" src="/images/anamorphic-1-3-1-2.jpg" alt="制作影片对白字幕时，那些容易漏掉的小问题">
+    </div>
+    <div class="prev__box">
+      <span class="post__nav post__nav__prev">Prev post</span>
+      <h2 class="post__nav__title">毕业论文分享（三）：变形镜头的光学原理</h2>
+    </div>
+  </a>
+  
+
+  
+</div>
+          </div>
+        </div>
+      </div>
+      
+      
+
+
+
+<div class="container">
+  <section class="related-posts is-related animate" aria-labelledby="related-posts-heading">
+    <div class="section__info">
+      <div class="section__head">
+        <h2 class="section__title" id="related-posts-heading">You may also like</h2>
+        <a class="section__link" href="/blog/">All posts <i class="ion ion-md-arrow-forward" aria-hidden="true"></i></a>
+      </div>
+    </div>
+    <div class="row">
+  
+    
+  
+    
+      
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+      
+        
+          
+          
+      
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[4]) -->
+
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/tie-dyeing">
+        <img loading="lazy" src="/images/td-after_1.jpg" alt="《扎染 Tie-Dyeing》调色手记">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/调色" class="c-blog-card__tag">调色</a>
+        
+        <a href="/tag/后期制作" class="c-blog-card__tag">后期制作</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/tie-dyeing">《扎染 Tie-Dyeing》调色手记</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        这次分享 MV《黄之仪 Kyra Zilver - 扎染 Tie-Dyeing》的调色前后对比。项目由杨翰执导，庄富洲担任摄影指导，我担任调色师。
+
+这支片子的摄影底子很好，前期已经建立了鲜明的风格。导演希望在原有基础上进一步做风格化...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2026-11-17T00:00:00+08:00">17 Nov 2026</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+        
+        
+      
+    
+  
+    
+      
+      
+        
+      
+        
+          
+          
+      
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[5]) -->
+
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/hu-shuo-chen-yu-xian">
+        <img loading="lazy" src="/images/lz-after_13.jpg" alt="《狐说臣与仙》AIGC 调色手记">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/调色" class="c-blog-card__tag">调色</a>
+        
+        <a href="/tag/后期制作" class="c-blog-card__tag">后期制作</a>
+        
+        <a href="/tag/aigc" class="c-blog-card__tag">AIGC</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/hu-shuo-chen-yu-xian">《狐说臣与仙》AIGC 调色手记</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        这次分享 AI 动画《音乐剧〈狐说臣与仙〉先导动画》的调色前后对比。项目由脑特执导，直接调色提供调色及完片服务，我担任调色师。
+
+项目采用逐镜头生成的方式，通过反复提供参考素材，维持角色、场景和画面风格的连续性。最终生成的统一性很好，...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2026-11-15T12:00:00+08:00">15 Nov 2026</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+        
+        
+      
+    
+  
+    
+      
+      
+        
+      
+        
+          
+          
+      
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[6]) -->
+
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/whose-home-hdr">
+        <img loading="lazy" src="/images/zc-g1961_1.jpg" alt="《转厝》HDR 调色手记">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/调色" class="c-blog-card__tag">调色</a>
+        
+        <a href="/tag/后期制作" class="c-blog-card__tag">后期制作</a>
+        
+        <a href="/tag/hdr" class="c-blog-card__tag">HDR</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/whose-home-hdr">《转厝》HDR 调色手记</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        《转厝》是黄多嘉导演的北京电影学院毕业联合作业。很幸运，在完成 P3-D65 Gamma 2.6 的 SDR 版本半年后，我有机会重新为这部作品制作 HDR 版本。
+
+这次分别制作了两个版本：1000 nits 的杜比视界家庭版和 3...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2026-11-04T12:00:00+08:00">04 Nov 2026</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+        
+        
+</div>
+  </section>
+</div>
+
+
+    
+
+    <button class="top" type="button" aria-label="Back to top"><i class="ion ion-ios-arrow-up" aria-hidden="true"></i></button>
+
+    <!-- begin footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col col-12">
+
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(social-link.jekyll.html) params() context() -->
+
+<div class="social">
+  <ul class="social__list list-reset">
+    
+    <li class="social__item">
+      <a class="social__link" href="https://weibo.com/StephenYKQ" target="_blank" rel="noopener" aria-label="weibo icon">
+        
+          <svg viewBox="0 0 800 649.5" width="17" height="17" fill="currentColor" class="weibo-icon" style="vertical-align: middle; position: relative;">
+            <path d="m336.6,602.3c-132.6,13-247.1-46.9-255.7-134-8.6-87,91.9-168.2,224.6-181.4,132.7-13.2,247.1,46.7,255.7,133.8,8.7,86.7-91.9,168.4-224.5,181.4h-.1Zm-34.9-103.5c-12.9,20.6-40.2,29.4-60.9,20.1-20.4-9.3-26.4-33.1-13.5-53.1,12.6-19.8,39.2-28.6,59.8-19.9,20.7,8.7,27.3,32.3,14.7,53Zm42.3-54.2c-4.7,7.8-15,11.7-22.9,8.3-7.9-3-10.5-12-6-19.5,4.7-7.6,14.6-11.5,22.4-8,7.9,3,10.5,12,6,20.1l.5-.9Zm5.9-90.8c-63.2-16.4-134.4,15.1-161.8,70.7-27.9,56.8-.9,119.6,62.8,140.2,66.1,21.4,144-11.3,171.1-72.5,26.7-59.8-6.7-121.5-72-138.4Zm252.1-40.7c-11.5-3.5-19-6-13.5-20.4,12.5-32.6,14.1-60.2,0-80.2-26-37-97.1-35-178.8-.9,0,0-25.5,10.9-19-9.1,12.5-40.5,10.6-74.1-9-93.6-44.7-44.5-162.4,1.6-262.9,102.7C43.6,287.1,0,367.2,0,436.4c0,132.7,169.9,213.2,336.2,213.2s362.9-126.7,362.9-227.3-51.6-95.1-97.1-109.4v.3Zm63.7-169.7c-25.7-28.6-63.7-39.6-98.7-32.2-14.6,3-23.6,17.1-20.6,31.1,3,13.9,17,23,31.1,20.1,17-3.5,35.6,1.4,48.1,15.5s15.5,32.6,10.6,49.1c-4.5,13.5,3,28.5,16.9,33.1,13.5,4,28.6-3.5,33.1-17.1,11.1-34,4-72.7-21.5-101.2l1,1.5Zm80.6-73.2C693.6,11.6,616-10.5,544.4,4.6c-16.5,3.4-27.1,19.5-23.6,36.1s19.5,27.1,36.1,23.6c51-11.1,106.1,4.9,143.2,46.1,37,41.5,47.7,98,31.5,147.1-5.5,16,3.5,33.6,19.5,38.5,16,5.6,33.1-3.4,38.5-19.5,22.5-69.5,8.1-149.2-44.5-207.8l1,1.6Z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://github.com/StephenYKQ" target="_blank" rel="noopener" aria-label="github icon">
+        
+          <i class="ion ion-logo-github"></i>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://instagram.com/stephenykq/" target="_blank" rel="noopener" aria-label="instagram icon">
+        
+          <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" class="instagram-icon" style="vertical-align: middle; position: relative;">
+            <path d="M20.445 5h-8.891A6.559 6.559 0 0 0 5 11.554v8.891A6.559 6.559 0 0 0 11.554 27h8.891a6.56 6.56 0 0 0 6.554-6.555v-8.891A6.557 6.557 0 0 0 20.445 5zm4.342 15.445a4.343 4.343 0 0 1-4.342 4.342h-8.891a4.341 4.341 0 0 1-4.341-4.342v-8.891a4.34 4.34 0 0 1 4.341-4.341h8.891a4.342 4.342 0 0 1 4.341 4.341l.001 8.891z"/>
+            <path d="M16 10.312c-3.138 0-5.688 2.551-5.688 5.688s2.551 5.688 5.688 5.688 5.688-2.551 5.688-5.688-2.55-5.688-5.688-5.688zm0 9.163a3.475 3.475 0 1 1-.001-6.95 3.475 3.475 0 0 1 .001 6.95zM21.7 8.991a1.363 1.363 0 1 1-1.364 1.364c0-.752.51-1.364 1.364-1.364z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://youtube.com/@stephenykq" target="_blank" rel="noopener" aria-label="youtube icon">
+        
+          <i class="ion ion-logo-youtube"></i>
+        
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+<!--bookshop-live end-->
+
+        <ul class="footer_nav list-reset">
+          
+          <li class="footer_nav__item">
+            <a href="/" class="footer_nav__link">Home</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/projects/" class="footer_nav__link">Projects</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/contact/" class="footer_nav__link">Contact</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/about/" class="footer_nav__link">About</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/blog/" class="footer_nav__link">Blog</a>
+          </li>
+          
+        </ul>
+
+        <div class="copyright"><p> 2025 &copy; <a href="/">STECAGE 斯特拉吉</a></div>
+
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- end footer -->
+
+    <script src="/js/scripts.js"></script>
+    <script src="/js/common.js"></script>
+</body>
+</html>
