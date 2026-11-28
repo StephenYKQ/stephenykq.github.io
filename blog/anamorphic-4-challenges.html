@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121212">
+  <meta name="google-site-verification" content="ob0b-vF5pnuPBcij_2UTn3m7Kh6Pkxob0ZylZpvFaC8" />
+
+  <title>毕业论文分享（四）：变形镜头在制作中的问题</title>
+  <meta name='description' content='Welcome to the home of Stephen Yang Kaiqi! :)'>
+
+  <link rel="canonical" href="/blog/anamorphic-4-challenges">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="毕业论文分享（四）：变形镜头在制作中的问题 – STECAGE 斯特拉吉">
+  <meta name="twitter:description" content="前面两篇介绍了变形镜头的成像特性和光学原理。这一篇进入毕业论文第二章，结合具体画面，讨论这些特性在实际拍摄与后期制作中可能带来的问题。
+">
+  <meta name="twitter:image:src" content="/images/anamorphic-fig-2-1-1.webp">
+
+  <!-- Facebook OpenGraph -->
+  <meta property="og:title" content="毕业论文分享（四）：变形镜头在制作中的问题 – STECAGE 斯特拉吉">
+  <meta property="og:description" content="前面两篇介绍了变形镜头的成像特性和光学原理。这一篇进入毕业论文第二章，结合具体画面，讨论这些特性在实际拍摄与后期制作中可能带来的问题。
+">
+  <meta property="og:image" content="/images/anamorphic-fig-2-1-1.webp">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- Ionicons -->
+  <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/main.css">
+</head>
+
+
+<body>
+
+    
+
+    <!-- begin header -->
+<header class="c-header">
+  <div class="container">
+    <div class="row">
+      <div class="c-header__inner">
+
+        <div class="logo">
+          <a class="logo__link" href="/">
+          
+            <img class="logo__image" src="/images/logo.svg" alt="STECAGE 斯特拉吉">
+          
+          </a>
+        </div>
+
+        <nav class="main-nav" id="main-navigation" aria-label="Main navigation">
+          <div class="main-nav__box">
+
+            <button type="button" class="nav__icon-close" aria-label="Close menu">
+              <i class="ion ion-md-close" aria-hidden="true"></i>
+            </button>
+
+            <div class="nav__title">Menu</div>
+
+              <ul class="nav__list list-reset">
+
+              
+                
+                <li class="nav__item">
+                  <a href="/" class="nav__link">Home</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/projects/" class="nav__link">Projects</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/blog/" class="nav__link">Blog</a>
+                </li>
+                
+              
+                
+                <li class="nav__item dropdown">
+                  <span class="nav__link dropdown-toggle" tabindex="0">Pages <i class="ion ion-ios-arrow-down arrow-down" aria-hidden="true"></i></span>
+                  <div class="dropdown-menu">
+                    
+                      <a href="/about/" class="nav__link">About</a>
+                    
+                      <a href="/contact/" class="nav__link">Contact</a>
+                    
+                  </div>
+                </li>
+
+                
+              
+
+            </ul>
+          </div>
+
+          <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(social-link.jekyll.html) params() context() -->
+
+<div class="social">
+  <ul class="social__list list-reset">
+    
+    <li class="social__item">
+      <a class="social__link" href="https://weibo.com/StephenYKQ" target="_blank" rel="noopener" aria-label="weibo icon">
+        
+          <svg viewBox="0 0 800 649.5" width="17" height="17" fill="currentColor" class="weibo-icon" style="vertical-align: middle; position: relative;">
+            <path d="m336.6,602.3c-132.6,13-247.1-46.9-255.7-134-8.6-87,91.9-168.2,224.6-181.4,132.7-13.2,247.1,46.7,255.7,133.8,8.7,86.7-91.9,168.4-224.5,181.4h-.1Zm-34.9-103.5c-12.9,20.6-40.2,29.4-60.9,20.1-20.4-9.3-26.4-33.1-13.5-53.1,12.6-19.8,39.2-28.6,59.8-19.9,20.7,8.7,27.3,32.3,14.7,53Zm42.3-54.2c-4.7,7.8-15,11.7-22.9,8.3-7.9-3-10.5-12-6-19.5,4.7-7.6,14.6-11.5,22.4-8,7.9,3,10.5,12,6,20.1l.5-.9Zm5.9-90.8c-63.2-16.4-134.4,15.1-161.8,70.7-27.9,56.8-.9,119.6,62.8,140.2,66.1,21.4,144-11.3,171.1-72.5,26.7-59.8-6.7-121.5-72-138.4Zm252.1-40.7c-11.5-3.5-19-6-13.5-20.4,12.5-32.6,14.1-60.2,0-80.2-26-37-97.1-35-178.8-.9,0,0-25.5,10.9-19-9.1,12.5-40.5,10.6-74.1-9-93.6-44.7-44.5-162.4,1.6-262.9,102.7C43.6,287.1,0,367.2,0,436.4c0,132.7,169.9,213.2,336.2,213.2s362.9-126.7,362.9-227.3-51.6-95.1-97.1-109.4v.3Zm63.7-169.7c-25.7-28.6-63.7-39.6-98.7-32.2-14.6,3-23.6,17.1-20.6,31.1,3,13.9,17,23,31.1,20.1,17-3.5,35.6,1.4,48.1,15.5s15.5,32.6,10.6,49.1c-4.5,13.5,3,28.5,16.9,33.1,13.5,4,28.6-3.5,33.1-17.1,11.1-34,4-72.7-21.5-101.2l1,1.5Zm80.6-73.2C693.6,11.6,616-10.5,544.4,4.6c-16.5,3.4-27.1,19.5-23.6,36.1s19.5,27.1,36.1,23.6c51-11.1,106.1,4.9,143.2,46.1,37,41.5,47.7,98,31.5,147.1-5.5,16,3.5,33.6,19.5,38.5,16,5.6,33.1-3.4,38.5-19.5,22.5-69.5,8.1-149.2-44.5-207.8l1,1.6Z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://github.com/StephenYKQ" target="_blank" rel="noopener" aria-label="github icon">
+        
+          <i class="ion ion-logo-github"></i>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://instagram.com/stephenykq/" target="_blank" rel="noopener" aria-label="instagram icon">
+        
+          <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" class="instagram-icon" style="vertical-align: middle; position: relative;">
+            <path d="M20.445 5h-8.891A6.559 6.559 0 0 0 5 11.554v8.891A6.559 6.559 0 0 0 11.554 27h8.891a6.56 6.56 0 0 0 6.554-6.555v-8.891A6.557 6.557 0 0 0 20.445 5zm4.342 15.445a4.343 4.343 0 0 1-4.342 4.342h-8.891a4.341 4.341 0 0 1-4.341-4.342v-8.891a4.34 4.34 0 0 1 4.341-4.341h8.891a4.342 4.342 0 0 1 4.341 4.341l.001 8.891z"/>
+            <path d="M16 10.312c-3.138 0-5.688 2.551-5.688 5.688s2.551 5.688 5.688 5.688 5.688-2.551 5.688-5.688-2.55-5.688-5.688-5.688zm0 9.163a3.475 3.475 0 1 1-.001-6.95 3.475 3.475 0 0 1 .001 6.95zM21.7 8.991a1.363 1.363 0 1 1-1.364 1.364c0-.752.51-1.364 1.364-1.364z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://youtube.com/@stephenykq" target="_blank" rel="noopener" aria-label="youtube icon">
+        
+          <i class="ion ion-logo-youtube"></i>
+        
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+<!--bookshop-live end-->
+        </nav>
+
+        <div class="nav-button">
+          <button type="button" class="nav__icon nav__icon-menu ion ion-md-menu" aria-label="Open menu" aria-controls="main-navigation" aria-expanded="false"></button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</header>
+<!-- end header -->
+
+
+    
+
+
+
+
+
+
+
+
+<header class="post-top post-top--article animate">
+  <div class="container">
+    <div class="post-heading post-heading--desktop-text post-heading--mobile-text">
+        <div class="post__info">
+
+          
+          <div class="post-tags">
+            
+              <a href="/tag/镜头光学" class="post-tags__tag">镜头光学</a>
+            
+              <a href="/tag/学术研究" class="post-tags__tag">学术研究</a>
+            
+          </div>
+          
+
+
+          <h1 class="post__title">毕业论文分享（四）：变形镜头在制作中的问题</h1>
+
+          <div class="post__meta">
+            <div class="post__author-image">
+              <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+            </div>
+
+            <div class="post__meta-bottom">
+              <div class="post__author">Stephen Yang Kaiqi</div>
+              <time class="post__date" datetime="2025-06-06T00:04:00+08:00">06 Jun 2025</time>
+            </div>
+          </div>
+
+        </div>
+      
+    </div>
+  </div>
+</header>
+
+<!-- begin post -->
+<div class="container animate">
+
+  <article class="post">
+
+    <div class="post__content">
+      <p>前面两篇介绍了变形镜头的成像特性和光学原理。这一篇进入毕业论文第二章，结合具体画面，讨论这些特性在实际拍摄与后期制作中可能带来的问题。</p>
+
+<h1 id="2-变形镜头在制作中的问题">2. 变形镜头在制作中的问题</h1>
+
+<p>变形镜头的光学特性既能成为创作语言，也可能给制作流程带来困难。光晕、畸变与柔化可以是有意保留的风格，但镜组偏斜、焦点偏移或不可控的比例变化，会影响构图、对焦和镜头之间的连续性，也会增加后期跟踪与合成的难度。本章结合具体案例，梳理这些问题的成因与影响，为后续的镜头测试、现场使用和数字修复建立依据。</p>
+
+<h2 id="21-变形镜组偏斜">2.1 变形镜组偏斜</h2>
+
+<p>自变形镜头诞生以来，变形镜组偏斜（anamorphic skew 或 anamorphic misalignment）便是一个难以完全避免的问题。即使是在制作预算充足的好莱坞大片或知名的经典影片中，画面中仍可见偏斜现象的存在。这一问题的普遍性，源于变形镜头复杂的光学结构以及其对齐精度的高度要求。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1300px; --image-ratio: 2.398523985240; --image-aspect-ratio: 1300 / 542;" width="1300" height="542" src="/images/anamorphic-fig-2-1-1.webp" alt="图 2.1.1 电影《月球叛军：火之女》（Rebel Moon: A Child of Fire）静帧" loading="lazy" />
+  <figcaption>图 2.1.1 电影《月球叛军：火之女》（<em>Rebel Moon: A Child of Fire</em>）静帧</figcaption>
+</figure>
+
+<p>在早期胶片时代，由于监看设备和即时反馈能力的限制，偏斜现象倾向于在制作流程中的较晚阶段才被发现。数字时代使摄制人员能够更及时地发现并更换故障镜头。然而，偏斜现象仍未被完全杜绝。许多缺乏变形镜头使用经验的创作者可能忽略这一问题，甚至将偏斜现象误认为是变形镜头独特的风格。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1300px; --image-ratio: 2.355072463768; --image-aspect-ratio: 1300 / 552;" width="1300" height="552" src="/images/anamorphic-fig-2-1-2.webp" alt="图 2.1.2 电影《芙蓉镇》静帧" loading="lazy" />
+  <figcaption>图 2.1.2 电影《芙蓉镇》静帧</figcaption>
+</figure>
+
+<h3 id="211-成因">2.1.1 成因</h3>
+
+<p>变形镜组偏斜不同于摄影机的倾斜，两者在成因和画面效果上均不相同。偏斜问题的根源在于变形镜组未与成像器完全对齐——当变形镜头的活动轴与成像器的水平轴或垂直轴存在夹角时，图像会沿错误方向被压缩或拉伸，导致画面倾斜或扭曲。常见诱因包括镜头安装误差、环境变化及器材老化。</p>
+
+<h3 id="212-影响">2.1.2 影响</h3>
+
+<p>经作者实测，1°以内的轻微偏斜（如图 2.1.2.1 上方所示）影响较轻，肉眼不易察觉。尽管如此，不受控的偏斜也会对现场拍摄和后期制作带来诸多负面影响：可能导致画面无法完全调平、后期视效流程中三维场景解算出现困难等。</p>
+
+<figure class="thesis-figure thesis-figure--medium">
+  <img style="--image-native-width: 1300px; --image-ratio: 2.398523985240; --image-aspect-ratio: 1300 / 542;" width="1300" height="542" src="/images/anamorphic-fig-2-1-2-1_sub1.webp" alt="图 2.1.2.1 柱面透镜逆时针偏斜模拟图（上为 1 度，下为 5 度）（子图 1）" loading="lazy" />
+  <img style="--image-native-width: 1300px; --image-ratio: 2.398523985240; --image-aspect-ratio: 1300 / 542;" width="1300" height="542" src="/images/anamorphic-fig-2-1-2-1_sub2.webp" alt="图 2.1.2.1 柱面透镜逆时针偏斜模拟图（上为 1 度，下为 5 度）（子图 2）" loading="lazy" />
+  <figcaption>图 2.1.2.1 柱面透镜逆时针偏斜模拟图<sup><a href="#ref-21" id="citation-21" aria-label="参考文献 21">[21]</a></sup>（上为 1 度，下为 5 度）</figcaption>
+</figure>
+
+<p>而 5°以上的偏斜会使图像产生明显扭曲（如图 2.1.2.1 下方所示）：演员或场景在径向上出现不自然的拉伸或收缩，导致画面结构失衡，影响构图与观感。此外，偏斜还会使变形光晕无法保持水平的“拉丝”效果（如图 2.1.2.2 所示），并导致椭圆形散景变形（如图 2.1.2.3 所示），破坏变形镜头经典的焦外样貌。</p>
+
+<figure class="thesis-figure thesis-figure--medium">
+  <img style="--image-native-width: 1040px; --image-ratio: 2.401847575058; --image-aspect-ratio: 1040 / 433;" width="1040" height="433" src="/images/anamorphic-fig-2-1-2-2.jpg" alt="图 2.1.2.2 偏斜导致的变形光晕倾斜" loading="lazy" />
+  <figcaption>图 2.1.2.2 偏斜导致的变形光晕倾斜</figcaption>
+</figure>
+
+<figure class="thesis-figure thesis-figure--medium">
+  <img style="--image-native-width: 1040px; --image-ratio: 2.401847575058; --image-aspect-ratio: 1040 / 433;" width="1040" height="433" src="/images/anamorphic-fig-2-1-2-3.jpg" alt="图 2.1.2.3 偏斜导致的散景形状变形" loading="lazy" />
+  <figcaption>图 2.1.2.3 偏斜导致的散景形状变形</figcaption>
+</figure>
+
+<h3 id="213-mesmerizer-镜头">2.1.3 Mesmerizer 镜头</h3>
+
+<p>尽管变形镜组偏斜在技术上属于非理想现象，但它亦可被转化为一种具有表现力的视觉叙事手段。Mesmerizer 是一款专为此设计的特效镜头附件，其光学结构中包含可旋转的柱面透镜，允许创作者在拍摄时主动控制镜头的偏斜方向与幅度。Mesmerizer 可制造类似“眩晕效应”（vertigo effect）的动态失衡效果。Mesmerizer 曾被应用于《战栗空间》（Panic Room）、1994 年版的《乌鸦》（<em>The Crow</em>）等影片中，为影片增添主观情绪或心理错乱的视觉表现力。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1300px; --image-ratio: 2.402957486137; --image-aspect-ratio: 1300 / 541;" width="1300" height="541" src="/images/anamorphic-fig-2-1-3-1.webp" alt="图 2.1.3.1 电影《哈利·波特与死亡圣器（上）》 （Harry Potter and the Deathly Hallows: Part 1）静帧" loading="lazy" />
+  <figcaption>图 2.1.3.1 电影《哈利·波特与死亡圣器（上）》 （<em>Harry Potter and the Deathly Hallows: Part 1</em>）静帧</figcaption>
+</figure>
+
+<p>Mesmerizer 有可作为镜头前置附加镜或后置附加镜的两款产品。另外，Mesmerizer 可以很好地保留其搭配镜头原本的光学属性，并不会为画面带来除压缩和拉伸以外的光学效果（如拉丝光晕和椭圆形散景等）。</p>
+
+<figure class="thesis-figure thesis-figure--medium">
+  <img style="--image-native-width: 1039px; --image-ratio: 1.990421455939; --image-aspect-ratio: 1039 / 522;" width="1039" height="522" src="/images/anamorphic-fig-2-1-3-2.jpg" alt="图 2.1.3.2 Mesmerizer 附加镜" loading="lazy" />
+  <figcaption>图 2.1.3.2 Mesmerizer 附加镜<sup><a href="#ref-22" id="citation-22" aria-label="参考文献 22">[22]</a></sup></figcaption>
+</figure>
+
+<h2 id="22-像散畸变">2.2 像散畸变</h2>
+
+<p>许多使用柱面透镜方案的变形镜头，其压缩比并非在所有对焦距离下恒定。其所标注的压缩比仅对应于对焦在无限远时的理想值。实际拍摄中，压缩比会随对焦距离变化而发生偏移，且往往呈正相关，即对焦越近，压缩比越低，从而导致画面产生畸变。尤其在近距离拍摄时，镜头会使演员面部发生不自然的横向膨胀，使演员在同一场戏中呈现出忽胖忽瘦的失真效果（如图 2.2.1 所示）。因此，这种问题在业内被戏称为“变形腮腺炎”（anamorphic mumps）。</p>
+
+<figure class="thesis-figure thesis-figure--pair">
+  <img style="--image-native-width: 962px; --image-ratio: 2.551724137931; --image-aspect-ratio: 962 / 377;" width="962" height="377" src="/images/anamorphic-fig-2-2-1_sub1.jpg" alt="图 2.2.1 电影《爱乐之城》（La La Land）静帧（子图 1）" loading="lazy" />
+  <img style="--image-native-width: 962px; --image-ratio: 2.551724137931; --image-aspect-ratio: 962 / 377;" width="962" height="377" src="/images/anamorphic-fig-2-2-1_sub2.jpg" alt="图 2.2.1 电影《爱乐之城》（La La Land）静帧（子图 2）" loading="lazy" />
+  <img style="--image-native-width: 962px; --image-ratio: 2.551724137931; --image-aspect-ratio: 962 / 377;" width="962" height="377" src="/images/anamorphic-fig-2-2-1_sub3.jpg" alt="图 2.2.1 电影《爱乐之城》（La La Land）静帧（子图 3）" loading="lazy" />
+  <img style="--image-native-width: 962px; --image-ratio: 2.551724137931; --image-aspect-ratio: 962 / 377;" width="962" height="377" src="/images/anamorphic-fig-2-2-1_sub4.jpg" alt="图 2.2.1 电影《爱乐之城》（La La Land）静帧（子图 4）" loading="lazy" />
+  <figcaption>图 2.2.1 电影《爱乐之城》（<em>La La Land</em>）静帧</figcaption>
+</figure>
+
+<p>后来，Panavision Auto Panatar 变形摄影镜头以棱镜搭配可变像散校正器<sup><a href="#ref-14" id="citation-14" aria-label="参考文献 14">[14]</a></sup> 的方案解决了该问题，并通过对比测试直接突显其在特写镜头表现上的优势（如图 2.2.2 所示）。可变像散校正器的核心是一对互补的正、负柱面透镜，两透镜的轴线可绕光轴同步反向旋转（counter-rotating）——当系统聚焦于不同距离时，通过调整两透镜的旋转角度，可以改变等效垂直与水平平面上的光焦度分布，从而抵消额外的像散。彼时，约翰·韦恩（John Wayne）和弗兰克·辛纳屈（Frank Sinatra）等顶级演员甚至拒绝在非 Panavision 镜头下工作。这项创新最终为 Panavision 赢得了美国电影艺术与科学学院颁发的“科学与技术奖”。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 400px; --image-ratio: 0.814663951120; --image-aspect-ratio: 400 / 491;" width="400" height="491" src="/images/anamorphic-fig-2-2-2.jpg" alt="图 2.2.2 Panavision 1958 年前后的营销宣传图" loading="lazy" />
+  <figcaption>图 2.2.2 Panavision 1958 年前后的营销宣传图<sup><a href="#ref-23" id="citation-23" aria-label="参考文献 23">[23]</a></sup></figcaption>
+</figure>
+
+<h3 id="221-成因">2.2.1 成因</h3>
+
+<p>变形光学系统中，后平面（即“成像平面”，如胶片或传感器）与前平面（即“物平面”，如场景或银幕）共轭聚焦（conjugate foci）。无论是摄影机还是投影仪，后平面通常紧邻聚焦透镜（即前文所述的“拍摄镜头”）。在摄影机中，前平面位于被摄场景的中心；在投影仪中，前平面则位于银幕处，用于投射图像。此时，前平面与聚焦透镜的前共轭距离（front conjugate distance）较长，而后平面与透镜的后共轭距离（back conjugate distance）较短。</p>
+
+<p>当变形镜组置于聚焦透镜前方（即远离后平面的一侧）时，若前平面处于无限远，光线平行入射，系统不产生额外像散，压缩比保持稳定。随着对焦距离缩短，入射光线不再平行，系统出现额外像散，压缩比随之变化，且距离越近，变化越明显。极近距离拍摄或超近投影时，这种像散畸变尤为突出。</p>
+
+<h3 id="222-影响">2.2.2 影响</h3>
+
+<p>像散效应引起的畸变，会对影像表现和制作流程带来实际影响。近距离拍摄时，演员的体型或外貌可能失真，若画面效果与其预期不符，可能造成心理压力，影响表演状态。场景中的物体比例也可能因畸变不一致而失衡，使观众在镜头切换时难以建立连贯的空间感知。而且，此类畸变也会增加后期视效制作的技术负担。因此，在拍摄中使像散畸变的影响保持可控，至关重要。</p>
+
+<h2 id="23-眩光">2.3 眩光</h2>
+
+<p>变形光晕常在画面中占据更大面积，易分散观众注意力。透镜间多次反射产生的雾状眩光会降低画面对比度，使暗部细节模糊成灰雾；强光区域的扩散光斑可能遮挡重要画面内容，干扰叙事表达。另外，不同变形镜头产生的眩光效果不尽相同，易导致画面风格不一致，难以保持光学质感的连贯性。</p>
+
+<p>眩光效果受多种因素影响，包括镀膜、入射角度、感光材料特性等。拍摄时，创作者需对镜头特性有充分了解，并具备一定预判能力。眩光也可能使取景器画面泛白，增加精准对焦的难度。在后期制作中，视效部门一般需要先擦除原始眩光再重建。眩光既能强化风格化表达，也是一项需要严格控制的技术难点。</p>
+
+<h2 id="24-几何畸变">2.4 几何畸变</h2>
+
+<p>变形镜头的几何畸变主要可分为两个方面：第一类包括与球面镜头相似的径向畸变，如桶形畸变与枕形畸变。由于变形镜头的双平面对称性，这些畸变在水平轴与垂直轴上的表现往往不一致，可能出现仅在水平方向呈现桶形畸变，而垂直方向相对稳定的情形，因此需分别描述。第二类为变形镜头特有的，如压缩比在像场中的动态变化：柱面透镜的结构特点导致其压缩比在远离光轴时发生偏移，使图像在不同区域产生非线性形变。</p>
+
+<p>早期的 CinemaScope 变形镜头的压缩比在银幕中央是 1:1.87，在中央到边缘的中间是 1:2.04，到了边缘是 1:2.37。这样就形成一种奇怪的现象，银幕上的人物在画面中间时比较胖，走到边缘时，就变瘦了<sup><a href="#ref-24" id="citation-24" aria-label="参考文献 24">[24]</a></sup>（如图 2.4.1 和图 2.4.2 所示）。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1104px; --image-ratio: 2.230303030303; --image-aspect-ratio: 1104 / 495;" width="1104" height="495" src="/images/anamorphic-fig-2-4-1.webp" alt="图 2.4.1 从画面中心到边缘的径向压缩比不恒定" loading="lazy" />
+  <figcaption>图 2.4.1 从画面中心到边缘的径向压缩比不恒定</figcaption>
+</figure>
+
+<p>一些现代变形镜头，如 ARRI Master Anamorphic 和老蛙 PROTEUS，已通过光学修正技术减少了此类畸变，但许多创作者仍倾向保留这一特性，以强化画面风格。此类畸变使摄影机的运动在视觉上更具动感，但处于画面边缘的主体也容易比例失衡。在后期制作中，若施加带 X 轴、Y 轴位移的重新构图，畸变可能导致图像观感异常；而对视效工作而言，也必须精准匹配实拍素材的畸变特性。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1300px; --image-ratio: 1.897810218978; --image-aspect-ratio: 1300 / 685;" width="1300" height="685" src="/images/anamorphic-fig-2-4-2.webp" alt="图 2.4.2 电影《复仇者联盟 4：终局之战》（Avengers: Endgame）静帧" loading="lazy" />
+  <figcaption>图 2.4.2 电影《复仇者联盟 4：终局之战》（<em>Avengers: Endgame</em>）静帧</figcaption>
+</figure>
+
+<h2 id="25-焦点偏移">2.5 焦点偏移</h2>
+
+<p>变形镜组通常包含多个光学元件，其轴向对准和位置容差较小，装配或校准偏差可能导致图像难以准确对焦。</p>
+
+<p>法兰距（flange focal depth）指摄影机机身卡口基准面到传感器成像平面的理论距离，如 PL 卡口的 52.00 mm 标准；而后焦距（back focus）则是指镜头最后一个光学元件到传感器平面的实际距离，属于镜头内部的光学校准参数。</p>
+
+<p>实际应用中，制造公差、环境温度变化引起的热胀冷缩、机械磨损及运输震动等均可能引起法兰距或后焦距的微小偏差。球面镜头对此表现为对焦刻度与实际拍摄距离的局部偏差，影响相对有限。但变形镜头因其像散特性，水平轴和垂直轴的焦平面不重合，法兰距或后焦距偏差会放大像散效应。若误差超出焦深范围，不仅可能导致焦点锐度下降与图像比例失衡，严重时还会使无限远对焦功能失效，出现无法通过常规调焦手段校正的轴向模糊（如图 2.5.1 所示）。</p>
+
+<figure class="thesis-figure thesis-figure--pair">
+  <img style="--image-native-width: 961px; --image-ratio: 2.199084668192; --image-aspect-ratio: 961 / 437;" width="961" height="437" src="/images/anamorphic-fig-2-5-1_sub1.webp" alt="图 2.5.1 严重的像散效应（左为正常清晰图像以供对比）（子图 1）" loading="lazy" />
+  <img style="--image-native-width: 961px; --image-ratio: 2.199084668192; --image-aspect-ratio: 961 / 437;" width="961" height="437" src="/images/anamorphic-fig-2-5-1_sub2.webp" alt="图 2.5.1 严重的像散效应（左为正常清晰图像以供对比）（子图 2）" loading="lazy" />
+  <img style="--image-native-width: 961px; --image-ratio: 2.199084668192; --image-aspect-ratio: 961 / 437;" width="961" height="437" src="/images/anamorphic-fig-2-5-1_sub3.webp" alt="图 2.5.1 严重的像散效应（左为正常清晰图像以供对比）（子图 3）" loading="lazy" />
+  <img style="--image-native-width: 961px; --image-ratio: 2.199084668192; --image-aspect-ratio: 961 / 437;" width="961" height="437" src="/images/anamorphic-fig-2-5-1_sub4.webp" alt="图 2.5.1 严重的像散效应（左为正常清晰图像以供对比）（子图 4）" loading="lazy" />
+  <figcaption>图 2.5.1 严重的像散效应（左为正常清晰图像以供对比）</figcaption>
+</figure>
+
+<h2 id="26-像差">2.6 像差</h2>
+
+<p>变形镜头的像差难以校正，虽带来柔和的美感，却在技术上构成限制。许多镜头需缩小至 T4～T5.6 光圈，才能达到画质均匀、锐度接近球面镜头在 T2～T2.8 下的表现。这种“通光量换画质”的权衡，在低照度拍摄中要求增加照明或提高感光度，进而影响创作灵活性。变形镜头明显的场曲（field curvature）和边缘像差常导致画面周围一圈渐进式的模糊（如图 2.6.1 和图 2.6.2 所示）。这不仅限制了边缘构图的可用性，也使后期裁切或数字变焦时画质下降。在视效密集或用于巨幕影院放映的项目中，低锐度的放大效应可能进一步造成困扰。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1364px; --image-ratio: 2.401408450704; --image-aspect-ratio: 1364 / 568;" width="1364" height="568" src="/images/anamorphic-fig-2-6-1.webp" alt="图 2.6.1 电影《007：无暇赴死》（No Time to Die）静帧" loading="lazy" />
+  <figcaption>图 2.6.1 电影《007：无暇赴死》（<em>No Time to Die</em>）静帧</figcaption>
+</figure>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1366px; --image-ratio: 2.400702987698; --image-aspect-ratio: 1366 / 569;" width="1366" height="569" src="/images/anamorphic-fig-2-6-2.jpg" alt="图 2.6.2 电影《唐探 1900》静帧" loading="lazy" />
+  <figcaption>图 2.6.2 电影《唐探 1900》静帧</figcaption>
+</figure>
+
+<h2 id="27-果冻效应">2.7 果冻效应</h2>
+
+<p>变形镜头会显著加剧 CMOS 传感器卷帘快门（rolling shutter）本身的果冻效应（jello effect）。由于图像被水平压缩，反挤压处理后，相当于将传感器的读出时间按压缩比等比放大。例如，某传感器原本 16 ms 的逐行读出时间，在使用 2 倍压缩比的镜头时，其视觉效果等同于 32 ms 读出时间。</p>
+
+<p>这一放大效应可能引发多种问题：运动物体出现更严重的倾斜变形；手持拍摄的抖动被进一步夸张，易引起眩晕感；常规的后期增稳算法难以适配；视效制作中的运动跟踪可能因图像偏移而失败。</p>
+
+<h2 id="28-其他问题">2.8 其他问题</h2>
+
+<p>变形镜头往往体积和重量大、最近对焦距离长、通光量小。如表 2.8.1 所示，是市面上常见的几款 Super 35 画幅 50 mm 定焦变形镜头和球面镜头的最大光圈、最近对焦距离和重量三项参数的对比。</p>
+
+<div class="thesis-table-wrap" tabindex="0" role="region" aria-label="表 2.8.1">
+<table class="thesis-table thesis-table--wide">
+<caption>表 2.8.1</caption>
+<tr>
+<th scope="col">类型</th>
+<th scope="col">镜头系列名称</th>
+<th scope="col">最大光圈</th>
+<th scope="col">最近对焦距离</th>
+<th scope="col">重量</th>
+</tr>
+<tr>
+<td>变 形</td>
+<td>ARRI / Zeiss Master Anamorphic</td>
+<td>T1.9</td>
+<td>0.75 m</td>
+<td>2.6 kg</td>
+</tr>
+<tr>
+<td>变 形</td>
+<td>Atlas Orion</td>
+<td>T2.0</td>
+<td>0.76 m</td>
+<td>2.3 kg</td>
+</tr>
+<tr>
+<td>变 形</td>
+<td>Cooke Anamorphic/i S35</td>
+<td>T2.3</td>
+<td>0.85 m</td>
+<td>3.6 kg</td>
+</tr>
+<tr>
+<td>变 形</td>
+<td>Hawk V‑Series</td>
+<td>T2.2</td>
+<td>0.60 m</td>
+<td>3.7 kg</td>
+</tr>
+<tr>
+<td>变 形</td>
+<td>Panavision T Series</td>
+<td>T2.3</td>
+<td>0.61 m</td>
+<td>2.7 kg</td>
+</tr>
+<tr>
+<td>球 面</td>
+<td>ARRI Master Prime</td>
+<td>T1.3</td>
+<td>0.50 m</td>
+<td>2.7 kg</td>
+</tr>
+<tr>
+<td>球 面</td>
+<td>Cooke S4/i</td>
+<td>T2.0</td>
+<td>0.32 m</td>
+<td>1.5 kg</td>
+</tr>
+<tr>
+<td>球 面</td>
+<td>Leitz Summilux-C</td>
+<td>T1.4</td>
+<td>0.60 m</td>
+<td>1.8 kg</td>
+</tr>
+</table>
+</div>
+
+<h3 id="参考文献">参考文献</h3>
+
+<ol class="references">
+
+  <li id="ref-14" value="14">WALLIN W. Anamorphosing system: US, 2890622[P]. 1959-06-16. <a href="#citation-14" aria-label="返回引用位置 1">↩</a></li>
+
+  <li id="ref-21" value="21">ShareGrid. Lenses [EB/OL]. <a href="https://www.sharegrid.com/learn/lens-sets">原文链接</a>。 <a href="#citation-21" aria-label="返回引用位置 1">↩</a></li>
+
+  <li id="ref-22" value="22">Keslow Camera. Anamorphic Mesmerizer [EB/OL]. <a href="https://www.keslowcamera.com/gear/lenses/other/lens-accessories/anamorphic-mesmerizer/">原文链接</a>。 <a href="#citation-22" aria-label="返回引用位置 1">↩</a></li>
+
+  <li id="ref-23" value="23">The American Society of Cinematographers. American Cinematographer Image Viewer [EB/OL]. <a href="https://theasc.com/magazine/sept03/sub/image1.html">原文链接</a>。 <a href="#citation-23" aria-label="返回引用位置 1">↩</a></li>
+
+  <li id="ref-24" value="24">屠明非.电影技术艺术互动史：影响真实感探索历程[M].中国电影出版社,2009:90. <a href="#citation-24" aria-label="返回引用位置 1">↩</a></li>
+
+</ol>
+
+    </div>
+
+  </article>
+</div>
+<!-- end post -->
+
+
+    <!--
+        Bookshop components are accessed using the bookshop tag,
+        using the same syntax as the standard Jekyll include tag.
+    -->
+    <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(page.jekyll.html) params(content_blocks=page.content_blocks page_theme=page.page_theme) context() -->
+
+
+<!--bookshop-live end-->
+
+    
+      <div class="container">
+        <div class="row">
+          <div class="col col-10 col-d-12 push-d-0 push-1">
+            <div class="post__navigation animate">
+  
+  <a class="post__prev" href="/blog/anamorphic-5-lens-testing">
+    <div class="prev__image">
+      <img loading="lazy" src="/images/anamorphic-fig-3-1-1-1.jpg" alt="毕业论文分享（四）：变形镜头在制作中的问题">
+    </div>
+    <div class="prev__box">
+      <span class="post__nav post__nav__prev">Prev post</span>
+      <h2 class="post__nav__title">毕业论文分享（五）：变形镜头测试</h2>
+    </div>
+  </a>
+  
+
+  
+  <a class="post__next" href="/blog/anamorphic-3-optical-principles">
+    <div class="next__box">
+      <span class="post__nav post__nav__next">Next post</span>
+      <h2 class="post__nav__title">毕业论文分享（三）：变形镜头的光学原理</h2>
+    </div>
+    <div class="next__image">
+      <img loading="lazy" src="/images/anamorphic-fig-1-3-1-2.jpg" alt="毕业论文分享（四）：变形镜头在制作中的问题">
+    </div>
+  </a>
+  
+</div>
+          </div>
+        </div>
+      </div>
+      
+      
+
+
+
+<div class="container">
+  <section class="related-posts is-related animate" aria-labelledby="related-posts-heading">
+    <div class="section__info">
+      <div class="section__head">
+        <h2 class="section__title" id="related-posts-heading">You may also like</h2>
+        <a class="section__link" href="/blog/">All posts <i class="ion ion-md-arrow-forward" aria-hidden="true"></i></a>
+      </div>
+    </div>
+    <div class="row">
+  
+    
+      
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+          
+          
+      
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[4]) -->
+
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/anamorphic-deskew-dctl">
+        <img loading="lazy" src="/images/2025-12-18-dctl.png" alt="“歪”变宽校正 DCTL">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        
+        <a href="/tag/后期制作" class="c-blog-card__tag">后期制作</a>
+        
+        <a href="/tag/工具分享" class="c-blog-card__tag">工具分享</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/anamorphic-deskew-dctl">“歪”变宽校正 DCTL</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        上个月，我的论文《**影视制作中变形镜头装配偏斜检测及画面校正方法研究**》发表于《现代电影技术》。在这里再次感谢屈老师、陈老师在研究与写作过程中的指导，也感谢《现代电影技术》的老师们的专业帮助。如果你对**变形宽银幕镜头**感兴趣，...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2025-12-18T12:06:00+08:00">18 Dec 2025</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+        
+        
+      
+    
+  
+    
+      
+      
+        
+          
+          
+      
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[5]) -->
+
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/anamorphic-1-history">
+        <img loading="lazy" src="/images/anamorphic-fig-1-1-1.jpg" alt="毕业论文分享（一）：变形镜头的历史发展">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        
+        <a href="/tag/学术研究" class="c-blog-card__tag">学术研究</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/anamorphic-1-history">毕业论文分享（一）：变形镜头的历史发展</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        这是我的本科毕业论文《**电影制作中变形镜头的应用流程优化研究**》。我准备把论文正文按章节整理成几篇文章，在这里分次分享给大家。这一篇是第一章“变形镜头概述”的第一小节。
+
+# 1. 变形镜头概述
+
+## 1.1 历史发展
+
+20 ...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2025-06-06T00:07:00+08:00">06 Jun 2025</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+        
+        
+      
+    
+  
+    
+      
+      
+        
+          
+          
+      
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[6]) -->
+
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/anamorphic-2-characteristics">
+        <img loading="lazy" src="/images/anamorphic-fig-1-2-5-1.jpg" alt="毕业论文分享（二）：变形镜头的成像特性">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        
+        <a href="/tag/学术研究" class="c-blog-card__tag">学术研究</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/anamorphic-2-characteristics">毕业论文分享（二）：变形镜头的成像特性</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        变形镜头带来的视觉风格，远不止更宽的画幅。接着[上一篇的历史回顾](/blog/anamorphic-lens-history)，这一篇分享毕业论文的 1.2 节“成像特性”：从双平面对称性出发，讨论视场角、景深与散景，再看光晕、畸变...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2025-06-06T00:06:00+08:00">06 Jun 2025</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+        
+        
+</div>
+  </section>
+</div>
+
+
+    
+
+    <button class="top" type="button" aria-label="Back to top"><i class="ion ion-ios-arrow-up" aria-hidden="true"></i></button>
+
+    <!-- begin footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col col-12">
+
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(social-link.jekyll.html) params() context() -->
+
+<div class="social">
+  <ul class="social__list list-reset">
+    
+    <li class="social__item">
+      <a class="social__link" href="https://weibo.com/StephenYKQ" target="_blank" rel="noopener" aria-label="weibo icon">
+        
+          <svg viewBox="0 0 800 649.5" width="17" height="17" fill="currentColor" class="weibo-icon" style="vertical-align: middle; position: relative;">
+            <path d="m336.6,602.3c-132.6,13-247.1-46.9-255.7-134-8.6-87,91.9-168.2,224.6-181.4,132.7-13.2,247.1,46.7,255.7,133.8,8.7,86.7-91.9,168.4-224.5,181.4h-.1Zm-34.9-103.5c-12.9,20.6-40.2,29.4-60.9,20.1-20.4-9.3-26.4-33.1-13.5-53.1,12.6-19.8,39.2-28.6,59.8-19.9,20.7,8.7,27.3,32.3,14.7,53Zm42.3-54.2c-4.7,7.8-15,11.7-22.9,8.3-7.9-3-10.5-12-6-19.5,4.7-7.6,14.6-11.5,22.4-8,7.9,3,10.5,12,6,20.1l.5-.9Zm5.9-90.8c-63.2-16.4-134.4,15.1-161.8,70.7-27.9,56.8-.9,119.6,62.8,140.2,66.1,21.4,144-11.3,171.1-72.5,26.7-59.8-6.7-121.5-72-138.4Zm252.1-40.7c-11.5-3.5-19-6-13.5-20.4,12.5-32.6,14.1-60.2,0-80.2-26-37-97.1-35-178.8-.9,0,0-25.5,10.9-19-9.1,12.5-40.5,10.6-74.1-9-93.6-44.7-44.5-162.4,1.6-262.9,102.7C43.6,287.1,0,367.2,0,436.4c0,132.7,169.9,213.2,336.2,213.2s362.9-126.7,362.9-227.3-51.6-95.1-97.1-109.4v.3Zm63.7-169.7c-25.7-28.6-63.7-39.6-98.7-32.2-14.6,3-23.6,17.1-20.6,31.1,3,13.9,17,23,31.1,20.1,17-3.5,35.6,1.4,48.1,15.5s15.5,32.6,10.6,49.1c-4.5,13.5,3,28.5,16.9,33.1,13.5,4,28.6-3.5,33.1-17.1,11.1-34,4-72.7-21.5-101.2l1,1.5Zm80.6-73.2C693.6,11.6,616-10.5,544.4,4.6c-16.5,3.4-27.1,19.5-23.6,36.1s19.5,27.1,36.1,23.6c51-11.1,106.1,4.9,143.2,46.1,37,41.5,47.7,98,31.5,147.1-5.5,16,3.5,33.6,19.5,38.5,16,5.6,33.1-3.4,38.5-19.5,22.5-69.5,8.1-149.2-44.5-207.8l1,1.6Z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://github.com/StephenYKQ" target="_blank" rel="noopener" aria-label="github icon">
+        
+          <i class="ion ion-logo-github"></i>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://instagram.com/stephenykq/" target="_blank" rel="noopener" aria-label="instagram icon">
+        
+          <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" class="instagram-icon" style="vertical-align: middle; position: relative;">
+            <path d="M20.445 5h-8.891A6.559 6.559 0 0 0 5 11.554v8.891A6.559 6.559 0 0 0 11.554 27h8.891a6.56 6.56 0 0 0 6.554-6.555v-8.891A6.557 6.557 0 0 0 20.445 5zm4.342 15.445a4.343 4.343 0 0 1-4.342 4.342h-8.891a4.341 4.341 0 0 1-4.341-4.342v-8.891a4.34 4.34 0 0 1 4.341-4.341h8.891a4.342 4.342 0 0 1 4.341 4.341l.001 8.891z"/>
+            <path d="M16 10.312c-3.138 0-5.688 2.551-5.688 5.688s2.551 5.688 5.688 5.688 5.688-2.551 5.688-5.688-2.55-5.688-5.688-5.688zm0 9.163a3.475 3.475 0 1 1-.001-6.95 3.475 3.475 0 0 1 .001 6.95zM21.7 8.991a1.363 1.363 0 1 1-1.364 1.364c0-.752.51-1.364 1.364-1.364z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://youtube.com/@stephenykq" target="_blank" rel="noopener" aria-label="youtube icon">
+        
+          <i class="ion ion-logo-youtube"></i>
+        
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+<!--bookshop-live end-->
+
+        <ul class="footer_nav list-reset">
+          
+          <li class="footer_nav__item">
+            <a href="/" class="footer_nav__link">Home</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/projects/" class="footer_nav__link">Projects</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/contact/" class="footer_nav__link">Contact</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/about/" class="footer_nav__link">About</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/blog/" class="footer_nav__link">Blog</a>
+          </li>
+          
+        </ul>
+
+        <div class="copyright"><p> 2025 &copy; <a href="/">STECAGE 斯特拉吉</a></div>
+
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- end footer -->
+
+    <script src="/js/scripts.js"></script>
+    <script src="/js/common.js"></script>
+</body>
+</html>

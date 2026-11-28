@@ -166,9 +166,18 @@
 <!-- end header -->
 
 
-    <header class="post-top post-top--article animate">
+    
+
+
+
+
+
+
+
+
+<header class="post-top post-top--article animate">
   <div class="container">
-    <div class="post-heading">
+    <div class="post-heading post-heading--mobile-text">
         <div class="post__info">
 
           
@@ -197,7 +206,7 @@
 
         </div>
       
-      <div class="post-image">
+      <div class="post-image post-image--desktop-only">
         <img fetchpriority="high" src="/images/inspector-icon.png" alt="制作影片对白字幕时，那些容易漏掉的小问题">
       </div>
       
@@ -215,11 +224,11 @@
 
 <p><strong>字幕小警察</strong>目前已经发布 v0.1.0 版本，可在 <a href="https://github.com/StephenYKQ/subtitle-inspector/">GitHub 仓库页面</a>查看安装包及对应说明。</p>
 
-<h2 id="一排版与双语检查">一、排版与双语检查</h2>
+<h1 id="1-排版与双语检查">1. 排版与双语检查</h1>
 
-<h3 id="1-中文标点问题">1. 中文标点问题</h3>
+<h2 id="11-中文标点问题">1.1. 中文标点问题</h2>
 
-<p>在内地院线电影采用的字幕体例中，中文通常不包含标点符号；港澳台及海外发行版本、流媒体版本的标点要求有所不同，部分版本会保留逗号、问号等符号。Netflix 的简体中文指南明确规定不用逗号和句号，疑问句需要问号，必要时使用全角感叹号，并对引号另作规定。<sup><a href="#ref-1" id="citation-1">[1]</a></sup></p>
+<p>在内地院线电影采用的字幕体例中，中文通常不包含标点符号；港澳台及海外发行版本、流媒体版本的标点要求有所不同，可能会保留逗号、问号等符号。Netflix 的简体中文指南规定不用逗号和句号，疑问句需要问号，必要时使用全角感叹号，并对引号另作规定。<sup><a href="#ref-1" id="citation-1">[1]</a></sup></p>
 
 <div class="sq-pair">
   <div class="sq-sample"><span class="sq-label">内地常见体例</span><span class="sq-zh" lang="zh-CN">好 你明天来吗</span><span class="sq-en" lang="en">Okay, are you coming tomorrow?</span></div>
@@ -228,7 +237,7 @@
 
 <p>针对不同要求，在<strong>字幕小警察</strong>中可以调用或创建相应的检查预设。</p>
 
-<h3 id="2-全半角标点问题">2. 全半角标点问题</h3>
+<h2 id="12-全半角标点问题">1.2. 全半角标点问题</h2>
 
 <p>中英双语字幕需要分别遵循两种语言的标点规范。英文行中的逗号、句号、问号等标点符号应使用相应的半角字符；中文版本若保留标点，则按中文体例处理。</p>
 
@@ -239,7 +248,7 @@
 
 <p><strong>“半角/全角标点混用”</strong>检查会根据行语言标记不一致的字符，便于统一处理。</p>
 
-<h3 id="3-标点配对问题">3. 标点配对问题</h3>
+<h2 id="13-标点配对问题">1.3. 标点配对问题</h2>
 
 <p>引号应成对出现，前后样式也应一致。下面的开引号是弯双引号，闭引号却用了直双引号。</p>
 
@@ -250,7 +259,7 @@
 
 <p>软件的<strong>“英文标点检查”</strong>会提示单、双引号缺失或样式不符，并跟踪跨字幕延续的引语；能够确定配对关系的闭引号可自动修正。中文引号「」、『』、书名号《》以及圆、方、花括号，则由独立的<strong>“括号/书名号配对”</strong>选项检查。缺失符号只作提示，补在哪里仍需对照原文。</p>
 
-<h3 id="4-英文大小写问题">4. 英文大小写问题</h3>
+<h2 id="14-英文大小写问题">1.4. 英文大小写问题</h2>
 
 <p>大小写也需按句子和项目体例核对。下例同时展示句首小写和缩写格式不统一：假设项目其他条目已统一采用大写的 <code class="language-plaintext highlighter-rouge">P.M.</code>，这一条也应保持一致。注：<code class="language-plaintext highlighter-rouge">p.m.</code> 本身也是有效写法。</p>
 
@@ -261,9 +270,9 @@
 
 <p><strong>“大小写检查”</strong>会提示独立句首小写、部分句中异常大写，以及同一份字幕里 <code class="language-plaintext highlighter-rouge">A.M.</code>/<code class="language-plaintext highlighter-rouge">a.m.</code>、<code class="language-plaintext highlighter-rouge">P.M.</code>/<code class="language-plaintext highlighter-rouge">p.m.</code> 的混用。单独采用其中一种写法不会因此报错，混用时则提醒按项目体例统一。</p>
 
-<h3 id="5-空格问题">5. 空格问题</h3>
+<h2 id="15-空格问题">1.5. 空格问题</h2>
 
-<h4 id="英文空格">英文空格</h4>
+<h3 id="英文空格">英文空格</h3>
 
 <p>英文需要检查词间和标点前后的空格，也要留意缩写内部被拆开的情况。</p>
 
@@ -274,7 +283,7 @@
 
 <p>这一例中，缩写内和感叹号前多了空格，句号后缺了空格。<strong>“英文空格”</strong>检查可定位部分标点间距和单词粘连问题；缩写或所有格内部的多余空格由<strong>“连续/多余空格”</strong>检查标记。</p>
 
-<h4 id="连续多余空格">连续/多余空格</h4>
+<h3 id="连续多余空格">连续/多余空格</h3>
 
 <p>这项检查作用于中文行和英文行，包括连续空格、行首行尾空格，以及标点前不需要的空格。行首、行尾空格在部分渲染流程中会影响居中结果，连续空格则造成不一致的间距。</p>
 
@@ -283,7 +292,7 @@
   <div class="sq-sample"><span class="sq-label">修改后 · 保留单个分隔空格</span><span class="sq-zh" lang="zh-CN">等等 我还没准备好</span><span class="sq-en" lang="en">Wait! I'm not ready yet.</span></div>
 </div>
 
-<h4 id="中英文混排空格">中英文混排空格</h4>
+<h3 id="中英文混排空格">中英文混排空格</h3>
 
 <p>中文与拉丁字母、数字之间是否插入空格，取决于项目选择，但同一项目内需要统一。</p>
 
@@ -292,7 +301,7 @@
   <div class="sq-sample"><span class="sq-label">插入空格</span><span class="sq-zh" lang="zh-CN">检查 ABS 和 2 号传感器</span><span class="sq-en" lang="en">Check the ABS and sensor 2.</span></div>
 </div>
 
-<h3 id="6-双语结构与重复文本">6. 双语结构与重复文本</h3>
+<h2 id="16-双语结构与重复文本">1.6. 双语结构与重复文本</h2>
 
 <p>中英文字幕合并、替换或更新后，除了看文字，也要核对每条是否仍有对应的中英文行。</p>
 
@@ -312,15 +321,15 @@
 
 <p>原片中有意的重复、口吃和强调应保留。对“待确认”等交付前必须处理的标记，或本项目需要集中复核的写法，可以使用<strong>特别指定检查</strong>，并分别设置全部、仅中文或仅英文的标注词。</p>
 
-<h2 id="二文件与文字检查">二、文件与文字检查</h2>
+<h1 id="2-文件与文字检查">2. 文件与文字检查</h1>
 
 <p>排版之外，软件也检查 <strong>SRT 文件结构与时间码</strong>：非法或重复序号、字幕块缺少空行、正文缺失、时间字段越界、结束早于开始等。时长、字幕重叠和间隔按项目参数提示。</p>
 
-<p><strong>“字数上限与 CPS”</strong> 用于筛出文字过长、显示过密的条目。中文和英文可分别设置上限；CPS 使用应用自己的中英加权计数，作为筛查指标，不直接代替平台验收值。</p>
+<p><strong>“字数上限与 CPS”</strong> 用于筛出文字过长、显示过密的条目。中文和英文可分别设置上限；CPS 使用应用自己的中英加权计数，作为筛查指标，不代替平台验收值。</p>
 
 <p>中文高级检查包括<strong>“的、地、得”</strong>、<strong>“本地词典疑似错字”</strong>、<strong>“用词一致性”</strong>、<strong>“简繁混用”</strong>和<strong>“非 GB2312 字符提示”</strong>。其中，非 GB2312 只是兼容性复核线索，不等于错字或字体缺字。</p>
 
-<h2 id="三检查之后怎样修订">三、检查之后怎样修订</h2>
+<h1 id="3-检查之后怎样修订">3. 检查之后怎样修订</h1>
 
 <p>先按交付版本选择检查预设，确认单语/双语模式、标点和空格方案，再按类别处理提示。点击问题卡片可以定位原文；确认无需改动的提示可忽略，明确的空格、标点问题可批量修复。</p>
 
@@ -331,9 +340,9 @@
 
 <p>自动修复结果会在新标签页中打开。要确认这一轮具体改了什么，可以使用<strong>“字幕比对”</strong>查看两个版本的文字、增删和时间差异；最后再将导出文件放回剪辑软件或播放器复核。</p>
 
-<h2 id="四pngxml-图片字幕输出">四、PNG/XML 图片字幕输出</h2>
+<h1 id="4-pngxml-图片字幕输出">4. PNG/XML 图片字幕输出</h1>
 
-<p>IMAX DMR 的物料交付要求，是我开发 <strong>SRT 转 PNG/XML</strong> 子程序的原因：<sup><a href="#ref-3" id="citation-3">[3]</a></sup></p>
+<p>IMAX DMR 的物料交付要求，是我开发 <strong>PNG XML</strong> 子程序的原因：<sup><a href="#ref-3" id="citation-3">[3]</a></sup></p>
 
 <blockquote>
   <p>XML 字幕交付必须符合 CineCanvas 2.0 INTEROP 标准格式</p>
@@ -344,13 +353,13 @@
 </blockquote>
 
 <figure class="sq-shot">
-  <img src="/images/pngxml-layout.jpg" alt="SRT 转 PNG/XML 子程序 GUI 窗口" loading="lazy" />
-  <figcaption>SRT 转 PNG/XML 子程序 GUI 窗口</figcaption>
+  <img src="/images/pngxml-layout.jpg" alt="PNG XML 子程序 GUI 窗口" loading="lazy" />
+  <figcaption>PNG XML 子程序 GUI 窗口</figcaption>
 </figure>
 
 <p>这类交付由字幕图片和配套 XML 组成。PNG 保存字幕的实际字形与排版，XML 引用图片并描述其显示区间及位置。配套子程序可以从文字字幕生成逐条透明背景 PNG 和 CineCanvas 格式 XML。中文与英文可分别设置字体、字号、字距、行距、描边和位置，并通过参考画面、安全框及遮幅检查版式。可按 2K/4K 的 Scope/Flat/Container 画布导出全画面 PNG，也可导出为字幕区域 PNG 并在 XML 中记录 X/Y 轴位置。</p>
 
-<h2 id="参考文献">参考文献</h2>
+<h3 id="参考文献">参考文献</h3>
 
 <ol class="references">
   <li id="ref-1">Netflix. Chinese (Simplified) Timed Text Style Guide [EB/OL]. <a href="https://partnerhelp.netflixstudios.com/hc/en-us/articles/215986007-Chinese-Simplified-Timed-Text-Style-Guide">原文链接</a>。§12–13. <a href="#citation-1" aria-label="返回正文">↩</a></li>
@@ -381,13 +390,13 @@
           <div class="col col-10 col-d-12 push-d-0 push-1">
             <div class="post__navigation animate">
   
-  <a class="post__prev" href="/blog/anamorphic-optical-principles">
+  <a class="post__prev" href="/blog/tie-dyeing">
     <div class="prev__image">
-      <img loading="lazy" src="/images/anamorphic-1-3-1-2.jpg" alt="制作影片对白字幕时，那些容易漏掉的小问题">
+      <img loading="lazy" src="/images/td-after_1.jpg" alt="制作影片对白字幕时，那些容易漏掉的小问题">
     </div>
     <div class="prev__box">
       <span class="post__nav post__nav__prev">Prev post</span>
-      <h2 class="post__nav__title">毕业论文分享（三）：变形镜头的光学原理</h2>
+      <h2 class="post__nav__title">《扎染 Tie-Dyeing》调色手记</h2>
     </div>
   </a>
   
@@ -420,41 +429,11 @@
         
       
         
-      
-      
-    
-  
-    
-      
-      
-        
-      
-        
-      
-      
-    
-  
-    
-      
-      
-        
-      
-        
-      
-      
-    
-  
-    
-      
-      
-        
-      
-        
           
           
       
         <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
-<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[4]) -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[1]) -->
 
 
 <div class="c-blog-card col col-4 col-d-6 col-t-12">
@@ -520,7 +499,7 @@
           
       
         <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
-<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[5]) -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[2]) -->
 
 
 <div class="c-blog-card col col-4 col-d-6 col-t-12">
@@ -588,7 +567,7 @@
           
       
         <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
-<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[6]) -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[3]) -->
 
 
 <div class="c-blog-card col col-4 col-d-6 col-t-12">

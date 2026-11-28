@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121212">
+  <meta name="google-site-verification" content="ob0b-vF5pnuPBcij_2UTn3m7Kh6Pkxob0ZylZpvFaC8" />
+
+  <title>毕业论文分享（五）：变形镜头测试</title>
+  <meta name='description' content='Welcome to the home of Stephen Yang Kaiqi! :)'>
+
+  <link rel="canonical" href="/blog/anamorphic-5-lens-testing">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="毕业论文分享（五）：变形镜头测试 – STECAGE 斯特拉吉">
+  <meta name="twitter:description" content="选用一组变形镜头后，怎样在开拍前了解它的性能，并把潜在问题提前找出来？这一篇分享毕业论文第 3.1 节“镜头测试”，从外观检查、测试环境和焦点校准，逐步展开到畸变、光晕、散景、分辨率及果冻效应的测试。
+">
+  <meta name="twitter:image:src" content="/images/anamorphic-fig-3-1-1-1.jpg">
+
+  <!-- Facebook OpenGraph -->
+  <meta property="og:title" content="毕业论文分享（五）：变形镜头测试 – STECAGE 斯特拉吉">
+  <meta property="og:description" content="选用一组变形镜头后，怎样在开拍前了解它的性能，并把潜在问题提前找出来？这一篇分享毕业论文第 3.1 节“镜头测试”，从外观检查、测试环境和焦点校准，逐步展开到畸变、光晕、散景、分辨率及果冻效应的测试。
+">
+  <meta property="og:image" content="/images/anamorphic-fig-3-1-1-1.jpg">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- Ionicons -->
+  <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/main.css">
+</head>
+
+
+<body>
+
+    
+
+    <!-- begin header -->
+<header class="c-header">
+  <div class="container">
+    <div class="row">
+      <div class="c-header__inner">
+
+        <div class="logo">
+          <a class="logo__link" href="/">
+          
+            <img class="logo__image" src="/images/logo.svg" alt="STECAGE 斯特拉吉">
+          
+          </a>
+        </div>
+
+        <nav class="main-nav" id="main-navigation" aria-label="Main navigation">
+          <div class="main-nav__box">
+
+            <button type="button" class="nav__icon-close" aria-label="Close menu">
+              <i class="ion ion-md-close" aria-hidden="true"></i>
+            </button>
+
+            <div class="nav__title">Menu</div>
+
+              <ul class="nav__list list-reset">
+
+              
+                
+                <li class="nav__item">
+                  <a href="/" class="nav__link">Home</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/projects/" class="nav__link">Projects</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/blog/" class="nav__link">Blog</a>
+                </li>
+                
+              
+                
+                <li class="nav__item dropdown">
+                  <span class="nav__link dropdown-toggle" tabindex="0">Pages <i class="ion ion-ios-arrow-down arrow-down" aria-hidden="true"></i></span>
+                  <div class="dropdown-menu">
+                    
+                      <a href="/about/" class="nav__link">About</a>
+                    
+                      <a href="/contact/" class="nav__link">Contact</a>
+                    
+                  </div>
+                </li>
+
+                
+              
+
+            </ul>
+          </div>
+
+          <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(social-link.jekyll.html) params() context() -->
+
+<div class="social">
+  <ul class="social__list list-reset">
+    
+    <li class="social__item">
+      <a class="social__link" href="https://weibo.com/StephenYKQ" target="_blank" rel="noopener" aria-label="weibo icon">
+        
+          <svg viewBox="0 0 800 649.5" width="17" height="17" fill="currentColor" class="weibo-icon" style="vertical-align: middle; position: relative;">
+            <path d="m336.6,602.3c-132.6,13-247.1-46.9-255.7-134-8.6-87,91.9-168.2,224.6-181.4,132.7-13.2,247.1,46.7,255.7,133.8,8.7,86.7-91.9,168.4-224.5,181.4h-.1Zm-34.9-103.5c-12.9,20.6-40.2,29.4-60.9,20.1-20.4-9.3-26.4-33.1-13.5-53.1,12.6-19.8,39.2-28.6,59.8-19.9,20.7,8.7,27.3,32.3,14.7,53Zm42.3-54.2c-4.7,7.8-15,11.7-22.9,8.3-7.9-3-10.5-12-6-19.5,4.7-7.6,14.6-11.5,22.4-8,7.9,3,10.5,12,6,20.1l.5-.9Zm5.9-90.8c-63.2-16.4-134.4,15.1-161.8,70.7-27.9,56.8-.9,119.6,62.8,140.2,66.1,21.4,144-11.3,171.1-72.5,26.7-59.8-6.7-121.5-72-138.4Zm252.1-40.7c-11.5-3.5-19-6-13.5-20.4,12.5-32.6,14.1-60.2,0-80.2-26-37-97.1-35-178.8-.9,0,0-25.5,10.9-19-9.1,12.5-40.5,10.6-74.1-9-93.6-44.7-44.5-162.4,1.6-262.9,102.7C43.6,287.1,0,367.2,0,436.4c0,132.7,169.9,213.2,336.2,213.2s362.9-126.7,362.9-227.3-51.6-95.1-97.1-109.4v.3Zm63.7-169.7c-25.7-28.6-63.7-39.6-98.7-32.2-14.6,3-23.6,17.1-20.6,31.1,3,13.9,17,23,31.1,20.1,17-3.5,35.6,1.4,48.1,15.5s15.5,32.6,10.6,49.1c-4.5,13.5,3,28.5,16.9,33.1,13.5,4,28.6-3.5,33.1-17.1,11.1-34,4-72.7-21.5-101.2l1,1.5Zm80.6-73.2C693.6,11.6,616-10.5,544.4,4.6c-16.5,3.4-27.1,19.5-23.6,36.1s19.5,27.1,36.1,23.6c51-11.1,106.1,4.9,143.2,46.1,37,41.5,47.7,98,31.5,147.1-5.5,16,3.5,33.6,19.5,38.5,16,5.6,33.1-3.4,38.5-19.5,22.5-69.5,8.1-149.2-44.5-207.8l1,1.6Z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://github.com/StephenYKQ" target="_blank" rel="noopener" aria-label="github icon">
+        
+          <i class="ion ion-logo-github"></i>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://instagram.com/stephenykq/" target="_blank" rel="noopener" aria-label="instagram icon">
+        
+          <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" class="instagram-icon" style="vertical-align: middle; position: relative;">
+            <path d="M20.445 5h-8.891A6.559 6.559 0 0 0 5 11.554v8.891A6.559 6.559 0 0 0 11.554 27h8.891a6.56 6.56 0 0 0 6.554-6.555v-8.891A6.557 6.557 0 0 0 20.445 5zm4.342 15.445a4.343 4.343 0 0 1-4.342 4.342h-8.891a4.341 4.341 0 0 1-4.341-4.342v-8.891a4.34 4.34 0 0 1 4.341-4.341h8.891a4.342 4.342 0 0 1 4.341 4.341l.001 8.891z"/>
+            <path d="M16 10.312c-3.138 0-5.688 2.551-5.688 5.688s2.551 5.688 5.688 5.688 5.688-2.551 5.688-5.688-2.55-5.688-5.688-5.688zm0 9.163a3.475 3.475 0 1 1-.001-6.95 3.475 3.475 0 0 1 .001 6.95zM21.7 8.991a1.363 1.363 0 1 1-1.364 1.364c0-.752.51-1.364 1.364-1.364z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://youtube.com/@stephenykq" target="_blank" rel="noopener" aria-label="youtube icon">
+        
+          <i class="ion ion-logo-youtube"></i>
+        
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+<!--bookshop-live end-->
+        </nav>
+
+        <div class="nav-button">
+          <button type="button" class="nav__icon nav__icon-menu ion ion-md-menu" aria-label="Open menu" aria-controls="main-navigation" aria-expanded="false"></button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</header>
+<!-- end header -->
+
+
+    
+
+
+
+
+
+
+
+
+<header class="post-top post-top--article animate">
+  <div class="container">
+    <div class="post-heading post-heading--desktop-text post-heading--mobile-text">
+        <div class="post__info">
+
+          
+          <div class="post-tags">
+            
+              <a href="/tag/镜头光学" class="post-tags__tag">镜头光学</a>
+            
+              <a href="/tag/学术研究" class="post-tags__tag">学术研究</a>
+            
+          </div>
+          
+
+
+          <h1 class="post__title">毕业论文分享（五）：变形镜头测试</h1>
+
+          <div class="post__meta">
+            <div class="post__author-image">
+              <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+            </div>
+
+            <div class="post__meta-bottom">
+              <div class="post__author">Stephen Yang Kaiqi</div>
+              <time class="post__date" datetime="2025-06-06T00:03:00+08:00">06 Jun 2025</time>
+            </div>
+          </div>
+
+        </div>
+      
+    </div>
+  </div>
+</header>
+
+<!-- begin post -->
+<div class="container animate">
+
+  <article class="post">
+
+    <div class="post__content">
+      <p>选用一组变形镜头后，怎样在开拍前了解它的性能，并把潜在问题提前找出来？这一篇分享毕业论文第 3.1 节“镜头测试”，从外观检查、测试环境和焦点校准，逐步展开到畸变、光晕、散景、分辨率及果冻效应的测试。</p>
+
+<h1 id="3-变形镜头问题的解决方法">3. 变形镜头问题的解决方法</h1>
+
+<h2 id="31-镜头测试">3.1 镜头测试</h2>
+
+<p>拍摄前对变形镜头进行充分测试，是识别问题并加以规避的关键环节。测试主要包括技术测试与艺术性评估两部分：技术测试通过标准测试卡（test charts）检测镜头的各项光学性能，确保技术指标达标；艺术性评估则需在模拟实际拍摄条件下进行，搭建含演员、服化道、场景美术与复杂光源的测试环境，以全面观察镜头在真实拍摄中的表现，如近距对焦能力、与附件搭配的操作手感等。测试过程中应完整记录信息，除常规拍摄参数外，必须备注镜头序列号，以便追踪个体差异。推荐使用标注详细信息的场记板，为后期整理与分析提供可靠依据。</p>
+
+<h3 id="311-目视检查">3.1.1 目视检查</h3>
+
+<p>镜头测试的第一步是目视检查。这一步往往能发现许多潜在问题。检查需覆盖镜头外观与内部结构，重点包括以下几个方面：</p>
+
+<p>首先检查镜身有无凹痕、划痕等物理损伤。将镜头倾斜，并借助光源从合适角度观察内部，可评估镜片和光圈叶片的状态。应确认光圈叶片运动是否同步、形状是否规则；注意是否有霉菌，典型特征为白色絮状斑点或蛛网状纹路，呈纤维连接状而区别于划痕；同时留意镜片是否有雾化现象，这通常由霉菌或润滑剂挥发所致，多见于存放环境潮湿、温度偏高的老镜头。</p>
+
+<p>一些微小划痕可能仅在放大镜下可见，甚至细至小于光波波长。对于大出瞳（exit pupil）设计的镜头，这类擦痕在特定情况下可能在散景中显现。老镜头镀膜上的气泡或尘点若不影响成像，通常不必因此淘汰镜头或降低使用预期。</p>
+
+<figure class="thesis-figure thesis-figure--medium">
+  <img style="--image-native-width: 994px; --image-ratio: 1.781362007168; --image-aspect-ratio: 994 / 558;" width="994" height="558" src="/images/anamorphic-fig-3-1-1-1.jpg" alt="图 3.1.1.1 镜片发霉起雾示例" loading="lazy" />
+  <figcaption>图 3.1.1.1 镜片发霉起雾示例<sup><a href="#ref-25" id="citation-25" aria-label="参考文献 25">[25]</a></sup></figcaption>
+</figure>
+
+<p>机械结构也需全面检查。对焦环与光圈环应操作顺滑、阻尼均匀、限位准确。若有摩擦声，可能是螺纹磨损或金属碎屑堆积；操作卡顿则提示润滑失效、凸轮变形或轨道问题；明显松动多为螺纹或随动件磨损所致。由于电影镜头一般不配备光学防抖功能，摇晃时应保持静音且稳固，任何异响都可能预示内部故障。</p>
+
+<p>对于变形镜头，还需检查变形镜组（如柱面透镜组）的对齐情况。在确保摄影机完全调平的前提下，从前镜片观察时应见元件的压缩方向垂直于地面。</p>
+
+<h3 id="312-技术测试环境">3.1.2 技术测试环境</h3>
+
+<p>测试环境需严格控制光照和曝光补偿标准。</p>
+
+<p>以数字摄影机为例，初始基准曝光推荐设定为 ISO 800、T5.6、24 FPS、172.8 度快门（对应约 50 fc/538 lx 的照度水平），便于后续不同光圈的测试。曝光补偿应优先通过调整帧率和快门速度实现，尽量避免引入额外光学变量<sup><a href="#ref-7" id="citation-7" aria-label="参考文献 7">[7]</a></sup>。</p>
+
+<p>测试卡应垂直悬挂或平贴墙面，布光推荐采用无频闪漫射光源交叉照明，照度控制在 ± 0.1 档内。测试时需注意：摄影机高度应使镜头光轴垂直于测试卡中心；测试卡图样大小应匹配成像器取景范围；对焦应尽量在最大光圈下完成，避免景深掩盖对焦误差；每次更换镜头或录制规格后，须重新确认测试卡位置与比例。</p>
+
+<p>此标准化环境确保数据可靠、可重复。</p>
+
+<figure class="thesis-figure thesis-figure--pair">
+  <img style="--image-native-width: 1000px; --image-ratio: 1.658374792703; --image-aspect-ratio: 1000 / 603;" width="1000" height="603" src="/images/anamorphic-fig-3-1-2-1_sub1.jpg" alt="图 3.1.2.1 针对拍摄测试卡的技术测试环境示例（子图 1）" loading="lazy" />
+  <img style="--image-native-width: 1091px; --image-ratio: 1.678461538462; --image-aspect-ratio: 1091 / 650;" width="1091" height="650" src="/images/anamorphic-fig-3-1-2-1_sub2.jpg" alt="图 3.1.2.1 针对拍摄测试卡的技术测试环境示例（子图 2）" loading="lazy" />
+  <figcaption>图 3.1.2.1 针对拍摄测试卡的技术测试环境示例<sup><a href="#ref-26" id="citation-26" aria-label="参考文献 26">[26]</a></sup></figcaption>
+</figure>
+
+<figure class="thesis-figure thesis-figure--pair thesis-figure--equal-height" style="--pair-first-ratio: 2.156862745fr; --pair-second-ratio: 1.82231405fr; --pair-ratio-sum: 3.979176795;">
+  <img style="--image-native-width: 1760px; --image-ratio: 2.156862745098; --image-aspect-ratio: 1760 / 816;" width="1760" height="816" src="/images/anamorphic-fig-3-1-2-2_sub1.png" alt="图 3.1.2.2 对准测试卡中央，测试图样框对齐取景框（子图 1）" loading="lazy" />
+  <img style="--image-native-width: 1764px; --image-ratio: 1.822314049587; --image-aspect-ratio: 1764 / 968;" width="1764" height="968" src="/images/anamorphic-fig-3-1-2-2_sub2.png" alt="图 3.1.2.2 对准测试卡中央，测试图样框对齐取景框（子图 2）" loading="lazy" />
+  <figcaption>图 3.1.2.2 对准测试卡中央，测试图样框对齐取景框<sup><a href="#ref-27" id="citation-27" aria-label="参考文献 27">[27]</a></sup></figcaption>
+</figure>
+
+<h3 id="313-焦点检查与校准">3.1.3 焦点检查与校准</h3>
+
+<p>将变形镜头安装至摄影机后，首先需要设置好选定的一种或多种录制规格和反挤压参数，并开启宽高比框线（frameline）显示功能（如图 3.1.3.1 所示）。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1364px; --image-ratio: 1.876203576341; --image-aspect-ratio: 1364 / 727;" width="1364" height="727" src="/images/anamorphic-fig-3-1-3-1.webp" alt="图 3.1.3.1 搭配 2 倍变形镜头， 录制规格：6K 3:2 Open Gate，目标取景画框线：90% 2.39:1" loading="lazy" />
+  <figcaption>图 3.1.3.1 搭配 2 倍变形镜头， 录制规格：6K 3:2 Open Gate，目标取景画框线：90% 2.39:1<sup><a href="#ref-28" id="citation-28" aria-label="参考文献 28">[28]</a></sup></figcaption>
+</figure>
+
+<p>测试时，在标定距离放置测试卡，通过取景器或外接监视器进行精确对焦。测试卡可以是 ISO 12233 分辨率测试卡或西门子星图（Siemens star），当中心线条锐度跃升时即为最佳合焦位置。若无专业测试卡，可用纹理细密的道具替代。</p>
+
+<p>测试需覆盖常用光圈范围（包含最大光圈、最佳成像光圈和最小常用光圈），同时验证无限远对焦的准确性，建议选择远处明显的实体作为测试目标。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1294px; --image-ratio: 1.629722921914; --image-aspect-ratio: 1294 / 794;" width="1294" height="794" src="/images/anamorphic-fig-3-1-3-2.png" alt="图 3.1.3.2 ISO 12233 分辨率测试卡" loading="lazy" />
+  <figcaption>图 3.1.3.2 ISO 12233 分辨率测试卡</figcaption>
+</figure>
+
+<p>焦点检查的关键在于核对三项数据是否一致：镜筒上对焦环标尺的读数、实际测量的目标距离，以及目视确认的焦点位置。若出现偏差，可能反映出以下问题：镜头后焦距偏移、摄影机法兰距异常或者对焦环标尺本身存在机械错位或刻印错误。变形镜头还需特别关注水平和垂直两个轴向焦点的一致性，任一轴向的焦点偏移（如图 3.1.3.3 所示）都会降低画面整体的清晰度。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1300px; --image-ratio: 2.402957486137; --image-aspect-ratio: 1300 / 541;" width="1300" height="541" src="/images/anamorphic-fig-3-1-3-3.png" alt="图 3.1.3.3 变形镜头单轴对焦偏移实拍表现 （左侧垂直线条清晰，右侧水平线条模糊）" loading="lazy" />
+  <figcaption>图 3.1.3.3 变形镜头单轴对焦偏移实拍表现 （左侧垂直线条清晰，右侧水平线条模糊）</figcaption>
+</figure>
+
+<p>变焦电影镜头通常采用齐焦（parfocal）设计，能确保在整个变焦范围内保持焦点稳定，但其前提是后焦距必须精确校准。对于变焦镜头的各项测试，至少应涵盖最广角端、最长焦端及中间 1～2 个焦段。若要更全面评估镜头性能，建议对镜筒变焦环标尺上所有的焦距刻度逐一测试。</p>
+
+<p>此外，若镜片组光轴（optical axis）安装不正或存在倾斜，会导致无限远对焦失效、单侧锐度下降或局部畸变加剧，这类问题多来源于制造或装配缺陷。测试时需重点观察画面四角及边缘区域的锐度与畸变均匀性。变形镜头出现非双平面对称性的问题分布情况，通常是镜片偏心（de-centering）或倾斜所致。条件允许时，可使用自准直仪（auto collimator）辅助判断。</p>
+
+<p>变形镜头的焦点校准可利用包含垂直和水平线条的测试图样。若垂直和水平线条不能同时保持清晰，则需检查并调整镜头后焦距或摄影机法兰距。具体操作步骤如下：先将焦点调至水平线对最清晰的位置，再向更近的对焦距离（一般是顺时针）方向转动对焦环，若此时垂直线变得清晰，则应通过增加垫片（shims），使镜组远离成像器，反之则减少垫片。排查时应遵循系统性原则：若多支镜头均出现同样问题，问题多出在摄影机机身，需要调整卡口垫片或成像器位置。</p>
+
+<h3 id="314-变形镜组对齐检查">3.1.4 变形镜组对齐检查</h3>
+
+<p>变形镜组偏斜可通过前文所述的目视方法作初步判断。进一步检查可包括：拍摄带有垂直线条的测试图样，确保测试图样与摄影机均调至水平，并启用监视器的网格显示功能，观察图像是否存在倾斜或形变；也可通过拍摄失焦光点或拉丝光晕，观察椭圆形散景是否垂直、光晕是否水平，以辅助判断。由于变形镜头存在径向畸变等像差，检查时应重点关注画面中心区域的几何结构是否正常。</p>
+
+<p>专业的校准需借助镜头投影仪等设备，先验证整体校正效果，再对每组柱面透镜元件分别调校，最后综合优化复合镜组性能。调整与检测需多次反复，直至获得最佳光学表现。一些高端变形镜头在设计阶段即预留了校准结构。例如 Panavision Panatar 系列镜头内部设有零位标记和开槽调节孔。这类操作需在专业环境中由技师完成，因此大多数变形镜头的调整与维护需返厂进行<sup><a href="#ref-7" id="citation-7-2" aria-label="参考文献 7">[7]</a></sup>。</p>
+
+<h3 id="315-畸变与呼吸效应测试">3.1.5 畸变与呼吸效应测试</h3>
+
+<p>几何畸变的测试与标定，通常使用带有规则网格图案的棋盘格（distortion grid/checkerboard chart）或点阵测试图样。该图案可印刷于平面材料上，或在大型高分辨率屏幕上显示。测试时需确保图样平整、与成像平面平行，并居中填满画面。必要时可通过平移或旋转拍摄，观察畸变在不同取景角度下的变化。部分专业视效团队还会使用三维网格或二维码测试卡，以获取更高精度的数据。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 742px; --image-ratio: 1.873737373737; --image-aspect-ratio: 742 / 396;" width="742" height="396" src="/images/anamorphic-fig-3-1-5-1.png" alt="图 3.1.5.1 畸变测试卡的拍摄场景示例" loading="lazy" />
+  <figcaption>图 3.1.5.1 畸变测试卡的拍摄场景示例<sup><a href="#ref-29" id="citation-29" aria-label="参考文献 29">[29]</a></sup> </figcaption>
+</figure>
+
+<p>特殊地，对于像散畸变（即“变形腮腺炎”）以及呼吸效应的测试和标定，则需要在不同对焦距离和机位下多次拍摄测试图样，可能会需要用到不同尺寸和网格密度的测试图样。理想情况下，应覆盖对焦环标尺上的所有刻度位置。配合带有圆形图样的测试卡（如图 3.1.5.2 所示），可以更方便地观察压缩比的变化。同时，应记录拍摄时的焦点位置元数据（可借助高级跟焦系统嵌入动态元数据），以建立问题与对焦距离的动态对应关系——这对高精尖视效制作至关重要。</p>
+
+<figure class="thesis-figure thesis-figure--medium">
+  <img style="--image-native-width: 1560px; --image-ratio: 1.837455830389; --image-aspect-ratio: 1560 / 849;" width="1560" height="849" src="/images/anamorphic-fig-3-1-5-2.png" alt="图 3.1.5.2 作者自制的带中央球形的棋盘格测试图样" loading="lazy" />
+  <figcaption>图 3.1.5.2 作者自制的带中央球形的棋盘格测试图样</figcaption>
+</figure>
+
+<p>畸变标定的核心在于对畸变进行可量化的参数表征。变形镜头在成像中存在的径向畸变和切向畸变（tangential distortion），可用如下数学模型描述：</p>
+
+<div class="thesis-equation"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">{</mo><mtable><mtr><mtd columnalign="right" style="text-align: right"><msub><mi>r</mi><mn>2</mn></msub><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mi>d</mi><mo>=</mo><mn>3</mn><msub><mi>k</mi><mn>1</mn></msub><msub><mi>r</mi><mn>2</mn></msub><mo>+</mo><mn>5</mn><msub><mi>k</mi><mn>2</mn></msub><msub><mi>r</mi><mn>2</mn></msub><msub><mi>r</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mrow><mo stretchy="true" form="prefix">(</mo><mfrac linethickness="0"><mrow><msub><mi>x</mi><mi>n</mi></msub><mo>=</mo><mi>x</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>d</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mn>6</mn><msub><mi>k</mi><mn>3</mn></msub><mi>x</mi><mi>y</mi><mo>−</mo><msub><mi>k</mi><mn>4</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>r</mi><mn>2</mn></msub><mo>−</mo><mn>6</mn><msup><mi>x</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><msub><mi>y</mi><mi>n</mi></msub><mo>=</mo><mi>y</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>d</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><msub><mi>k</mi><mn>3</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>r</mi><mn>2</mn></msub><mo>−</mo><mn>6</mn><msup><mi>y</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mn>6</mn><msub><mi>k</mi><mn>4</mn></msub><mi>x</mi><mi>y</mi></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr></mtable></mrow><mspace width="0.222em"></mspace></mrow></semantics></math></div>
+
+<p>其中，(<em>x</em><em><sub>n</sub></em>, <em>y</em><em><sub>n</sub></em>) 为畸变中心坐标，<em>k</em><sub>1</sub> 和<em> k</em><sub>2</sub> 为径向畸变系数，<em>k</em><sub>3</sub> 和<em> k</em><sub>4</sub> 为切向畸变系数<sup><a href="#ref-30" id="citation-30" aria-label="参考文献 30">[30]</a></sup>。The Foundry Nuke 等合成软件可以自动分析棋盘格图样并计算出这些系数，为后续视效制作提供校正依据（将在后续 3.4.2 节展开）。建议在镜头测试阶段即采集标准化的标定图像素材，这能显著提高后期制作的效率。</p>
+
+<h3 id="316-暗角测试">3.1.6 暗角测试</h3>
+
+<p>变形镜头通常配备更大的前组镜片和更宽广的视场角，因此成像时更易出现暗角或渐晕（vignetting）现象。使用遮光斗等附件时，问题可能会更加突出。</p>
+
+<p>暗角测试需使用照度均匀的白色平面或棋盘格图样作为测试目标。推荐采用磨砂玻璃板（如毛玻璃或磨砂亚克力）覆盖镜头的方法，相较于白墙或泡沫板，该方法更易获得稳定且可控的照明条件。</p>
+
+<p>测试需要考察所有参数的组合：包括不同光圈、对焦距离以及变焦镜头的各个焦段。像场覆盖（image circle coverage）和暗角表现会随着这些参数变化。通过全面测试，可以准确区分“光学暗角”和“机械暗角”的形成规律。这对适配不同尺寸的成像器及找到合适的附件尤为重要：光学暗角表现为画面边缘亮度渐弱，而像场覆盖不足等造成的机械暗角则会出现“舷窗效应”（portholing）。</p>
+
+<div class="thesis-figure thesis-figure--pair">
+<figure class="thesis-figure thesis-figure--small">
+  <img style="--image-native-width: 1169px; --image-ratio: 2.197368421053; --image-aspect-ratio: 1169 / 532;" width="1169" height="532" src="/images/anamorphic-fig-3-1-6-1.jpg" alt="图 3.1.6.1 变形镜头的光学暗角" loading="lazy" />
+  <figcaption>图 3.1.6.1 变形镜头的光学暗角</figcaption>
+</figure>
+<figure class="thesis-figure thesis-figure--small">
+  <img style="--image-native-width: 1169px; --image-ratio: 2.197368421053; --image-aspect-ratio: 1169 / 532;" width="1169" height="532" src="/images/anamorphic-fig-3-1-6-2.jpg" alt="图 3.1.6.2 变形镜头的机械暗角" loading="lazy" />
+  <figcaption>图 3.1.6.2 变形镜头的机械暗角</figcaption>
+</figure>
+</div>
+
+<p>有时暗角可能不易察觉——几乎没有镜头能做到整个像场完全均匀的照度。为了量化这种衰减程度，建议借助硬件或软件波形图监视器（waveform monitor）进行辅助分析。通过观察中心与边缘的透光率（transmittance）差异，可对镜头的照度均匀性做出客观评估。测试数据也能为后期校正提供量化依据。</p>
+
+<h3 id="317-自制测试图样">3.1.7 自制测试图样</h3>
+
+<p>为应对变形镜头测试流程繁琐、测试卡种类复杂的问题，作者设计了一款多功能快捷测试图样，集成了焦点、偏斜、像差、果冻效应及暗角的观察功能。</p>
+
+<p>如图 3.1.7.1 所示，图样采用复合式结构：以棋盘格为背景，中央设有十字线、圆形图案及水平/垂直线条组。棋盘格背景用于检测几何畸变与暗角，边缘模糊程度可反映场曲特征；十字线有助于判断图像是否存在偏斜，也可作为果冻效应摇摄的参照对象；圆形图案则用于观测像散畸变；线条组构成的焦点检查区特别设计为垂直线条稀疏、水平线条密集，便于在不具备反挤压监看的条件下检查正交轴对焦一致性，同时提升对焦效率；图样中的高对比度边缘也可用于观察色差。</p>
+
+<div class="thesis-figure thesis-figure--pair thesis-figure--equal-height" style="--pair-first-ratio: 1.83190184fr; --pair-second-ratio: 2.398073836fr; --pair-ratio-sum: 4.229975676;">
+<figure class="thesis-figure thesis-figure--small">
+  <img style="--image-native-width: 1493px; --image-ratio: 1.831901840491; --image-aspect-ratio: 1493 / 815;" width="1493" height="815" src="/images/anamorphic-fig-3-1-7-1.png" alt="图 3.1.7.1 作者自制测试图样设计示意" loading="lazy" />
+  <figcaption>图 3.1.7.1 作者自制测试图样设计示意</figcaption>
+</figure>
+<figure class="thesis-figure thesis-figure--small">
+  <img style="--image-native-width: 1494px; --image-ratio: 2.398073836276; --image-aspect-ratio: 1494 / 623;" width="1494" height="623" src="/images/anamorphic-fig-3-1-7-2.png" alt="图 3.1.7.2 测试图样实际拍摄效果" loading="lazy" />
+  <figcaption>图 3.1.7.2 测试图样实际拍摄效果</figcaption>
+</figure>
+</div>
+
+<h3 id="318-光晕测试">3.1.8 光晕测试</h3>
+
+<p>光晕的表现由光源与镜头镀膜特性共同决定，其强度受光圈大小、光线强度及入射角度等多重因素影响。镜头的光学设计以及使用状态（如灰尘、划痕或霉斑）均会改变光晕特性。实际拍摄时常用的滤镜和遮光斗（matte box）也可能带来额外影响。增光减焦镜（speed booster）也会改变镜头后焦距及其他光学参数。因此建议先对裸镜进行测试，再对全附件状态进行补充测试。</p>
+
+<p>测试变形镜头光晕和眩光时，推荐方案如下：在全黑环境中，使用黑色吸光背景，配备 100 W 钨丝菲涅耳聚光灯（Fresnel）作为测试光源，距离镜头 1.5～3 米，正对摄影机布置。首先将摄影机向左侧或右侧偏离光源 90°，避免直射光进入，然后缓慢地进行 180°水平摇摄，使光源完整穿过画面。</p>
+
+<p>该方法能精确记录光线与镜头相互作用的完整过程，包括侧面入射光到极端直射角下的雾面眩光，以及各类光斑和鬼影的形成规律。测试应覆盖不同光圈档位，且分别在无限远、最近对焦及光源位置三种对焦距离下进行。</p>
+
+<p>此外，部分镜头还会出现彩虹眩光（rainbow flare）、睫毛状眩光（eyelash flare）或焦散眩光（caustic flare）等特殊现象<sup><a href="#ref-7" id="citation-7-3" aria-label="参考文献 7">[7]</a></sup>，应一并关注。</p>
+
+<figure class="thesis-figure thesis-figure--stacked">
+  <img style="--image-native-width: 1300px; --image-ratio: 2.402957486137; --image-aspect-ratio: 1300 / 541;" width="1300" height="541" src="/images/anamorphic-fig-3-1-8-1_sub1.jpg" alt="图 3.1.8.1 维塔工作室（Wētā FX）采集的不同光圈和位置的光晕素材（子图 1）" loading="lazy" />
+  <img style="--image-native-width: 1300px; --image-ratio: 2.402957486137; --image-aspect-ratio: 1300 / 541;" width="1300" height="541" src="/images/anamorphic-fig-3-1-8-1_sub2.jpg" alt="图 3.1.8.1 维塔工作室（Wētā FX）采集的不同光圈和位置的光晕素材（子图 2）" loading="lazy" />
+  <figcaption>图 3.1.8.1 维塔工作室（Wētā FX）采集的不同光圈和位置的光晕素材<sup><a href="#ref-29" id="citation-29-2" aria-label="参考文献 29">[29]</a></sup></figcaption>
+</figure>
+
+<h3 id="319-散景测试">3.1.9 散景测试</h3>
+
+<p>椭圆形散景是变形镜头极具特色的成像特性之一。如前所述，不同压缩比的变形镜头其散景椭圆程度各异，经典的“瀑布”般焦外效果通常出现在 1.8 倍或 2 倍压缩比较高的镜头上。同一镜头在不同光圈下的散景形态也存在显著差别。</p>
+
+<p>通过失焦高光的表现，还可以观察镜头彗差（comatic aberration）引发的星芒效果，横向色差（lateral chromatic aberration）和纵向色差（longitudinal chromatic aberration）导致的边缘色散，以及球差校正（spherical aberration correction）对焦外过渡的影响。“洋葱圈”效应（onion ring effect）通常暗示非球面镜片的应用。散景形状的变化不仅反映光圈叶片数量和镜筒机械结构对斜射光的控制，也有助于判断镜头的佩兹瓦尔场曲（Petzval curvature）特性<sup><a href="#ref-7" id="citation-7-4" aria-label="参考文献 7">[7]</a></sup>。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1169px; --image-ratio: 2.400410677618; --image-aspect-ratio: 1169 / 487;" width="1169" height="487" src="/images/anamorphic-fig-3-1-9-1.jpg" alt="图 3.1.9.1 维塔工作室采集的散景素材" loading="lazy" />
+  <figcaption>图 3.1.9.1 维塔工作室采集的散景素材<sup><a href="#ref-34" id="citation-34" aria-label="参考文献 34">[34]</a></sup></figcaption>
+</figure>
+
+<p>测试环境建议与光晕测试类似，采用全黑背景，将多个小型点光源均匀排列在平行于成像器的平面上，距离镜头 2～3 米，确保散景在画面中的面积与对比度适中。测试应覆盖常用光圈范围。通过从最近对焦距离逐步调至无限远的对焦过程，可以观察焦外光斑随对焦点变化的动态演变，尤其是色差与球差的改善趋势。适度摇摄有助评估场曲及入瞳遮挡（pupil occlusion，又称口径蚀）对散景形状的影响<sup><a href="#ref-7" id="citation-7-5" aria-label="参考文献 7">[7]</a></sup>，许多变形镜头焦外呈现的菱形或矩形散景即由此产生（如下图所示）。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1300px; --image-ratio: 2.402957486137; --image-aspect-ratio: 1300 / 541;" width="1300" height="541" src="/images/anamorphic-fig-3-1-9-2.webp" alt="图 3.1.9.2 电影《阿诺拉》（Anora）静帧" loading="lazy" />
+  <figcaption>图 3.1.9.2 电影《阿诺拉》（<em>Anora</em>）静帧</figcaption>
+</figure>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1300px; --image-ratio: 2.389705882353; --image-aspect-ratio: 1300 / 544;" width="1300" height="544" src="/images/anamorphic-fig-3-1-9-3.webp" alt="图 3.1.9.3 电影《极盗车神》（Baby Driver）静帧" loading="lazy" />
+  <figcaption>图 3.1.9.3 电影《极盗车神》（<em>Baby Driver</em>）静帧</figcaption>
+</figure>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1298px; --image-ratio: 2.399260628466; --image-aspect-ratio: 1298 / 541;" width="1298" height="541" src="/images/anamorphic-fig-3-1-9-4.webp" alt="图 3.1.9.4 电影《豪勇七蛟龙》（The Magnificent Seven）静帧" loading="lazy" />
+  <figcaption>图 3.1.9.4 电影《豪勇七蛟龙》（<em>The Magnificent Seven</em>）静帧</figcaption>
+</figure>
+
+<h3 id="3110-色彩测试">3.1.10 色彩测试</h3>
+
+<p>变形镜头的色彩表现复杂，受镀膜、玻璃材质及老化状态影响，色彩一致性的控制难度大，易出现色彩偏差。即使是同系列、同批次的镜头，也可能产生色彩差异。老式变形镜头尤为明显，常需反复筛选才能形成色彩相对一致的匹配组（matched set）。色彩的不一致源于镜片对不同波长的光谱透过率差异，后期流程难以用简单的办法修正，因此仍建议尽量避免混用色彩或反差表现差异过大的镜头——除非这是创作者刻意追求的艺术效果。</p>
+
+<p>色彩测试应在标准照明环境下进行，使用 18% 灰卡和色卡，确保照明均匀、光源色温准确，将摄影机白平衡与光源匹配，避免使用滤镜或灯光附件。需覆盖不同光圈，以排查随光圈变化产生的偏移。后期可采样灰卡中心区域 10～50 个像素点的 RGB 值，理想情况下三个通道的数值应一致。同时，应该特别关注画面边缘的一致性。也推荐使用高质量球面镜头建立参考基准。</p>
+
+<p>推荐色彩测试包括实际场景的拍摄。通过真人演员配合服化道和场景美术布置，可全面观察镜头在不同色温、光比及局部光源干扰下对肤色等固有色的还原能力。这种方法相比拍摄测试卡，更能直观呈现镜头的色彩风格与表现倾向。</p>
+
+<h3 id="3111-分辨率测试">3.1.11 分辨率测试</h3>
+
+<p>分辨率测试用于评估光学系统解析细节的能力。其结果受摄影机、记录介质和显示设备共同影响，它实际反映的是整个成像系统的细节还原能力。</p>
+
+<p>分辨率测试卡的核心是由不同空间频率黑白线条组成的栅格（grating lines），这些栅格又称“朗奇光栅”（Ronchi ruling），得名于意大利物理学家瓦斯科·朗奇（Vasco Ronchi）。这些线条随空间频率升高逐渐变细变密，通常以每毫米线数（ln/mm）、每毫米线对/周期数（lp/mm 或 cy/mm）表示。数字系统中也可能采用每画面高度/宽度的线对数（lp/ph 或 lp/pw），直接关联传感器的感光单元（photosites）或像素分布。线条越细密，对系统解析力要求越高——有的测试卡直接标注频率数值，有的需查表解码字母代号。当频率超出系统能力时，线条会融合为灰块；此时可能出现混叠（aliasing）与黑白反转现象，即奈奎斯特频率（Nyquist limit）引发的典型伪像。有效分辨上限为最后一组清晰可辨的线条。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 606px; --image-ratio: 6.586956521739; --image-aspect-ratio: 606 / 92;" width="606" height="92" src="/images/anamorphic-fig-3-1-11-1.png" alt="图 3.1.11.1 朗奇光栅" loading="lazy" />
+  <figcaption>图 3.1.11.1 朗奇光栅<sup><a href="#ref-33" id="citation-33" aria-label="参考文献 33">[33]</a></sup></figcaption>
+</figure>
+
+<p>动态画面会降低系统分辨率，建议对比静帧与动态播放效果。光圈测试中，可发现镜头分辨率随光圈收小先提升后下降的衍射效应，由此确定最佳成像光圈的“甜点区”。此外，需评估对比度再现能力：黑白线纯度、中心与边缘对比度的一致性，对比不同光圈的测试结果可以更明显地观察对比度变化规律。</p>
+
+<p>如图 3.1.11.2 所示，分辨率测试卡还能暴露色差问题——黑白线条边缘可见彩色镶边（color fringing）。若边缘色差比中心显著，表明镜头存在横向色差。</p>
+
+<figure class="thesis-figure thesis-figure--small">
+  <img style="--image-native-width: 585px; --image-ratio: 0.998293515358; --image-aspect-ratio: 585 / 586;" width="585" height="586" src="/images/anamorphic-fig-3-1-11-2.webp" alt="图 3.1.11.2 分辨率测试卡上观察到的色差现象" loading="lazy" />
+  <figcaption>图 3.1.11.2 分辨率测试卡上观察到的色差现象<sup><a href="#ref-7" id="citation-7-6" aria-label="参考文献 7">[7]</a></sup></figcaption>
+</figure>
+
+<p>此外，通过拍摄分辨率测试卡或使用镜头投影仪，还可评估焦平面分布与场曲均匀性。场曲通常使画面四角锐度下降，收小光圈可改善此现象。但变形镜头的矫正难度更大，某些情况下还会出现“波浪形焦深”——画面中心与边缘保持清晰，而左右三分之一或四分之一的区域却出现软化现象。</p>
+
+<h3 id="3112-mtf-测试">3.1.12 MTF 测试</h3>
+
+<p>调制传递函数（Modulation Transfer Function，MTF）测试是量化镜头分辨率与对比度的最科学和客观的方法。主要采用四种方法：</p>
+
+<p>（1）频率生成法（frequency generation methods）：通过测量不同空间频率朗奇光栅的对比度衰减生成 MTF 曲线，数据可靠但耗时，多用于出厂质检。</p>
+
+<p>（2）扫描法（scanning methods）：利用微米级光源分析镜头成像的线扩散函数（Line Spread Function，LSF）或点扩散函数（Point Spread Function，PSF）推算 MTF。蔡司等厂商的自动化测试台采用此技术。另外，PSF 数据也会被用于视效流程中 CGI 与实拍素材的分辨率匹配。</p>
+
+<p>（3）斜边 MTF 测试（slanted-edge MTF testing）：拍摄斜边靶标后经傅里叶变换计算 MTF，符合 ISO 12233 标准，集成于 Imatest 等图像测试软件。</p>
+
+<p>（4）全焦面 MTF 映射（through-focus MTF mapping）：通过多焦平面测量同步评估球差、场曲等像差，ARRI Rental 等专业服务依赖此类设备。这些测试需高端光学平台（如 Trioptics 的 ImageMaster）<sup><a href="#ref-7" id="citation-7-7" aria-label="参考文献 7">[7]</a></sup>，不适用于影视拍摄的前期准备环节。</p>
+
+<figure class="thesis-figure thesis-figure--pair thesis-figure--medium">
+  <img style="--image-native-width: 326px; --image-ratio: 1.423580786026; --image-aspect-ratio: 326 / 229;" width="326" height="229" src="/images/anamorphic-fig-3-1-12-1_sub1.png" alt="图 3.1.12.1 Imatest 软件 MTF 界面（子图 1）" loading="lazy" />
+  <img style="--image-native-width: 326px; --image-ratio: 1.423580786026; --image-aspect-ratio: 326 / 229;" width="326" height="229" src="/images/anamorphic-fig-3-1-12-1_sub2.png" alt="图 3.1.12.1 Imatest 软件 MTF 界面（子图 2）" loading="lazy" />
+  <figcaption>图 3.1.12.1 Imatest 软件 MTF 界面<sup><a href="#ref-34" id="citation-34-2" aria-label="参考文献 34">[34]</a></sup></figcaption>
+</figure>
+
+<h3 id="3113-镜头投影仪测试">3.1.13 镜头投影仪测试</h3>
+
+<p>镜头投影仪通过逆向光路工作，将分辨率测试图的光线从镜头卡口端入射，经光学系统投射到白墙或幕布上。这种方法能单独评估镜头的性能，不受系统其他环节影响，但它无法生成图像记录，仅支持实时观察，且良好的投影表现未必等同于实际拍摄效果。通过投影仪可观察镜头的像场覆盖范围，并直观评估多项光学特性，包括分辨率、像差、呼吸效应及光轴偏心（如线条单向模糊）等。同时，对于变形镜头，投影测试还可辅助检测变形镜组偏斜等结构性缺陷。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1111px; --image-ratio: 2.132437619962; --image-aspect-ratio: 1111 / 521;" width="1111" height="521" src="/images/anamorphic-fig-3-1-13-1.jpg" alt="图 3.1.13.1 Gecko-Cam 镜头投影仪" loading="lazy" />
+  <figcaption>图 3.1.13.1 Gecko-Cam 镜头投影仪<sup><a href="#ref-18" id="citation-18" aria-label="参考文献 18">[18]</a></sup></figcaption>
+</figure>
+
+<h3 id="3114-果冻效应测试">3.1.14 果冻效应测试</h3>
+
+<p>变形镜头会放大 CMOS 传感器的果冻效应。其程度主要由两项因素决定：一是摄影机在当前分辨率和录制规格下的读出速度；二是镜头的压缩比。因此，同步测试摄影机、录制规格与变形镜头的搭配是非常重要的。</p>
+
+<p>测试方法建议如下：将摄影机固定在三脚架上进行左右摇摄，推荐设置较高的快门速度，观察规则形状物体在画面中的形变程度。更有效的测试方式是设计针对性的运动镜头段落，如中长焦距下的手持拍摄，并在大银幕上播放判断感受。</p>
+
+<p>根据作者实测，单帧读出时间 × 压缩比 ≤ 25 ms 的组合通常为可接受范围，动态观感自然，无明显眩晕感。读出时间越短越佳。推荐使用具备全域快门（global shutter）的摄影机系统，如 RED V-RAPTOR [X]，以彻底避免果冻效应。</p>
+
+<p>下表列出多款市面上常见的数字电影摄影机的读出速度。</p>
+
+<div class="thesis-table-wrap" tabindex="0" role="region" aria-label="表 3.1.14.1">
+<table class="thesis-table thesis-table--wide">
+<caption>表 3.1.14.1</caption>
+<tr>
+<th scope="col">摄影机型号</th>
+<th scope="col">分辨率</th>
+<th scope="col">单帧读出时间</th>
+</tr>
+<tr>
+<td>ARRI ALEXA 35</td>
+<td>1.46:1 4608×3164</td>
+<td>7.9 ms<sup><a href="#ref-36" id="citation-36" aria-label="参考文献 36">[36]</a></sup></td>
+</tr>
+<tr>
+<td>Blackmagic Pocket Cinema Camera 6K</td>
+<td>1.78:1 6144×3456</td>
+<td>19.7 ms<sup><a href="#ref-37" id="citation-37" aria-label="参考文献 37">[37]</a></sup></td>
+</tr>
+<tr>
+<td>DJI Ronin 4D 6K</td>
+<td>1.90:1 6008×3168</td>
+<td>19.6 ms<sup><a href="#ref-38" id="citation-38" aria-label="参考文献 38">[38]</a></sup></td>
+</tr>
+<tr>
+<td>RED V-RAPTOR 8K VV</td>
+<td>1.90:1 8192×4320</td>
+<td>8 ms<sup><a href="#ref-39" id="citation-39" aria-label="参考文献 39">[39]</a></sup></td>
+</tr>
+<tr>
+<td>Sony VENICE 2</td>
+<td>1.90:1 8192×4320</td>
+<td>&lt;3 ms<sup><a href="#ref-40" id="citation-40" aria-label="参考文献 40">[40]</a></sup></td>
+</tr>
+</table>
+</div>
+
+<p>通过系统的变形镜头测试流程，可以全面评估镜头性能，提升其在现场拍摄中的稳定性。科学有效的测试能帮助创作者区分镜头本身的成像特性与性能异常，从而更有把握地预估镜头表现，也有助于判断哪些光学特性可以转化为美学表达，哪些局限应在拍摄中规避。</p>
+
+<p>测试不仅是技术流程的起点，也是创作方法的一部分，能帮助创作者建立与镜头之间的“美学默契”。</p>
+
+<h3 id="参考文献">参考文献</h3>
+
+<ol class="references">
+
+  <li id="ref-7" value="7">HOLBEN J, PROBST C ASC. The Cine Lens Manual: The Definitive Filmmaker&#x27;s Guide to Cinema Lenses [M]. Los Angeles: Adakin Press, 2022:78-297. <a href="#citation-7" aria-label="返回引用位置 1">↩1</a> <a href="#citation-7-2" aria-label="返回引用位置 2">↩2</a> <a href="#citation-7-3" aria-label="返回引用位置 3">↩3</a> <a href="#citation-7-4" aria-label="返回引用位置 4">↩4</a> <a href="#citation-7-5" aria-label="返回引用位置 5">↩5</a> <a href="#citation-7-6" aria-label="返回引用位置 6">↩6</a> <a href="#citation-7-7" aria-label="返回引用位置 7">↩7</a></li>
+
+  <li id="ref-18" value="18">FAUER J. All About Anamorphic[J]. Film and Digital Times, 2015. <a href="#citation-18" aria-label="返回引用位置 1">↩</a></li>
+
+  <li id="ref-25" value="25">High 5 Cameras. What is Lens Fungus [EB/OL]. (2022-12-11) <a href="https://high5cameras.com/all-articles/repair/what-is-lens-fungus-the-reason-why/">原文链接</a>。 <a href="#citation-25" aria-label="返回引用位置 1">↩</a></li>
+
+  <li id="ref-26" value="26">PRÊT À TOURNER. Optical test step by step [EB/OL]. <a href="https://pat-acc.net/optical-test-step-by-step/">原文链接</a>。 <a href="#citation-26" aria-label="返回引用位置 1">↩</a></li>
+
+  <li id="ref-27" value="27">Matchmove Machine. Distortion Grid – Manual [EB/OL]. <a href="https://matchmovemachine.com/howto/">原文链接</a>。 <a href="#citation-27" aria-label="返回引用位置 1">↩</a></li>
+
+  <li id="ref-28" value="28">FAUER J. Paul Cameron, ASC on &quot;21 Bridges&quot; with Scorpio FFA 2x [EB/OL]. Sony Cine, (2020-02-21) <a href="https://sony-cinematography.com/articles/paul-cameron-asc-on-21-bridges-with-scorpio-ffa-2x/">原文链接</a>。 <a href="#citation-28" aria-label="返回引用位置 1">↩</a></li>
+
+  <li id="ref-29" value="29">AMIN J. Shooting Lens Grids [EB/OL]. CAVE Academy, (2022-09-18) <a href="https://caveacademy.com/wiki/onset-production/data-acquisition/data-acquisition-training/shooting-lens-grids/">原文链接</a>。 <a href="#citation-29" aria-label="返回引用位置 1">↩1</a> <a href="#citation-29-2" aria-label="返回引用位置 2">↩2</a></li>
+
+  <li id="ref-30" value="30">MA M, SHAO H, ZHANG J, WANG X, LI G. A calibration method of anamorphic lens camera based on virtual 3D target[C]//2019 IEEE/ASME International Conference on Advanced Intelligent Mechatronics (AIM). Hong Kong, China: IEEE, 2019: 205-210. <a href="#citation-30" aria-label="返回引用位置 1">↩</a></li>
+
+  <li id="ref-33" value="33">Imatest LLC. Lens Testing [EB/OL]. <a href="https://www.imatest.com/solutions/lens/">原文链接</a>。 <a href="#citation-33" aria-label="返回引用位置 1">↩</a></li>
+
+  <li id="ref-34" value="34">Imatest LLC. MTF curves and Image appearance [EB/OL]. <a href="https://www.imatest.com/imaging/mtf_appearance/">原文链接</a>。 <a href="#citation-34" aria-label="返回引用位置 1">↩1</a> <a href="#citation-34-2" aria-label="返回引用位置 2">↩2</a></li>
+
+  <li id="ref-36" value="36">MACHU G. ARRI ALEXA 35 Lab Test: Rolling Shutter, Dynamic Range and Latitude – plus Video! [EB/OL]. CineD, (2022-08-17) <a href="https://www.cined.com/arri-alexa-35-lab-test-rolling-shutter-dynamic-range-and-latitude-plus-video/">原文链接</a>。 <a href="#citation-36" aria-label="返回引用位置 1">↩</a></li>
+
+  <li id="ref-37" value="37">Blackmagic Design. Blackmagic Camera Readout Speeds [EB/OL]. Blackmagic Design Forum, (2022-03-02) <a href="https://forum.blackmagicdesign.com/viewtopic.php?f=2&amp;t=156200">原文链接</a>。 <a href="#citation-37" aria-label="返回引用位置 1">↩</a></li>
+
+  <li id="ref-38" value="38">LEITNER N. DJI Ronin 4D Review – This is the Ultimate Stabilized Camera [EB/OL]. CineD, (2021-10-20) <a href="https://www.cined.com/dji-ronin-4d-review-this-is-the-ultimate-stabilized-camera/">原文链接</a>。 <a href="#citation-38" aria-label="返回引用位置 1">↩</a></li>
+
+  <li id="ref-39" value="39">MACHU G. RED V-RAPTOR 8K VV Lab Test: Rolling Shutter, Dynamic Range and Latitude – plus Video! [EB/OL]. CineD, (2022-11-03) <a href="https://www.cined.com/red-v-raptor-8k-vv-lab-test-rolling-shutter-dynamic-range-and-latitude-plus-video/">原文链接</a>。 <a href="#citation-39" aria-label="返回引用位置 1">↩</a></li>
+
+  <li id="ref-40" value="40">MACHU G. Sony VENICE 2 Lab Test – Rolling Shutter, Dynamic Range, and Latitude [EB/OL]. CineD, (2022-06-07) <a href="https://www.cined.com/sony-venice-2-lab-test-rolling-shutter-dynamic-range-and-latitude/">原文链接</a>。 <a href="#citation-40" aria-label="返回引用位置 1">↩</a></li>
+
+</ol>
+
+    </div>
+
+  </article>
+</div>
+<!-- end post -->
+
+
+    <!--
+        Bookshop components are accessed using the bookshop tag,
+        using the same syntax as the standard Jekyll include tag.
+    -->
+    <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(page.jekyll.html) params(content_blocks=page.content_blocks page_theme=page.page_theme) context() -->
+
+
+<!--bookshop-live end-->
+
+    
+      <div class="container">
+        <div class="row">
+          <div class="col col-10 col-d-12 push-d-0 push-1">
+            <div class="post__navigation animate">
+  
+  <a class="post__prev" href="/blog/anamorphic-6-field-use-closeup">
+    <div class="prev__image">
+      <img loading="lazy" src="/images/anamorphic-3-2-1-1.jpg" alt="毕业论文分享（五）：变形镜头测试">
+    </div>
+    <div class="prev__box">
+      <span class="post__nav post__nav__prev">Prev post</span>
+      <h2 class="post__nav__title">毕业论文分享（六）：变形镜头的风险规避与近摄屈光镜</h2>
+    </div>
+  </a>
+  
+
+  
+  <a class="post__next" href="/blog/anamorphic-4-challenges">
+    <div class="next__box">
+      <span class="post__nav post__nav__next">Next post</span>
+      <h2 class="post__nav__title">毕业论文分享（四）：变形镜头在制作中的问题</h2>
+    </div>
+    <div class="next__image">
+      <img loading="lazy" src="/images/anamorphic-fig-2-1-1.webp" alt="毕业论文分享（五）：变形镜头测试">
+    </div>
+  </a>
+  
+</div>
+          </div>
+        </div>
+      </div>
+      
+      
+
+
+
+<div class="container">
+  <section class="related-posts is-related animate" aria-labelledby="related-posts-heading">
+    <div class="section__info">
+      <div class="section__head">
+        <h2 class="section__title" id="related-posts-heading">You may also like</h2>
+        <a class="section__link" href="/blog/">All posts <i class="ion ion-md-arrow-forward" aria-hidden="true"></i></a>
+      </div>
+    </div>
+    <div class="row">
+  
+    
+      
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+          
+          
+      
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[4]) -->
+
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/anamorphic-deskew-dctl">
+        <img loading="lazy" src="/images/2025-12-18-dctl.png" alt="“歪”变宽校正 DCTL">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        
+        <a href="/tag/后期制作" class="c-blog-card__tag">后期制作</a>
+        
+        <a href="/tag/工具分享" class="c-blog-card__tag">工具分享</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/anamorphic-deskew-dctl">“歪”变宽校正 DCTL</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        上个月，我的论文《**影视制作中变形镜头装配偏斜检测及画面校正方法研究**》发表于《现代电影技术》。在这里再次感谢屈老师、陈老师在研究与写作过程中的指导，也感谢《现代电影技术》的老师们的专业帮助。如果你对**变形宽银幕镜头**感兴趣，...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2025-12-18T12:06:00+08:00">18 Dec 2025</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+        
+        
+      
+    
+  
+    
+      
+      
+        
+          
+          
+      
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[5]) -->
+
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/anamorphic-1-history">
+        <img loading="lazy" src="/images/anamorphic-fig-1-1-1.jpg" alt="毕业论文分享（一）：变形镜头的历史发展">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        
+        <a href="/tag/学术研究" class="c-blog-card__tag">学术研究</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/anamorphic-1-history">毕业论文分享（一）：变形镜头的历史发展</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        这是我的本科毕业论文《**电影制作中变形镜头的应用流程优化研究**》。我准备把论文正文按章节整理成几篇文章，在这里分次分享给大家。这一篇是第一章“变形镜头概述”的第一小节。
+
+# 1. 变形镜头概述
+
+## 1.1 历史发展
+
+20 ...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2025-06-06T00:07:00+08:00">06 Jun 2025</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+        
+        
+      
+    
+  
+    
+      
+      
+        
+          
+          
+      
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[6]) -->
+
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/anamorphic-2-characteristics">
+        <img loading="lazy" src="/images/anamorphic-fig-1-2-5-1.jpg" alt="毕业论文分享（二）：变形镜头的成像特性">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        
+        <a href="/tag/学术研究" class="c-blog-card__tag">学术研究</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/anamorphic-2-characteristics">毕业论文分享（二）：变形镜头的成像特性</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        变形镜头带来的视觉风格，远不止更宽的画幅。接着[上一篇的历史回顾](/blog/anamorphic-lens-history)，这一篇分享毕业论文的 1.2 节“成像特性”：从双平面对称性出发，讨论视场角、景深与散景，再看光晕、畸变...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2025-06-06T00:06:00+08:00">06 Jun 2025</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+        
+        
+</div>
+  </section>
+</div>
+
+
+    
+
+    <button class="top" type="button" aria-label="Back to top"><i class="ion ion-ios-arrow-up" aria-hidden="true"></i></button>
+
+    <!-- begin footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col col-12">
+
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(social-link.jekyll.html) params() context() -->
+
+<div class="social">
+  <ul class="social__list list-reset">
+    
+    <li class="social__item">
+      <a class="social__link" href="https://weibo.com/StephenYKQ" target="_blank" rel="noopener" aria-label="weibo icon">
+        
+          <svg viewBox="0 0 800 649.5" width="17" height="17" fill="currentColor" class="weibo-icon" style="vertical-align: middle; position: relative;">
+            <path d="m336.6,602.3c-132.6,13-247.1-46.9-255.7-134-8.6-87,91.9-168.2,224.6-181.4,132.7-13.2,247.1,46.7,255.7,133.8,8.7,86.7-91.9,168.4-224.5,181.4h-.1Zm-34.9-103.5c-12.9,20.6-40.2,29.4-60.9,20.1-20.4-9.3-26.4-33.1-13.5-53.1,12.6-19.8,39.2-28.6,59.8-19.9,20.7,8.7,27.3,32.3,14.7,53Zm42.3-54.2c-4.7,7.8-15,11.7-22.9,8.3-7.9-3-10.5-12-6-19.5,4.7-7.6,14.6-11.5,22.4-8,7.9,3,10.5,12,6,20.1l.5-.9Zm5.9-90.8c-63.2-16.4-134.4,15.1-161.8,70.7-27.9,56.8-.9,119.6,62.8,140.2,66.1,21.4,144-11.3,171.1-72.5,26.7-59.8-6.7-121.5-72-138.4Zm252.1-40.7c-11.5-3.5-19-6-13.5-20.4,12.5-32.6,14.1-60.2,0-80.2-26-37-97.1-35-178.8-.9,0,0-25.5,10.9-19-9.1,12.5-40.5,10.6-74.1-9-93.6-44.7-44.5-162.4,1.6-262.9,102.7C43.6,287.1,0,367.2,0,436.4c0,132.7,169.9,213.2,336.2,213.2s362.9-126.7,362.9-227.3-51.6-95.1-97.1-109.4v.3Zm63.7-169.7c-25.7-28.6-63.7-39.6-98.7-32.2-14.6,3-23.6,17.1-20.6,31.1,3,13.9,17,23,31.1,20.1,17-3.5,35.6,1.4,48.1,15.5s15.5,32.6,10.6,49.1c-4.5,13.5,3,28.5,16.9,33.1,13.5,4,28.6-3.5,33.1-17.1,11.1-34,4-72.7-21.5-101.2l1,1.5Zm80.6-73.2C693.6,11.6,616-10.5,544.4,4.6c-16.5,3.4-27.1,19.5-23.6,36.1s19.5,27.1,36.1,23.6c51-11.1,106.1,4.9,143.2,46.1,37,41.5,47.7,98,31.5,147.1-5.5,16,3.5,33.6,19.5,38.5,16,5.6,33.1-3.4,38.5-19.5,22.5-69.5,8.1-149.2-44.5-207.8l1,1.6Z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://github.com/StephenYKQ" target="_blank" rel="noopener" aria-label="github icon">
+        
+          <i class="ion ion-logo-github"></i>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://instagram.com/stephenykq/" target="_blank" rel="noopener" aria-label="instagram icon">
+        
+          <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" class="instagram-icon" style="vertical-align: middle; position: relative;">
+            <path d="M20.445 5h-8.891A6.559 6.559 0 0 0 5 11.554v8.891A6.559 6.559 0 0 0 11.554 27h8.891a6.56 6.56 0 0 0 6.554-6.555v-8.891A6.557 6.557 0 0 0 20.445 5zm4.342 15.445a4.343 4.343 0 0 1-4.342 4.342h-8.891a4.341 4.341 0 0 1-4.341-4.342v-8.891a4.34 4.34 0 0 1 4.341-4.341h8.891a4.342 4.342 0 0 1 4.341 4.341l.001 8.891z"/>
+            <path d="M16 10.312c-3.138 0-5.688 2.551-5.688 5.688s2.551 5.688 5.688 5.688 5.688-2.551 5.688-5.688-2.55-5.688-5.688-5.688zm0 9.163a3.475 3.475 0 1 1-.001-6.95 3.475 3.475 0 0 1 .001 6.95zM21.7 8.991a1.363 1.363 0 1 1-1.364 1.364c0-.752.51-1.364 1.364-1.364z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://youtube.com/@stephenykq" target="_blank" rel="noopener" aria-label="youtube icon">
+        
+          <i class="ion ion-logo-youtube"></i>
+        
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+<!--bookshop-live end-->
+
+        <ul class="footer_nav list-reset">
+          
+          <li class="footer_nav__item">
+            <a href="/" class="footer_nav__link">Home</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/projects/" class="footer_nav__link">Projects</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/contact/" class="footer_nav__link">Contact</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/about/" class="footer_nav__link">About</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/blog/" class="footer_nav__link">Blog</a>
+          </li>
+          
+        </ul>
+
+        <div class="copyright"><p> 2025 &copy; <a href="/">STECAGE 斯特拉吉</a></div>
+
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- end footer -->
+
+    <script src="/js/scripts.js"></script>
+    <script src="/js/common.js"></script>
+</body>
+</html>

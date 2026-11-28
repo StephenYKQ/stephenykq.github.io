@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121212">
+  <meta name="google-site-verification" content="ob0b-vF5pnuPBcij_2UTn3m7Kh6Pkxob0ZylZpvFaC8" />
+
+  <title>毕业论文分享（七）：变形镜头的数字后期修复</title>
+  <meta name='description' content='Welcome to the home of Stephen Yang Kaiqi! :)'>
+
+  <link rel="canonical" href="/blog/anamorphic-7-digital-post-fix">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="毕业论文分享（七）：变形镜头的数字后期修复 – STECAGE 斯特拉吉">
+  <meta name="twitter:description" content="这一篇分享论文第 3.4 节“数字后期修复”，从变形镜组偏斜的剪切与旋转校正讲到 Nuke 中的镜头畸变处理，并整理相应流程和适用范围。
+">
+  <meta name="twitter:image:src" content="/images/anamorphic-fig-3-4-2-2_sub1.webp">
+
+  <!-- Facebook OpenGraph -->
+  <meta property="og:title" content="毕业论文分享（七）：变形镜头的数字后期修复 – STECAGE 斯特拉吉">
+  <meta property="og:description" content="这一篇分享论文第 3.4 节“数字后期修复”，从变形镜组偏斜的剪切与旋转校正讲到 Nuke 中的镜头畸变处理，并整理相应流程和适用范围。
+">
+  <meta property="og:image" content="/images/anamorphic-fig-3-4-2-2_sub1.webp">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- Ionicons -->
+  <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/main.css">
+</head>
+
+
+<body>
+
+    
+
+    <!-- begin header -->
+<header class="c-header">
+  <div class="container">
+    <div class="row">
+      <div class="c-header__inner">
+
+        <div class="logo">
+          <a class="logo__link" href="/">
+          
+            <img class="logo__image" src="/images/logo.svg" alt="STECAGE 斯特拉吉">
+          
+          </a>
+        </div>
+
+        <nav class="main-nav" id="main-navigation" aria-label="Main navigation">
+          <div class="main-nav__box">
+
+            <button type="button" class="nav__icon-close" aria-label="Close menu">
+              <i class="ion ion-md-close" aria-hidden="true"></i>
+            </button>
+
+            <div class="nav__title">Menu</div>
+
+              <ul class="nav__list list-reset">
+
+              
+                
+                <li class="nav__item">
+                  <a href="/" class="nav__link">Home</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/projects/" class="nav__link">Projects</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/blog/" class="nav__link">Blog</a>
+                </li>
+                
+              
+                
+                <li class="nav__item dropdown">
+                  <span class="nav__link dropdown-toggle" tabindex="0">Pages <i class="ion ion-ios-arrow-down arrow-down" aria-hidden="true"></i></span>
+                  <div class="dropdown-menu">
+                    
+                      <a href="/about/" class="nav__link">About</a>
+                    
+                      <a href="/contact/" class="nav__link">Contact</a>
+                    
+                  </div>
+                </li>
+
+                
+              
+
+            </ul>
+          </div>
+
+          <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(social-link.jekyll.html) params() context() -->
+
+<div class="social">
+  <ul class="social__list list-reset">
+    
+    <li class="social__item">
+      <a class="social__link" href="https://weibo.com/StephenYKQ" target="_blank" rel="noopener" aria-label="weibo icon">
+        
+          <svg viewBox="0 0 800 649.5" width="17" height="17" fill="currentColor" class="weibo-icon" style="vertical-align: middle; position: relative;">
+            <path d="m336.6,602.3c-132.6,13-247.1-46.9-255.7-134-8.6-87,91.9-168.2,224.6-181.4,132.7-13.2,247.1,46.7,255.7,133.8,8.7,86.7-91.9,168.4-224.5,181.4h-.1Zm-34.9-103.5c-12.9,20.6-40.2,29.4-60.9,20.1-20.4-9.3-26.4-33.1-13.5-53.1,12.6-19.8,39.2-28.6,59.8-19.9,20.7,8.7,27.3,32.3,14.7,53Zm42.3-54.2c-4.7,7.8-15,11.7-22.9,8.3-7.9-3-10.5-12-6-19.5,4.7-7.6,14.6-11.5,22.4-8,7.9,3,10.5,12,6,20.1l.5-.9Zm5.9-90.8c-63.2-16.4-134.4,15.1-161.8,70.7-27.9,56.8-.9,119.6,62.8,140.2,66.1,21.4,144-11.3,171.1-72.5,26.7-59.8-6.7-121.5-72-138.4Zm252.1-40.7c-11.5-3.5-19-6-13.5-20.4,12.5-32.6,14.1-60.2,0-80.2-26-37-97.1-35-178.8-.9,0,0-25.5,10.9-19-9.1,12.5-40.5,10.6-74.1-9-93.6-44.7-44.5-162.4,1.6-262.9,102.7C43.6,287.1,0,367.2,0,436.4c0,132.7,169.9,213.2,336.2,213.2s362.9-126.7,362.9-227.3-51.6-95.1-97.1-109.4v.3Zm63.7-169.7c-25.7-28.6-63.7-39.6-98.7-32.2-14.6,3-23.6,17.1-20.6,31.1,3,13.9,17,23,31.1,20.1,17-3.5,35.6,1.4,48.1,15.5s15.5,32.6,10.6,49.1c-4.5,13.5,3,28.5,16.9,33.1,13.5,4,28.6-3.5,33.1-17.1,11.1-34,4-72.7-21.5-101.2l1,1.5Zm80.6-73.2C693.6,11.6,616-10.5,544.4,4.6c-16.5,3.4-27.1,19.5-23.6,36.1s19.5,27.1,36.1,23.6c51-11.1,106.1,4.9,143.2,46.1,37,41.5,47.7,98,31.5,147.1-5.5,16,3.5,33.6,19.5,38.5,16,5.6,33.1-3.4,38.5-19.5,22.5-69.5,8.1-149.2-44.5-207.8l1,1.6Z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://github.com/StephenYKQ" target="_blank" rel="noopener" aria-label="github icon">
+        
+          <i class="ion ion-logo-github"></i>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://instagram.com/stephenykq/" target="_blank" rel="noopener" aria-label="instagram icon">
+        
+          <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" class="instagram-icon" style="vertical-align: middle; position: relative;">
+            <path d="M20.445 5h-8.891A6.559 6.559 0 0 0 5 11.554v8.891A6.559 6.559 0 0 0 11.554 27h8.891a6.56 6.56 0 0 0 6.554-6.555v-8.891A6.557 6.557 0 0 0 20.445 5zm4.342 15.445a4.343 4.343 0 0 1-4.342 4.342h-8.891a4.341 4.341 0 0 1-4.341-4.342v-8.891a4.34 4.34 0 0 1 4.341-4.341h8.891a4.342 4.342 0 0 1 4.341 4.341l.001 8.891z"/>
+            <path d="M16 10.312c-3.138 0-5.688 2.551-5.688 5.688s2.551 5.688 5.688 5.688 5.688-2.551 5.688-5.688-2.55-5.688-5.688-5.688zm0 9.163a3.475 3.475 0 1 1-.001-6.95 3.475 3.475 0 0 1 .001 6.95zM21.7 8.991a1.363 1.363 0 1 1-1.364 1.364c0-.752.51-1.364 1.364-1.364z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://youtube.com/@stephenykq" target="_blank" rel="noopener" aria-label="youtube icon">
+        
+          <i class="ion ion-logo-youtube"></i>
+        
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+<!--bookshop-live end-->
+        </nav>
+
+        <div class="nav-button">
+          <button type="button" class="nav__icon nav__icon-menu ion ion-md-menu" aria-label="Open menu" aria-controls="main-navigation" aria-expanded="false"></button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</header>
+<!-- end header -->
+
+
+    
+
+
+
+
+
+
+
+
+<header class="post-top post-top--article animate">
+  <div class="container">
+    <div class="post-heading post-heading--desktop-text post-heading--mobile-text">
+        <div class="post__info">
+
+          
+          <div class="post-tags">
+            
+              <a href="/tag/镜头光学" class="post-tags__tag">镜头光学</a>
+            
+              <a href="/tag/学术研究" class="post-tags__tag">学术研究</a>
+            
+          </div>
+          
+
+
+          <h1 class="post__title">毕业论文分享（七）：变形镜头的数字后期修复</h1>
+
+          <div class="post__meta">
+            <div class="post__author-image">
+              <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+            </div>
+
+            <div class="post__meta-bottom">
+              <div class="post__author">Stephen Yang Kaiqi</div>
+              <time class="post__date" datetime="2025-06-06T00:01:00+08:00">06 Jun 2025</time>
+            </div>
+          </div>
+
+        </div>
+      
+    </div>
+  </div>
+</header>
+
+<!-- begin post -->
+<div class="container animate">
+
+  <article class="post">
+
+    <div class="post__content">
+      <p>这一篇分享论文第 3.4 节“数字后期修复”，从变形镜组偏斜的剪切与旋转校正讲到 Nuke 中的镜头畸变处理，并整理相应流程和适用范围。</p>
+
+<h2 id="34-数字后期修复">3.4 数字后期修复</h2>
+
+<h3 id="341-偏斜校正">3.4.1 偏斜校正</h3>
+
+<p>由变形镜组偏斜引起的图像畸变，虽源于光学结构问题，但仍可在数字后期中通过二维线性几何变换方法进行一定程度的校正。</p>
+
+<p>其通常包含两部分校正：一是压缩方向的偏移，数学上对应剪切变换（shear transformation）；二是图像整体的倾斜，对应旋转变换（rotation transformation）。在轻微偏斜情况下，通常仅需剪切变换即可有效校正，该操作可在图像反挤压前后任一阶段完成。但当偏斜较为严重时，需先进行剪切变换，再进行旋转校正。为获得更佳效果，建议在图像反挤压前处理原始图像，校正完成后再进行反挤压。</p>
+
+<p>首先，压缩方向的偏移本质上是空间坐标系下的非正交仿射变换。设成像器平面坐标系为 (<em>x</em>, <em>y</em>)，理想情况下柱面透镜的压缩方向应与 <em>x</em> 轴平行；当存在偏斜角 <em>θ</em> 时，实际压缩方向沿单位向量 <em>v</em> = (cos <em>θ</em>, sin <em>θ</em>)，导致画面在 <em>v</em> 方向被压缩，而垂直于 <em>v</em> 的方向保持原比例。此过程可建模为线性变换矩阵：</p>
+
+<div class="thesis-equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>T</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn><mspace width="0.222em"></mspace><mo>−</mo><mi>k</mi><mspace width="0.222em"></mspace><mi>c</mi><mi>o</mi><msup><mi>s</mi><mn>2</mn></msup><mi>θ</mi></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mi>k</mi><mspace width="0.222em"></mspace><mi>c</mi><mi>o</mi><mi>s</mi><mi>θ</mi><mspace width="0.222em"></mspace><mo>sin</mo><mi>θ</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow></semantics></math></div>
+
+<p>其中 <em>k</em> 为变形镜头的压缩比的倒数（如 2 倍变形对应 <em>k</em> = 0.5）。</p>
+
+<p>校正的目标是构造逆变换 <em>T</em><sup> </sup><sup>−1</sup>，其本质是在图像空间施加水平剪切变换，而非整体旋转。如图 3.4.1.1 所示，原矩形图像被“斜拉”成一个平行四边形，图像中原本的垂直线条仍然保持垂直，高度不变。</p>
+
+<p>该变换仅调整像素的 <em>x</em> 坐标，保持 <em>y</em> 坐标不变。</p>
+
+<figure class="thesis-figure thesis-figure--small thesis-figure--with-frame">
+  <img style="--image-native-width: 1039px; --image-ratio: 2.664102564103; --image-aspect-ratio: 1039 / 390;" width="1039" height="390" src="/images/anamorphic-fig-3-4-1-1.png" alt="图 3.4.1.1 水平剪切变换示意图" loading="lazy" />
+  <figcaption>图 3.4.1.1 水平剪切变换示意图</figcaption>
+</figure>
+
+<p>校正矩阵为：</p>
+
+<div class="thesis-equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>H</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>tan</mo><mi>α</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow></semantics></math></div>
+
+<p>其中，剪切角 <em>α</em> 需满足几何约束：</p>
+
+<div class="thesis-equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo>tan</mo><mi>α</mi><mo>=</mo><mfrac><mrow><mi>k</mi><mspace width="0.222em"></mspace><mo>sin</mo><mi>θ</mi></mrow><mrow><mn>1</mn><mo>−</mo><mi>k</mi><mspace width="0.222em"></mspace><mo>cos</mo><mi>θ</mi></mrow></mfrac></mrow></semantics></math></div>
+
+<p>在实践中，对于校正轻度偏斜的已反挤压素材，剪切角 <em>α</em> 可近似取为原始偏斜角 <em>θ</em>。尽管如此，仍然建议在发现问题时，现场测量并记录偏斜角的度数。</p>
+
+<p>剪切变换能够恢复画面的比例关系，纠正压缩方向的偏移，但无法解决图像整体的倾斜问题。即使完成剪切校正后，画面仍可能保持一定角度的倾斜。这是因为经过变形镜组后的成像光路并非垂直投射于成像器，而是以一定角度“斜投”于其上，导致整体成像出现旋转偏差。因此，还需通过额外的旋转变换来调整画面方向，使其恢复到拍摄时摄影机的横滚轴姿态。</p>
+
+<p>旋转变换可表示为二维旋转矩阵：</p>
+
+<div class="thesis-equation"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>R</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>φ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mo>cos</mo><mi>φ</mi></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mi>s</mi><mi>i</mi><mi>n</mi><mi>φ</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>sin</mo><mi>φ</mi></mtd><mtd columnalign="center" style="text-align: center"><mo>cos</mo><mi>φ</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow></semantics></math></div>
+
+<p>其中，<em>φ</em> 为旋转角度，正值表示逆时针旋转。将图像坐标与旋转矩阵相乘，即可实现画面整体方向的校正。由于旋转角度通常需要结合辅助线或画面中的参照物人工确定，建议更换故障镜头前，拍摄十字测试图样，以供后期校正参考。</p>
+
+<figure class="thesis-figure thesis-figure--small thesis-figure--with-frame">
+  <img style="--image-native-width: 1066px; --image-ratio: 1.800675675676; --image-aspect-ratio: 1066 / 592;" width="1066" height="592" src="/images/anamorphic-fig-3-4-1-2.png" alt="图 3.4.1.2 剪切变换加旋转变换示意图" loading="lazy" />
+  <figcaption>图 3.4.1.2 剪切变换加旋转变换示意图</figcaption>
+</figure>
+
+<p>然而，这种校正方法通常会导致画面边缘部分像素的丢失，从而产生画幅裁切。变形镜组偏斜的角度越大，校正后损失的画面越多。具体来说，经过水平剪切变换和旋转变换校正后，原始矩形画面被映射为一个倾斜的平行四边形（如图 3.4.1.2 中阴影部分所示）。在该平行四边形内，需选取一个与坐标轴 <em>x</em> 轴平行的最大面积内接矩形（如图 3.4.1.3 中白色部分所示，此时阴影为舍弃部分）作为有效画面区域，因此不可避免地会造成视场角的缩减和分辨率的下降。</p>
+
+<figure class="thesis-figure thesis-figure--small">
+  <img style="--image-native-width: 1066px; --image-ratio: 1.800675675676; --image-aspect-ratio: 1066 / 592;" width="1066" height="592" src="/images/anamorphic-fig-3-4-1-3.png" alt="图 3.4.1.3 最大内接矩形裁剪区域示意图" loading="lazy" />
+  <figcaption>图 3.4.1.3 最大内接矩形裁剪区域示意图</figcaption>
+</figure>
+
+<p>上述的平行四边形校正可以通过如 Adobe After Effects 软件中的角钉工具（corner pins）进行。以达芬奇（DaVinci Resolve）软件为例，其 Fusion 面板或 Open FX 中 Transform 工具的交互式锚点（interactive pins）可以选定图像的 3 个角点并拖动微调位置，从而修正压缩方向的偏移。</p>
+
+<p>需要注意的是，这类锚点工具在底层实现上更接近投影变换或单应性变换。拖动锚点校正偏斜时，应尽可能保持水平剪切变换的几何特性，避免引入比例失衡。具体操作可根据画面内容和创作需求调整。</p>
+
+<p>上述变换属于二维平面上的线性操作，无法修复因柱面透镜倾斜所引起的三维光路偏移。由成像光路与感光面夹角造成的变形光晕倾斜，也无法通过此类方法校正。尽管数字后期处理较为便捷，拍摄现场及时识别并更换存在偏斜问题的镜头，仍是更理想、可靠的解决方案。</p>
+
+<p>在视效制作中，三维透视校准算法基于直线透视原理，包括变形镜组偏斜在内的任何畸变都会干扰计算机对场景结构的识别。因此，视效流程严格遵循几何归一化（geometric normalization）预处理原则：将原始图像转为“理想镜头”的状态。在此标准化基础上完成三维反求与合成后，再通过属性逆向还原（attribute reapplication）恢复原始镜头的畸变特性，确保合成结果与实拍画面的光学一致性。</p>
+
+<h3 id="342-畸变校正">3.4.2 畸变校正</h3>
+
+<p>使用 Nuke 进行畸变校正十分常见且高效。用户可导入棋盘格或其他几何测试图样，通过“LensDistortion”（镜头畸变）节点建立畸变模型，Nuke 内置多种畸变解算模型（均支持变形镜头），也支持自定义模型。根据所选模型，会有不同的参数控制项，本文以 NukeX Classic 为例。</p>
+
+<p>如图 3.4.2.1 所示，对于变形镜头，LensDistortion 节点额外提供下列参数设置：“anamorphicSqueeze”（变形挤压）：设定压缩比，用于调整 X 轴系数；“anamorphicTwist”（变形旋转）：设定变形镜组偏斜度数，用于补偿偏斜对畸变校正的影响（不建议使用，建议优先采用前文所述的剪切变换单独校正偏斜）；“anamorphicScale”（变形缩放）：补偿呼吸效应引起的焦距变化。</p>
+
+<p>而其他节点中出现的“Asymmetric Distortion”（非对称畸变）则用于校正变形镜头图像边缘的拉伸或压缩。尽管 Nuke 提供了面向变形镜头的细化参数控制，但在多数制作场景中可简化处理，直接按球面镜头校正即可满足需求。</p>
+
+<figure class="thesis-figure thesis-figure--pair">
+  <img style="--image-native-width: 714px; --image-ratio: 1.142400000000; --image-aspect-ratio: 714 / 625;" width="714" height="625" src="/images/anamorphic-fig-3-4-2-1_sub1.png" alt="图 3.4.2.1 Nuke 中的 LensDistortion 节点（子图 1）" loading="lazy" />
+  <img style="--image-native-width: 714px; --image-ratio: 1.142400000000; --image-aspect-ratio: 714 / 625;" width="714" height="625" src="/images/anamorphic-fig-3-4-2-1_sub2.png" alt="图 3.4.2.1 Nuke 中的 LensDistortion 节点（子图 2）" loading="lazy" />
+  <figcaption>图 3.4.2.1 Nuke 中的 LensDistortion 节点</figcaption>
+</figure>
+
+<p>操作流程包括：在“Grid Detect”（网格检测）面板中让软件自动识别图样，点击“Solve”（解算）得出畸变系数，生成初步曲线后可手动微调。所建立畸变模型可用于去除畸变（undistort），也可导出为 STMap 供后续节点调用。</p>
+
+<figure class="thesis-figure thesis-figure--stacked">
+  <img style="--image-native-width: 1754px; --image-ratio: 2.784126984127; --image-aspect-ratio: 1754 / 630;" width="1754" height="630" src="/images/anamorphic-fig-3-4-2-2_sub1.webp" alt="图 3.4.2.2 Nuke 中的畸变校正流程和界面（子图 1）" loading="lazy" />
+  <img style="--image-native-width: 1754px; --image-ratio: 2.784126984127; --image-aspect-ratio: 1754 / 630;" width="1754" height="630" src="/images/anamorphic-fig-3-4-2-2_sub2.webp" alt="图 3.4.2.2 Nuke 中的畸变校正流程和界面（子图 2）" loading="lazy" />
+  <figcaption>图 3.4.2.2 Nuke 中的畸变校正流程和界面</figcaption>
+</figure>
+
+<p>运动跟踪或三维反求时，例如使用 CameraTracker 节点，需输入已知参数如成像器尺寸（Film Back Size）与焦距（Focal Length）。若未启用变形模式，则需要自行将活动轴方向的图像宽度乘以压缩比，得出新的成像器尺寸，以此修正。例如，原 36 mm 宽的图像宽度，在使用 2 倍水平压缩变形镜头时，应设为 72 mm。焦距可按镜筒标注值输入。鉴于不少变形镜头的镜筒标注值存在偏差，同样推荐结合视场角测试校正焦距参数，本文在此不作深入探讨。</p>
+
+<figure class="thesis-figure thesis-figure--small">
+  <img style="--image-native-width: 714px; --image-ratio: 1.142400000000; --image-aspect-ratio: 714 / 625;" width="714" height="625" src="/images/anamorphic-fig-3-4-2-3.png" alt="图 3.4.2.3 Nuke 中的 CameraTracker 节点" loading="lazy" />
+  <figcaption>图 3.4.2.3 Nuke 中的 CameraTracker 节点</figcaption>
+</figure>
+
+<p>合成工作完成后，可重新添加畸变（redistort）。Nuke 所建立的畸变模型可统一应用于同一镜头拍摄的素材，既可用于去除畸变，也可为 CGI 镜头或球面镜头画面添加匹配畸变，以确保光学一致性或实现风格化视觉效果。</p>
+
+<figure class="thesis-figure thesis-figure--with-frame">
+  <img style="--image-native-width: 2500px; --image-ratio: 3.033980582524; --image-aspect-ratio: 2500 / 824;" width="2500" height="824" src="/images/anamorphic-fig-3-4-2-4.png" alt="图 3.4.2.4 变形镜头的后期校正流程" loading="lazy" />
+  <figcaption>图 3.4.2.4 变形镜头的后期校正流程</figcaption>
+</figure>
+
+<p>基于数学模型的精确分析并结合软件工具，偏斜与畸变校正能够有效改善画面的几何准确性，也为视效制作奠定可靠基础。本文尚未涉及像散畸变和呼吸效应的动态标定与校正；这也是变形镜头校正及视效流程中值得继续研究的环节，涉及电子跟焦系统动态元数据的采集与处理。</p>
+
+    </div>
+
+  </article>
+</div>
+<!-- end post -->
+
+
+    <!--
+        Bookshop components are accessed using the bookshop tag,
+        using the same syntax as the standard Jekyll include tag.
+    -->
+    <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(page.jekyll.html) params(content_blocks=page.content_blocks page_theme=page.page_theme) context() -->
+
+
+<!--bookshop-live end-->
+
+    
+      <div class="container">
+        <div class="row">
+          <div class="col col-10 col-d-12 push-d-0 push-1">
+            <div class="post__navigation animate">
+  
+  <a class="post__prev" href="/blog/anamorphic-8-spherical-simulation">
+    <div class="prev__image">
+      <img loading="lazy" src="/images/anamorphic-4-1-1.webp" alt="毕业论文分享（七）：变形镜头的数字后期修复">
+    </div>
+    <div class="prev__box">
+      <span class="post__nav post__nav__prev">Prev post</span>
+      <h2 class="post__nav__title">毕业论文分享（八）：球面镜头模拟变形效果</h2>
+    </div>
+  </a>
+  
+
+  
+  <a class="post__next" href="/blog/anamorphic-6-field-use-closeup">
+    <div class="next__box">
+      <span class="post__nav post__nav__next">Next post</span>
+      <h2 class="post__nav__title">毕业论文分享（六）：变形镜头的风险规避与近摄屈光镜</h2>
+    </div>
+    <div class="next__image">
+      <img loading="lazy" src="/images/anamorphic-3-2-1-1.jpg" alt="毕业论文分享（七）：变形镜头的数字后期修复">
+    </div>
+  </a>
+  
+</div>
+          </div>
+        </div>
+      </div>
+      
+      
+
+
+
+<div class="container">
+  <section class="related-posts is-related animate" aria-labelledby="related-posts-heading">
+    <div class="section__info">
+      <div class="section__head">
+        <h2 class="section__title" id="related-posts-heading">You may also like</h2>
+        <a class="section__link" href="/blog/">All posts <i class="ion ion-md-arrow-forward" aria-hidden="true"></i></a>
+      </div>
+    </div>
+    <div class="row">
+  
+    
+      
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+          
+          
+      
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[4]) -->
+
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/anamorphic-deskew-dctl">
+        <img loading="lazy" src="/images/2025-12-18-dctl.png" alt="“歪”变宽校正 DCTL">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        
+        <a href="/tag/后期制作" class="c-blog-card__tag">后期制作</a>
+        
+        <a href="/tag/工具分享" class="c-blog-card__tag">工具分享</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/anamorphic-deskew-dctl">“歪”变宽校正 DCTL</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        上个月，我的论文《**影视制作中变形镜头装配偏斜检测及画面校正方法研究**》发表于《现代电影技术》。在这里再次感谢屈老师、陈老师在研究与写作过程中的指导，也感谢《现代电影技术》的老师们的专业帮助。如果你对**变形宽银幕镜头**感兴趣，...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2025-12-18T12:06:00+08:00">18 Dec 2025</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+        
+        
+      
+    
+  
+    
+      
+      
+        
+          
+          
+      
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[5]) -->
+
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/anamorphic-1-history">
+        <img loading="lazy" src="/images/anamorphic-fig-1-1-1.jpg" alt="毕业论文分享（一）：变形镜头的历史发展">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        
+        <a href="/tag/学术研究" class="c-blog-card__tag">学术研究</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/anamorphic-1-history">毕业论文分享（一）：变形镜头的历史发展</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        这是我的本科毕业论文《**电影制作中变形镜头的应用流程优化研究**》。我准备把论文正文按章节整理成几篇文章，在这里分次分享给大家。这一篇是第一章“变形镜头概述”的第一小节。
+
+# 1. 变形镜头概述
+
+## 1.1 历史发展
+
+20 ...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2025-06-06T00:07:00+08:00">06 Jun 2025</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+        
+        
+      
+    
+  
+    
+      
+      
+        
+          
+          
+      
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[6]) -->
+
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/anamorphic-2-characteristics">
+        <img loading="lazy" src="/images/anamorphic-fig-1-2-5-1.jpg" alt="毕业论文分享（二）：变形镜头的成像特性">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        
+        <a href="/tag/学术研究" class="c-blog-card__tag">学术研究</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/anamorphic-2-characteristics">毕业论文分享（二）：变形镜头的成像特性</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        变形镜头带来的视觉风格，远不止更宽的画幅。接着[上一篇的历史回顾](/blog/anamorphic-lens-history)，这一篇分享毕业论文的 1.2 节“成像特性”：从双平面对称性出发，讨论视场角、景深与散景，再看光晕、畸变...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2025-06-06T00:06:00+08:00">06 Jun 2025</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+        
+        
+</div>
+  </section>
+</div>
+
+
+    
+
+    <button class="top" type="button" aria-label="Back to top"><i class="ion ion-ios-arrow-up" aria-hidden="true"></i></button>
+
+    <!-- begin footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col col-12">
+
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(social-link.jekyll.html) params() context() -->
+
+<div class="social">
+  <ul class="social__list list-reset">
+    
+    <li class="social__item">
+      <a class="social__link" href="https://weibo.com/StephenYKQ" target="_blank" rel="noopener" aria-label="weibo icon">
+        
+          <svg viewBox="0 0 800 649.5" width="17" height="17" fill="currentColor" class="weibo-icon" style="vertical-align: middle; position: relative;">
+            <path d="m336.6,602.3c-132.6,13-247.1-46.9-255.7-134-8.6-87,91.9-168.2,224.6-181.4,132.7-13.2,247.1,46.7,255.7,133.8,8.7,86.7-91.9,168.4-224.5,181.4h-.1Zm-34.9-103.5c-12.9,20.6-40.2,29.4-60.9,20.1-20.4-9.3-26.4-33.1-13.5-53.1,12.6-19.8,39.2-28.6,59.8-19.9,20.7,8.7,27.3,32.3,14.7,53Zm42.3-54.2c-4.7,7.8-15,11.7-22.9,8.3-7.9-3-10.5-12-6-19.5,4.7-7.6,14.6-11.5,22.4-8,7.9,3,10.5,12,6,20.1l.5-.9Zm5.9-90.8c-63.2-16.4-134.4,15.1-161.8,70.7-27.9,56.8-.9,119.6,62.8,140.2,66.1,21.4,144-11.3,171.1-72.5,26.7-59.8-6.7-121.5-72-138.4Zm252.1-40.7c-11.5-3.5-19-6-13.5-20.4,12.5-32.6,14.1-60.2,0-80.2-26-37-97.1-35-178.8-.9,0,0-25.5,10.9-19-9.1,12.5-40.5,10.6-74.1-9-93.6-44.7-44.5-162.4,1.6-262.9,102.7C43.6,287.1,0,367.2,0,436.4c0,132.7,169.9,213.2,336.2,213.2s362.9-126.7,362.9-227.3-51.6-95.1-97.1-109.4v.3Zm63.7-169.7c-25.7-28.6-63.7-39.6-98.7-32.2-14.6,3-23.6,17.1-20.6,31.1,3,13.9,17,23,31.1,20.1,17-3.5,35.6,1.4,48.1,15.5s15.5,32.6,10.6,49.1c-4.5,13.5,3,28.5,16.9,33.1,13.5,4,28.6-3.5,33.1-17.1,11.1-34,4-72.7-21.5-101.2l1,1.5Zm80.6-73.2C693.6,11.6,616-10.5,544.4,4.6c-16.5,3.4-27.1,19.5-23.6,36.1s19.5,27.1,36.1,23.6c51-11.1,106.1,4.9,143.2,46.1,37,41.5,47.7,98,31.5,147.1-5.5,16,3.5,33.6,19.5,38.5,16,5.6,33.1-3.4,38.5-19.5,22.5-69.5,8.1-149.2-44.5-207.8l1,1.6Z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://github.com/StephenYKQ" target="_blank" rel="noopener" aria-label="github icon">
+        
+          <i class="ion ion-logo-github"></i>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://instagram.com/stephenykq/" target="_blank" rel="noopener" aria-label="instagram icon">
+        
+          <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" class="instagram-icon" style="vertical-align: middle; position: relative;">
+            <path d="M20.445 5h-8.891A6.559 6.559 0 0 0 5 11.554v8.891A6.559 6.559 0 0 0 11.554 27h8.891a6.56 6.56 0 0 0 6.554-6.555v-8.891A6.557 6.557 0 0 0 20.445 5zm4.342 15.445a4.343 4.343 0 0 1-4.342 4.342h-8.891a4.341 4.341 0 0 1-4.341-4.342v-8.891a4.34 4.34 0 0 1 4.341-4.341h8.891a4.342 4.342 0 0 1 4.341 4.341l.001 8.891z"/>
+            <path d="M16 10.312c-3.138 0-5.688 2.551-5.688 5.688s2.551 5.688 5.688 5.688 5.688-2.551 5.688-5.688-2.55-5.688-5.688-5.688zm0 9.163a3.475 3.475 0 1 1-.001-6.95 3.475 3.475 0 0 1 .001 6.95zM21.7 8.991a1.363 1.363 0 1 1-1.364 1.364c0-.752.51-1.364 1.364-1.364z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://youtube.com/@stephenykq" target="_blank" rel="noopener" aria-label="youtube icon">
+        
+          <i class="ion ion-logo-youtube"></i>
+        
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+<!--bookshop-live end-->
+
+        <ul class="footer_nav list-reset">
+          
+          <li class="footer_nav__item">
+            <a href="/" class="footer_nav__link">Home</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/projects/" class="footer_nav__link">Projects</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/contact/" class="footer_nav__link">Contact</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/about/" class="footer_nav__link">About</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/blog/" class="footer_nav__link">Blog</a>
+          </li>
+          
+        </ul>
+
+        <div class="copyright"><p> 2025 &copy; <a href="/">STECAGE 斯特拉吉</a></div>
+
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- end footer -->
+
+    <script src="/js/scripts.js"></script>
+    <script src="/js/common.js"></script>
+</body>
+</html>

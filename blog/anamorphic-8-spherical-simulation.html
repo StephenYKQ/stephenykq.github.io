@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121212">
+  <meta name="google-site-verification" content="ob0b-vF5pnuPBcij_2UTn3m7Kh6Pkxob0ZylZpvFaC8" />
+
+  <title>毕业论文分享（八）：球面镜头模拟变形效果</title>
+  <meta name='description' content='Welcome to the home of Stephen Yang Kaiqi! :)'>
+
+  <link rel="canonical" href="/blog/anamorphic-8-spherical-simulation">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="毕业论文分享（八）：球面镜头模拟变形效果 – STECAGE 斯特拉吉">
+  <meta name="twitter:description" content="前几篇介绍了变形镜头本身的光学特性、拍摄风险和数字修复。这一篇分享论文第四章，讨论如何通过椭圆形散景光阑、拉丝光晕滤镜和数字后期，在球面镜头素材上模拟变形镜头的部分视觉特征。
+">
+  <meta name="twitter:image:src" content="/images/anamorphic-4-1-1.webp">
+
+  <!-- Facebook OpenGraph -->
+  <meta property="og:title" content="毕业论文分享（八）：球面镜头模拟变形效果 – STECAGE 斯特拉吉">
+  <meta property="og:description" content="前几篇介绍了变形镜头本身的光学特性、拍摄风险和数字修复。这一篇分享论文第四章，讨论如何通过椭圆形散景光阑、拉丝光晕滤镜和数字后期，在球面镜头素材上模拟变形镜头的部分视觉特征。
+">
+  <meta property="og:image" content="/images/anamorphic-4-1-1.webp">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+
+  <!-- Ionicons -->
+  <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/main.css">
+</head>
+
+
+<body>
+
+    
+
+    <!-- begin header -->
+<header class="c-header">
+  <div class="container">
+    <div class="row">
+      <div class="c-header__inner">
+
+        <div class="logo">
+          <a class="logo__link" href="/">
+          
+            <img class="logo__image" src="/images/logo.svg" alt="STECAGE 斯特拉吉">
+          
+          </a>
+        </div>
+
+        <nav class="main-nav" id="main-navigation" aria-label="Main navigation">
+          <div class="main-nav__box">
+
+            <button type="button" class="nav__icon-close" aria-label="Close menu">
+              <i class="ion ion-md-close" aria-hidden="true"></i>
+            </button>
+
+            <div class="nav__title">Menu</div>
+
+              <ul class="nav__list list-reset">
+
+              
+                
+                <li class="nav__item">
+                  <a href="/" class="nav__link">Home</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/projects/" class="nav__link">Projects</a>
+                </li>
+                
+              
+                
+                <li class="nav__item">
+                  <a href="/blog/" class="nav__link">Blog</a>
+                </li>
+                
+              
+                
+                <li class="nav__item dropdown">
+                  <span class="nav__link dropdown-toggle" tabindex="0">Pages <i class="ion ion-ios-arrow-down arrow-down" aria-hidden="true"></i></span>
+                  <div class="dropdown-menu">
+                    
+                      <a href="/about/" class="nav__link">About</a>
+                    
+                      <a href="/contact/" class="nav__link">Contact</a>
+                    
+                  </div>
+                </li>
+
+                
+              
+
+            </ul>
+          </div>
+
+          <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(social-link.jekyll.html) params() context() -->
+
+<div class="social">
+  <ul class="social__list list-reset">
+    
+    <li class="social__item">
+      <a class="social__link" href="https://weibo.com/StephenYKQ" target="_blank" rel="noopener" aria-label="weibo icon">
+        
+          <svg viewBox="0 0 800 649.5" width="17" height="17" fill="currentColor" class="weibo-icon" style="vertical-align: middle; position: relative;">
+            <path d="m336.6,602.3c-132.6,13-247.1-46.9-255.7-134-8.6-87,91.9-168.2,224.6-181.4,132.7-13.2,247.1,46.7,255.7,133.8,8.7,86.7-91.9,168.4-224.5,181.4h-.1Zm-34.9-103.5c-12.9,20.6-40.2,29.4-60.9,20.1-20.4-9.3-26.4-33.1-13.5-53.1,12.6-19.8,39.2-28.6,59.8-19.9,20.7,8.7,27.3,32.3,14.7,53Zm42.3-54.2c-4.7,7.8-15,11.7-22.9,8.3-7.9-3-10.5-12-6-19.5,4.7-7.6,14.6-11.5,22.4-8,7.9,3,10.5,12,6,20.1l.5-.9Zm5.9-90.8c-63.2-16.4-134.4,15.1-161.8,70.7-27.9,56.8-.9,119.6,62.8,140.2,66.1,21.4,144-11.3,171.1-72.5,26.7-59.8-6.7-121.5-72-138.4Zm252.1-40.7c-11.5-3.5-19-6-13.5-20.4,12.5-32.6,14.1-60.2,0-80.2-26-37-97.1-35-178.8-.9,0,0-25.5,10.9-19-9.1,12.5-40.5,10.6-74.1-9-93.6-44.7-44.5-162.4,1.6-262.9,102.7C43.6,287.1,0,367.2,0,436.4c0,132.7,169.9,213.2,336.2,213.2s362.9-126.7,362.9-227.3-51.6-95.1-97.1-109.4v.3Zm63.7-169.7c-25.7-28.6-63.7-39.6-98.7-32.2-14.6,3-23.6,17.1-20.6,31.1,3,13.9,17,23,31.1,20.1,17-3.5,35.6,1.4,48.1,15.5s15.5,32.6,10.6,49.1c-4.5,13.5,3,28.5,16.9,33.1,13.5,4,28.6-3.5,33.1-17.1,11.1-34,4-72.7-21.5-101.2l1,1.5Zm80.6-73.2C693.6,11.6,616-10.5,544.4,4.6c-16.5,3.4-27.1,19.5-23.6,36.1s19.5,27.1,36.1,23.6c51-11.1,106.1,4.9,143.2,46.1,37,41.5,47.7,98,31.5,147.1-5.5,16,3.5,33.6,19.5,38.5,16,5.6,33.1-3.4,38.5-19.5,22.5-69.5,8.1-149.2-44.5-207.8l1,1.6Z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://github.com/StephenYKQ" target="_blank" rel="noopener" aria-label="github icon">
+        
+          <i class="ion ion-logo-github"></i>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://instagram.com/stephenykq/" target="_blank" rel="noopener" aria-label="instagram icon">
+        
+          <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" class="instagram-icon" style="vertical-align: middle; position: relative;">
+            <path d="M20.445 5h-8.891A6.559 6.559 0 0 0 5 11.554v8.891A6.559 6.559 0 0 0 11.554 27h8.891a6.56 6.56 0 0 0 6.554-6.555v-8.891A6.557 6.557 0 0 0 20.445 5zm4.342 15.445a4.343 4.343 0 0 1-4.342 4.342h-8.891a4.341 4.341 0 0 1-4.341-4.342v-8.891a4.34 4.34 0 0 1 4.341-4.341h8.891a4.342 4.342 0 0 1 4.341 4.341l.001 8.891z"/>
+            <path d="M16 10.312c-3.138 0-5.688 2.551-5.688 5.688s2.551 5.688 5.688 5.688 5.688-2.551 5.688-5.688-2.55-5.688-5.688-5.688zm0 9.163a3.475 3.475 0 1 1-.001-6.95 3.475 3.475 0 0 1 .001 6.95zM21.7 8.991a1.363 1.363 0 1 1-1.364 1.364c0-.752.51-1.364 1.364-1.364z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://youtube.com/@stephenykq" target="_blank" rel="noopener" aria-label="youtube icon">
+        
+          <i class="ion ion-logo-youtube"></i>
+        
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+<!--bookshop-live end-->
+        </nav>
+
+        <div class="nav-button">
+          <button type="button" class="nav__icon nav__icon-menu ion ion-md-menu" aria-label="Open menu" aria-controls="main-navigation" aria-expanded="false"></button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</header>
+<!-- end header -->
+
+
+    
+
+
+
+
+
+
+
+
+<header class="post-top post-top--article animate">
+  <div class="container">
+    <div class="post-heading post-heading--desktop-text post-heading--mobile-text">
+        <div class="post__info">
+
+          
+          <div class="post-tags">
+            
+              <a href="/tag/镜头光学" class="post-tags__tag">镜头光学</a>
+            
+              <a href="/tag/学术研究" class="post-tags__tag">学术研究</a>
+            
+          </div>
+          
+
+
+          <h1 class="post__title">毕业论文分享（八）：球面镜头模拟变形效果</h1>
+
+          <div class="post__meta">
+            <div class="post__author-image">
+              <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+            </div>
+
+            <div class="post__meta-bottom">
+              <div class="post__author">Stephen Yang Kaiqi</div>
+              <time class="post__date" datetime="2025-06-06T00:00:00+08:00">06 Jun 2025</time>
+            </div>
+          </div>
+
+        </div>
+      
+    </div>
+  </div>
+</header>
+
+<!-- begin post -->
+<div class="container animate">
+
+  <article class="post">
+
+    <div class="post__content">
+      <p>前几篇介绍了变形镜头本身的光学特性、拍摄风险和数字修复。这一篇分享论文第四章，讨论如何通过椭圆形散景光阑、拉丝光晕滤镜和数字后期，在球面镜头素材上模拟变形镜头的部分视觉特征。</p>
+
+<h1 id="4-球面镜头模拟变形效果">4. 球面镜头模拟变形效果</h1>
+
+<p>尽管变形镜头具备无可比拟的美学价值，其实际应用仍面临诸多限制：光学稳定性较差、光学性能较弱、体积与重量偏大、焦距选择受限（尤其缺乏超广角与超长焦选项），且需配合高读出速度的摄影机以应对果冻效应问题。此外，高昂的租赁与购置成本亦使其不易被低预算项目采用；而有 IMAX 画幅、立体 3D 或大量视效镜头等制作需求的项目，也更倾向于使用球面镜头。</p>
+
+<p>虽然缺乏变形光学特性，球面镜头仍可通过光学改装或后期手段，在一定范围内实现变形风格的模拟，作为替代方案应用于特定场景。</p>
+
+<h2 id="41-球面镜头改装">4.1 球面镜头改装</h2>
+
+<p>如图 4.1.1 所示，在《新蝙蝠侠》（<em>The Batman</em>）的车辆追逐戏份中，出于安全和体积的考量，摄制组采用了苏联生产的 Helios 58 mm f/2 球面镜头，并为其加装椭圆形散景光阑，以匹配影片其余部分使用的变形镜头的成像风格。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1364px; --image-ratio: 2.388791593695; --image-aspect-ratio: 1364 / 571;" width="1364" height="571" src="/images/anamorphic-fig-4-1-1.webp" alt="图 4.1.1 电影《新蝙蝠侠》静帧" loading="lazy" />
+  <figcaption>图 4.1.1 电影《新蝙蝠侠》静帧</figcaption>
+</figure>
+
+<p>Hawk 将其推出的 MiniHawk 系列镜头称为“混合变形镜头”（Hybrid Anamorphics）。它们本质上是添加了椭圆形光阑的球面镜头，避免了使用柱面透镜元件而导致的复杂光学问题，镜头轻巧、光圈大，拥有良好的光学素质和近距离对焦能力，无呼吸效应，同时实现了变形镜头经典的椭圆形散景特性。</p>
+
+<p>我国克诺公司新发布的 ZER0 系列镜头也采取了相同的技术路线。</p>
+
+<h3 id="411-椭圆形散景光阑">4.1.1 椭圆形散景光阑</h3>
+
+<p>入瞳形状决定散景形状，因此可通过定制化光阑实现个性化的散景效果，如爱心形、五角星形及变形镜头标志性的垂直椭圆形。椭圆形光阑可通过金属切割或 3D 打印制作，并根据需要调整宽高比例。此类光阑可安装于镜头前方、后方或原始光阑位置，但无论安装位置如何，均会因通光面积减少带来一定光损失。</p>
+
+<figure class="thesis-figure thesis-figure--pair">
+  <img style="--image-native-width: 883px; --image-ratio: 1.659774436090; --image-aspect-ratio: 883 / 532;" width="883" height="532" src="/images/anamorphic-fig-4-1-1-1_sub1.jpg" alt="图 4.1.1.1 安装于镜头前部和后部的椭圆形光阑附件（子图 1）" loading="lazy" />
+  <img style="--image-native-width: 879px; --image-ratio: 1.575268817204; --image-aspect-ratio: 879 / 558;" width="879" height="558" src="/images/anamorphic-fig-4-1-1-1_sub2.jpg" alt="图 4.1.1.1 安装于镜头前部和后部的椭圆形光阑附件（子图 2）" loading="lazy" />
+  <figcaption>图 4.1.1.1 安装于镜头前部和后部的椭圆形光阑附件<sup><a href="#ref-42" id="citation-42" aria-label="参考文献 42">[42]</a></sup></figcaption>
+</figure>
+
+<figure class="thesis-figure thesis-figure--pair thesis-figure--medium">
+  <img style="--image-native-width: 648px; --image-ratio: 0.998459167951; --image-aspect-ratio: 648 / 649;" width="648" height="649" src="/images/anamorphic-fig-4-1-1-2_sub1.png" alt="图 4.1.1.2 安装于镜头内部的固定式椭圆形光阑设计（子图 1）" loading="lazy" />
+  <img style="--image-native-width: 528px; --image-ratio: 0.998109640832; --image-aspect-ratio: 528 / 529;" width="528" height="529" src="/images/anamorphic-fig-4-1-1-2_sub2.png" alt="图 4.1.1.2 安装于镜头内部的固定式椭圆形光阑设计（子图 2）" loading="lazy" />
+  <figcaption>图 4.1.1.2 安装于镜头内部的固定式椭圆形光阑设计<sup><a href="#ref-42" id="citation-42-2" aria-label="参考文献 42">[42]</a></sup></figcaption>
+</figure>
+
+<figure class="thesis-figure thesis-figure--medium">
+  <img style="--image-native-width: 876px; --image-ratio: 1.977426636569; --image-aspect-ratio: 876 / 443;" width="876" height="443" src="/images/anamorphic-fig-4-1-1-3.jpg" alt="图 4.1.1.3 双叶片可调式椭圆形光阑机构" loading="lazy" />
+  <figcaption>图 4.1.1.3 双叶片可调式椭圆形光阑机构<sup><a href="#ref-42" id="citation-42-3" aria-label="参考文献 42">[42]</a></sup></figcaption>
+</figure>
+
+<p>固定式椭圆形光阑不可调节光圈大小，应用场景有限；也有采用双叶片结构的简易可调光阑，但因叶片数量有限，散景形状往往有所妥协。值得一提的是，深圳品牌至乐光学最新推出的 Blazar Mantis 变形镜头，创新地结合了 1.33 倍柱面透镜与 14 叶片椭圆形光阑设计，有效模拟出高压缩比变形镜头的窄椭圆形散景。</p>
+
+<h3 id="412-拉丝光晕滤镜">4.1.2 拉丝光晕滤镜</h3>
+
+<p>变形镜头特有的拉丝光晕效果，也可以通过物理附件进行增强与模拟。</p>
+
+<p>ARRI 为其 Master Anamorphic 系列镜头提供了专用的 Master Anamorphic Flare Sets（变形光晕套件），包含前置与后置两种滤镜组件，可单独或组合使用。这些滤镜经过特殊镀膜处理，能增强镜头本身的光晕、鬼影和雾状眩光，进一步突出变形镜头的视觉特征。对于其他品牌的变形镜头，或球面镜头系统，也可选用第三方光晕滤镜。例如，Vantage Blue-Vision、Tiffen Streaks 或 Optefex Blue Streak 等产品，其滤镜表面加入了平行的细密条纹。一种简便替代方案是在镜头前部或后部悬挂细鱼线或透明尼龙线，原理类似，效果也相近。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 500px; --image-ratio: 2.008032128514; --image-aspect-ratio: 500 / 249;" width="500" height="249" src="/images/anamorphic-fig-4-1-2-1.png" alt="图 4.1.2.1 Schneider 2 mm 间距蓝色 True-Streak 滤镜" loading="lazy" />
+  <figcaption>图 4.1.2.1  Schneider 2 mm 间距蓝色 True-Streak 滤镜<sup><a href="#ref-43" id="citation-43" aria-label="参考文献 43">[43]</a></sup></figcaption>
+</figure>
+
+<p>线材或滤镜条纹的数量、粗细、间距与颜色都会影响最终的光晕效果，可根据画面需求进行调整。光晕的方向取决于其安装角度——若需呈现典型的水平拉丝效果，必须确保线材或滤镜条纹垂直于成像器的水平轴线。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 876px; --image-ratio: 1.776876267748; --image-aspect-ratio: 876 / 493;" width="876" height="493" src="/images/anamorphic-fig-4-1-2-2.jpg" alt="图 4.1.2.2 不同线条密度的光晕滤镜效果" loading="lazy" />
+  <figcaption>图 4.1.2.2 不同线条密度的光晕滤镜效果<sup><a href="#ref-42" id="citation-42-4" aria-label="参考文献 42">[42]</a></sup></figcaption>
+</figure>
+
+<p>需要特别注意，所有外加滤镜或线材都可能在散景或扩散光斑中产生条状阴影，破坏其边缘完整性。此外，在广角镜头使用时，这类模拟光晕在画面边缘可能出现不同程度的弯曲，与始终保持水平方向的变形光晕有所区别。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1561px; --image-ratio: 2.401538461538; --image-aspect-ratio: 1561 / 650;" width="1561" height="650" src="/images/anamorphic-fig-4-1-2-3.jpg" alt="图 4.1.2.3 电影《疾速追杀 3》（John Wick: Chapter 3 – Parabellum）静帧" loading="lazy" />
+  <figcaption>图 4.1.2.3 电影《疾速追杀 3》（<em>John Wick: Chapter 3 – Parabellum</em>）静帧</figcaption>
+</figure>
+
+<h2 id="42-数字后期模拟">4.2 数字后期模拟</h2>
+
+<p>以大卫·芬奇执导的电影《杀手》（<em>The Killer</em>）为例，因导演对近距离拍摄的偏好及频繁的后期构图调整需求（如裁切与位移），该片使用 Leitz Summilux-C 球面镜头拍摄，而后期通过视效技术添加了变形镜头的典型特征：水平条纹眩光、强化的桶形畸变、场曲造成的边缘模糊、横向色差等。</p>
+
+<figure class="thesis-figure">
+  <img style="--image-native-width: 1558px; --image-ratio: 2.400616332820; --image-aspect-ratio: 1558 / 649;" width="1558" height="649" src="/images/anamorphic-fig-4-2-1.jpg" alt="图 4.2.1 电影《杀手》静帧" loading="lazy" />
+  <figcaption>图 4.2.1 电影《杀手》静帧</figcaption>
+</figure>
+
+<p>后期模拟变形效果主要包括以下几个环节：</p>
+
+<blockquote>
+  <p><strong>景深模拟：</strong>借助深度图或手动抠像，对失焦背景施加垂直椭圆形模糊。</p>
+
+  <p><strong>光晕合成：</strong>追踪画面中直射高光，合成实拍或 CGI 的变形光晕素材。</p>
+
+  <p><strong>桶形畸变添加：</strong>建议在拍摄时预留安全框以保留后期裁切空间；</p>
+
+  <p><strong>像差与分辨率：</strong>尤其表现为水平方向的色差和锐度降低。</p>
+
+  <p><strong>像散畸变和呼吸效应模拟：</strong>添加与对焦距离动态关联的画面变化。</p>
+
+  <p><strong>颗粒噪声结构：</strong>呈现与反挤压同步的拉伸样貌。</p>
+</blockquote>
+
+<p>值得强调的是，为视觉特效进行的镜头标定远比前文所涉及到的测试卡拍摄复杂，需深入研究并理解镜头光学特性，包括入瞳、核心像差、景深及点扩散函数（PSF）等参数，还需要采集大量的参考素材。</p>
+
+<p>高阶 CGI 的镜头模拟会在光线追踪的物理渲染引擎中复刻镜头的光学结构。这种技术能够高度真实地模拟包括景深在内的复杂光学特性。而光晕往往采用实拍光晕素材，手动擦除再重建于画面上的办法。</p>
+
+<figure class="thesis-figure thesis-figure--pair">
+  <img style="--image-native-width: 1558px; --image-ratio: 2.400616332820; --image-aspect-ratio: 1558 / 649;" width="1558" height="649" src="/images/anamorphic-fig-4-2-2_sub1.jpg" alt="图 4.2.2 CGI 流程中的光晕重建（子图 1）" loading="lazy" />
+  <img style="--image-native-width: 1558px; --image-ratio: 2.400616332820; --image-aspect-ratio: 1558 / 649;" width="1558" height="649" src="/images/anamorphic-fig-4-2-2_sub2.jpg" alt="图 4.2.2 CGI 流程中的光晕重建（子图 2）" loading="lazy" />
+  <img style="--image-native-width: 1558px; --image-ratio: 2.400616332820; --image-aspect-ratio: 1558 / 649;" width="1558" height="649" src="/images/anamorphic-fig-4-2-2_sub3.jpg" alt="图 4.2.2 CGI 流程中的光晕重建（子图 3）" loading="lazy" />
+  <img style="--image-native-width: 1558px; --image-ratio: 2.400616332820; --image-aspect-ratio: 1558 / 649;" width="1558" height="649" src="/images/anamorphic-fig-4-2-2_sub4.jpg" alt="图 4.2.2 CGI 流程中的光晕重建（子图 4）" loading="lazy" />
+  <figcaption>图 4.2.2 CGI 流程中的光晕重建<sup><a href="#ref-32" id="citation-32" aria-label="参考文献 32">[32]</a></sup></figcaption>
+</figure>
+
+<figure class="thesis-figure thesis-figure--with-frame">
+  <img style="--image-native-width: 2500px; --image-ratio: 2.688172043011; --image-aspect-ratio: 2500 / 930;" width="2500" height="930" src="/images/anamorphic-fig-4-2-3.png" alt="图 4.2.3 球面镜头模拟变形效果流程" loading="lazy" />
+  <figcaption>图 4.2.3 球面镜头模拟变形效果流程</figcaption>
+</figure>
+
+<p>球面镜头模拟变形效果主要包括镜头光学附件改装和数字后期处理。光学改装为预算有限或有特殊拍摄需求的项目提供替代方案，同时保留部分变形镜头的美学特征；数字后期模拟则为高端项目，尤其是 CGI 项目，提供了另一条技术路径。</p>
+
+<p>通过添加椭圆形散景光阑，并在后期合成径向畸变与光晕，利用二维图像处理可以获得较理想的视觉效果。更高级的模拟可通过光线追踪等渲染方法呈现景深等复杂光学特性；论文对这部分技术未作深入探讨。</p>
+
+<h3 id="参考文献">参考文献</h3>
+<ol class="references">
+<li id="ref-32" value="32">WĒTĀ FX. The Visual Effects of Better Man [EB/OL]. YouTube, (2025-02-11). <a href="https://www.youtube.com/watch?v=7BwUvvUMq3o">原文链接</a>。 <a href="#citation-32" aria-label="返回引用位置 1">↩</a></li>
+<li id="ref-42" value="42">FERRADANS T. Anamorfake It [M/OL]. <a href="https://anamorphic.e-junkie.com/product/1622776/">原文链接</a>。 <a href="#citation-42" aria-label="返回引用位置 1">↩1</a> <a href="#citation-42-2" aria-label="返回引用位置 2">↩2</a> <a href="#citation-42-3" aria-label="返回引用位置 3">↩3</a> <a href="#citation-42-4" aria-label="返回引用位置 4">↩4</a></li>
+<li id="ref-43" value="43">Schneider-Kreuznach. Schneider 4 x 5.65&quot; 2 mm Blue True-Streak Filter [EB/OL]. B&amp;H Photo Video. <a href="https://www.bhphotovideo.com/c/product/944109-REG/schneider_68_500256_4x5_65_true_streak_blue_2mm.html">原文链接</a>。 <a href="#citation-43" aria-label="返回引用位置 1">↩</a></li>
+</ol>
+
+    </div>
+
+  </article>
+</div>
+<!-- end post -->
+
+
+    <!--
+        Bookshop components are accessed using the bookshop tag,
+        using the same syntax as the standard Jekyll include tag.
+    -->
+    <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(page.jekyll.html) params(content_blocks=page.content_blocks page_theme=page.page_theme) context() -->
+
+
+<!--bookshop-live end-->
+
+    
+      <div class="container">
+        <div class="row">
+          <div class="col col-10 col-d-12 push-d-0 push-1">
+            <div class="post__navigation animate">
+  
+
+  
+  <a class="post__next" href="/blog/anamorphic-7-digital-post-fix">
+    <div class="next__box">
+      <span class="post__nav post__nav__next">Next post</span>
+      <h2 class="post__nav__title">毕业论文分享（七）：变形镜头的数字后期修复</h2>
+    </div>
+    <div class="next__image">
+      <img loading="lazy" src="/images/anamorphic-fig-3-4-2-2_sub1.webp" alt="毕业论文分享（八）：球面镜头模拟变形效果">
+    </div>
+  </a>
+  
+</div>
+          </div>
+        </div>
+      </div>
+      
+      
+
+
+
+<div class="container">
+  <section class="related-posts is-related animate" aria-labelledby="related-posts-heading">
+    <div class="section__info">
+      <div class="section__head">
+        <h2 class="section__title" id="related-posts-heading">You may also like</h2>
+        <a class="section__link" href="/blog/">All posts <i class="ion ion-md-arrow-forward" aria-hidden="true"></i></a>
+      </div>
+    </div>
+    <div class="row">
+  
+    
+      
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+      
+        
+      
+        
+      
+      
+    
+  
+    
+      
+      
+        
+          
+          
+      
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[4]) -->
+
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/anamorphic-deskew-dctl">
+        <img loading="lazy" src="/images/2025-12-18-dctl.png" alt="“歪”变宽校正 DCTL">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        
+        <a href="/tag/后期制作" class="c-blog-card__tag">后期制作</a>
+        
+        <a href="/tag/工具分享" class="c-blog-card__tag">工具分享</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/anamorphic-deskew-dctl">“歪”变宽校正 DCTL</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        上个月，我的论文《**影视制作中变形镜头装配偏斜检测及画面校正方法研究**》发表于《现代电影技术》。在这里再次感谢屈老师、陈老师在研究与写作过程中的指导，也感谢《现代电影技术》的老师们的专业帮助。如果你对**变形宽银幕镜头**感兴趣，...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2025-12-18T12:06:00+08:00">18 Dec 2025</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+        
+        
+      
+    
+  
+    
+      
+      
+        
+          
+          
+      
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[5]) -->
+
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/anamorphic-1-history">
+        <img loading="lazy" src="/images/anamorphic-fig-1-1-1.jpg" alt="毕业论文分享（一）：变形镜头的历史发展">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        
+        <a href="/tag/学术研究" class="c-blog-card__tag">学术研究</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/anamorphic-1-history">毕业论文分享（一）：变形镜头的历史发展</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        这是我的本科毕业论文《**电影制作中变形镜头的应用流程优化研究**》。我准备把论文正文按章节整理成几篇文章，在这里分次分享给大家。这一篇是第一章“变形镜头概述”的第一小节。
+
+# 1. 变形镜头概述
+
+## 1.1 历史发展
+
+20 ...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2025-06-06T00:07:00+08:00">06 Jun 2025</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+        
+        
+      
+    
+  
+    
+      
+      
+        
+          
+          
+      
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(blog-card/blog-card.jekyll.html) params(post=post) context(post=site.posts[6]) -->
+
+
+<div class="c-blog-card col col-4 col-d-6 col-t-12">
+  <div class="c-blog-card__inner">
+
+    
+    <div class="c-blog-card__image-wrap">
+      <a class="c-blog-card__image" href="/blog/anamorphic-2-characteristics">
+        <img loading="lazy" src="/images/anamorphic-fig-1-2-5-1.jpg" alt="毕业论文分享（二）：变形镜头的成像特性">
+      </a>
+    </div>
+    
+
+    <div class="c-blog-card__content">
+
+      
+      <div class="c-blog-card__tags-box">
+        
+        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        
+        <a href="/tag/学术研究" class="c-blog-card__tag">学术研究</a>
+        
+      </div>
+      
+
+      <h2 class="c-blog-card__title">
+        <a href="/blog/anamorphic-2-characteristics">毕业论文分享（二）：变形镜头的成像特性</a>
+      </h2>
+
+      <p class="c-blog-card__excerpt">
+        变形镜头带来的视觉风格，远不止更宽的画幅。接着[上一篇的历史回顾](/blog/anamorphic-lens-history)，这一篇分享毕业论文的 1.2 节“成像特性”：从双平面对称性出发，讨论视场角、景深与散景，再看光晕、畸变...
+      </p>
+
+      <div class="c-blog-card__meta">
+        <div class="c-blog-card__author-image">
+          <img loading="lazy" src="/images/avatar.jpg" alt="Stephen Yang Kaiqi">
+        </div>
+        <div class="c-blog-card__info">
+          <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
+          <span class="c-blog-card__date"><time datetime="2025-06-06T00:06:00+08:00">06 Jun 2025</time></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--bookshop-live end-->
+        
+        
+</div>
+  </section>
+</div>
+
+
+    
+
+    <button class="top" type="button" aria-label="Back to top"><i class="ion ion-ios-arrow-up" aria-hidden="true"></i></button>
+
+    <!-- begin footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col col-12">
+
+        <!--bookshop-live meta(version="3.9.0" baseurl="" title="STECAGE") -->
+<!--bookshop-live name(social-link.jekyll.html) params() context() -->
+
+<div class="social">
+  <ul class="social__list list-reset">
+    
+    <li class="social__item">
+      <a class="social__link" href="https://weibo.com/StephenYKQ" target="_blank" rel="noopener" aria-label="weibo icon">
+        
+          <svg viewBox="0 0 800 649.5" width="17" height="17" fill="currentColor" class="weibo-icon" style="vertical-align: middle; position: relative;">
+            <path d="m336.6,602.3c-132.6,13-247.1-46.9-255.7-134-8.6-87,91.9-168.2,224.6-181.4,132.7-13.2,247.1,46.7,255.7,133.8,8.7,86.7-91.9,168.4-224.5,181.4h-.1Zm-34.9-103.5c-12.9,20.6-40.2,29.4-60.9,20.1-20.4-9.3-26.4-33.1-13.5-53.1,12.6-19.8,39.2-28.6,59.8-19.9,20.7,8.7,27.3,32.3,14.7,53Zm42.3-54.2c-4.7,7.8-15,11.7-22.9,8.3-7.9-3-10.5-12-6-19.5,4.7-7.6,14.6-11.5,22.4-8,7.9,3,10.5,12,6,20.1l.5-.9Zm5.9-90.8c-63.2-16.4-134.4,15.1-161.8,70.7-27.9,56.8-.9,119.6,62.8,140.2,66.1,21.4,144-11.3,171.1-72.5,26.7-59.8-6.7-121.5-72-138.4Zm252.1-40.7c-11.5-3.5-19-6-13.5-20.4,12.5-32.6,14.1-60.2,0-80.2-26-37-97.1-35-178.8-.9,0,0-25.5,10.9-19-9.1,12.5-40.5,10.6-74.1-9-93.6-44.7-44.5-162.4,1.6-262.9,102.7C43.6,287.1,0,367.2,0,436.4c0,132.7,169.9,213.2,336.2,213.2s362.9-126.7,362.9-227.3-51.6-95.1-97.1-109.4v.3Zm63.7-169.7c-25.7-28.6-63.7-39.6-98.7-32.2-14.6,3-23.6,17.1-20.6,31.1,3,13.9,17,23,31.1,20.1,17-3.5,35.6,1.4,48.1,15.5s15.5,32.6,10.6,49.1c-4.5,13.5,3,28.5,16.9,33.1,13.5,4,28.6-3.5,33.1-17.1,11.1-34,4-72.7-21.5-101.2l1,1.5Zm80.6-73.2C693.6,11.6,616-10.5,544.4,4.6c-16.5,3.4-27.1,19.5-23.6,36.1s19.5,27.1,36.1,23.6c51-11.1,106.1,4.9,143.2,46.1,37,41.5,47.7,98,31.5,147.1-5.5,16,3.5,33.6,19.5,38.5,16,5.6,33.1-3.4,38.5-19.5,22.5-69.5,8.1-149.2-44.5-207.8l1,1.6Z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://github.com/StephenYKQ" target="_blank" rel="noopener" aria-label="github icon">
+        
+          <i class="ion ion-logo-github"></i>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://instagram.com/stephenykq/" target="_blank" rel="noopener" aria-label="instagram icon">
+        
+          <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor" class="instagram-icon" style="vertical-align: middle; position: relative;">
+            <path d="M20.445 5h-8.891A6.559 6.559 0 0 0 5 11.554v8.891A6.559 6.559 0 0 0 11.554 27h8.891a6.56 6.56 0 0 0 6.554-6.555v-8.891A6.557 6.557 0 0 0 20.445 5zm4.342 15.445a4.343 4.343 0 0 1-4.342 4.342h-8.891a4.341 4.341 0 0 1-4.341-4.342v-8.891a4.34 4.34 0 0 1 4.341-4.341h8.891a4.342 4.342 0 0 1 4.341 4.341l.001 8.891z"/>
+            <path d="M16 10.312c-3.138 0-5.688 2.551-5.688 5.688s2.551 5.688 5.688 5.688 5.688-2.551 5.688-5.688-2.55-5.688-5.688-5.688zm0 9.163a3.475 3.475 0 1 1-.001-6.95 3.475 3.475 0 0 1 .001 6.95zM21.7 8.991a1.363 1.363 0 1 1-1.364 1.364c0-.752.51-1.364 1.364-1.364z"/>
+          </svg>
+        
+      </a>
+    </li>
+    
+    <li class="social__item">
+      <a class="social__link" href="https://youtube.com/@stephenykq" target="_blank" rel="noopener" aria-label="youtube icon">
+        
+          <i class="ion ion-logo-youtube"></i>
+        
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+<!--bookshop-live end-->
+
+        <ul class="footer_nav list-reset">
+          
+          <li class="footer_nav__item">
+            <a href="/" class="footer_nav__link">Home</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/projects/" class="footer_nav__link">Projects</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/contact/" class="footer_nav__link">Contact</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/about/" class="footer_nav__link">About</a>
+          </li>
+          
+          <li class="footer_nav__item">
+            <a href="/blog/" class="footer_nav__link">Blog</a>
+          </li>
+          
+        </ul>
+
+        <div class="copyright"><p> 2025 &copy; <a href="/">STECAGE 斯特拉吉</a></div>
+
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- end footer -->
+
+    <script src="/js/scripts.js"></script>
+    <script src="/js/common.js"></script>
+</body>
+</html>

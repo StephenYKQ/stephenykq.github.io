@@ -166,7 +166,16 @@
 <!-- end header -->
 
 
-    <header class="post-top post-top--article animate">
+    
+
+
+
+
+
+
+
+
+<header class="post-top post-top--article animate">
   <div class="container">
     <div class="post-heading">
         <div class="post__info">
@@ -199,7 +208,7 @@
 
         </div>
       
-      <div class="post-image">
+      <div class="post-image post-image--all-devices">
         <img fetchpriority="high" src="/images/2025-12-18-dctl.png" alt="“歪”变宽校正 DCTL">
       </div>
       
@@ -217,8 +226,6 @@
 
 <p>而这篇推文，则希望把论文中<strong>用于制作实践的那一部分</strong>整理出来：一个用于检测和校正“变宽偏斜”的 DCTL 脚本，公开给大家尝试使用。</p>
 
-<hr />
-
 <h2 id="1-什么是变宽偏斜">1. 什么是变宽偏斜？</h2>
 
 <p>这项研究，源自一个在片场和成片中都并不少见、却长期被忽视的问题：</p>
@@ -227,8 +234,10 @@
 
 <p>需要首先明确的是，这种“歪”并非摄影机横滚轴未调平，也不是变形镜头刻意追求的风格化效果，而是源自变形镜头自身的结构问题——当变形镜头的活动轴（Active Axis）由于内部柱面镜组发生偏移，或镜头与摄影机之间存在装配误差时，其压缩（或拉伸）方向将偏离成像器件的正交轴，这一现象被称为<strong>变形镜头装配偏斜（Assembly-Induced Anamorphic Skew）</strong>。</p>
 
-<p><img src="/images/2025-12-18-what-is-skew.png" alt="What is Skew" />
-<em>左为理想情况，右为镜头偏斜</em></p>
+<figure class="thesis-figure thesis-figure--medium">
+  <img style="--image-native-width: 2048px; --image-ratio: 2.844444444444; --image-aspect-ratio: 2048 / 720;" width="2048" height="720" src="/images/2025-12-18-what-is-skew.png" alt="What is Skew" loading="lazy" />
+  <figcaption>左为理想情况，右为镜头偏斜</figcaption>
+</figure>
 
 <p>一句话概括就是：</p>
 
@@ -242,21 +251,21 @@
   <li>椭圆形散景的方向倾斜甚至不能维持椭圆</li>
 </ul>
 
-<p><img src="/images/2025-12-18-rebel-moon-before.jpg" alt="Rebel Moon Before" /></p>
+<figure class="thesis-figure thesis-figure--stacked thesis-figure--medium">
+  <img style="--image-native-width: 2048px; --image-ratio: 2.400937866354; --image-aspect-ratio: 2048 / 853;" width="2048" height="853" src="/images/2025-12-18-rebel-moon-before.jpg" alt="Rebel Moon Before" loading="lazy" />
+  <img style="--image-native-width: 2048px; --image-ratio: 2.386946386946; --image-aspect-ratio: 2048 / 858;" width="2048" height="858" src="/images/2025-12-18-rebel-moon-after.jpg" alt="Rebel Moon After" loading="lazy" />
+  <figcaption>电影《月球叛军：火之女》（2023）静帧，镜头顺时针方向偏斜，下图为该场景恢复正常比例的参考</figcaption>
+</figure>
 
-<p><img src="/images/2025-12-18-rebel-moon-after.jpg" alt="Rebel Moon After" />
-<em>电影《月球叛军：火之女》（2023）静帧，镜头顺时针方向偏斜，下图为该场景恢复正常比例的参考</em></p>
-
-<p><img src="/images/2025-12-18-girl-on-edge.jpg" alt="Girl on Edge" /></p>
-
-<p><img src="/images/2025-12-18-girl-on-edge-grid.jpg" alt="Girl on Edge Grid" />
-<em>电影《花漾少女杀人事件》（2025）静帧，镜头顺时针方向偏斜，可见场景被拉伸成了“平行四边形”</em></p>
+<figure class="thesis-figure thesis-figure--stacked thesis-figure--medium">
+  <img style="--image-native-width: 2048px; --image-ratio: 2.386946386946; --image-aspect-ratio: 2048 / 858;" width="2048" height="858" src="/images/2025-12-18-girl-on-edge.jpg" alt="Girl on Edge" loading="lazy" />
+  <img style="--image-native-width: 2048px; --image-ratio: 2.386946386946; --image-aspect-ratio: 2048 / 858;" width="2048" height="858" src="/images/2025-12-18-girl-on-edge-grid.jpg" alt="Girl on Edge Grid" loading="lazy" />
+  <figcaption>电影《花漾少女杀人事件》（2025）静帧，镜头顺时针方向偏斜，可见场景被拉伸成了“平行四边形”</figcaption>
+</figure>
 
 <blockquote>
   <p>自变形镜头诞生以来，装配偏斜问题便<strong>难以避免</strong>。变形镜头结构复杂，且高度依赖光学元件的轴向对齐。即便在拍摄前进行了充分的测试，在拍摄过程中，偏斜仍可能因装配公差、环境变化或操作过程中的细微扰动而出现或加重。P.S. 我上周看了杜琪峰的《PTU》，里面有一个推镜头，不知道什么原因，拍着拍着突然柱面镜就转歪了……</p>
 </blockquote>
-
-<hr />
 
 <h2 id="2-以前的做法">2. 以前的做法</h2>
 
@@ -264,20 +273,18 @@
 
 <p>第一种是选择<strong>忽略</strong>：在后期中不对偏斜作校正，视效为 CG 合成元素施加拉伸，使其与实拍画面同步偏斜。这种做法的优势在于能够保留原本的构图，并避免校正带来的分辨率损失，但创作者未必希望画面是歪的。</p>
 
-<p><img src="/images/2025-12-18-the-creator.jpg" alt="The Creator" />
-<em>电影《AI 创世者》（2023）静帧</em></p>
+<figure class="thesis-figure thesis-figure--medium">
+  <img style="--image-native-width: 2048px; --image-ratio: 2.760107816712; --image-aspect-ratio: 2048 / 742;" width="2048" height="742" src="/images/2025-12-18-the-creator.jpg" alt="The Creator" loading="lazy" />
+  <figcaption>电影《AI 创世者》（2023）静帧</figcaption>
+</figure>
 
 <p>第二种是<strong>手动校正</strong>：例如使用 After Effects 的 Corner Pin，或 Resolve 的 Interactive-Pins（油管老哥 Tito Ferradans 有做过视频），通过拖拽画面四角尽量将其拉成一个平行四边形。这类方法依赖目测判断，操作精度有限，结果难以复现，并且在实际操作中可能会引入额外的比例失衡——不够优雅和完美。</p>
-
-<hr />
 
 <h2 id="3-我做了什么">3. 我做了什么？</h2>
 
 <p>在论文中，我将变形镜头的装配偏斜问题拆解为两个层面：其一，如何在拍摄前期或现场更高效、可重复地识别偏斜；其二，在拍摄已经完成的前提下，后期是否存在一种可控、可量化的几何校正方式。</p>
 
 <p>论文提出了一种基于<strong>二维仿射变换模型</strong>的后期校正方法，我据此使用 DCTL 编写了配套工具，并设计了一套更便于识别偏斜的测试图样。相关理论推导与测试方法已在论文中完整展开，这里不再赘述。</p>
-
-<hr />
 
 <h2 id="4-dctl-的功能介绍">4. DCTL 的功能介绍</h2>
 
@@ -318,19 +325,21 @@
   </li>
 </ul>
 
-<p><img src="/images/2025-12-18-dctl-before.jpg" alt="DCTL Before" />
-<em>使用脚本校正前，圆是椭圆、十字不正交</em></p>
+<figure class="thesis-figure thesis-figure--medium">
+  <img style="--image-native-width: 1887px; --image-ratio: 2.199300699301; --image-aspect-ratio: 1887 / 858;" width="1887" height="858" src="/images/2025-12-18-dctl-before.jpg" alt="DCTL Before" loading="lazy" />
+  <figcaption>使用脚本校正前，圆是椭圆、十字不正交</figcaption>
+</figure>
 
-<p><img src="/images/2025-12-18-dctl-after.jpg" alt="DCTL After" />
-<em>使用脚本校正后，圆是圆、十字正交</em></p>
+<figure class="thesis-figure thesis-figure--medium">
+  <img style="--image-native-width: 1887px; --image-ratio: 2.199300699301; --image-aspect-ratio: 1887 / 858;" width="1887" height="858" src="/images/2025-12-18-dctl-after.jpg" alt="DCTL After" loading="lazy" />
+  <figcaption>使用脚本校正后，圆是圆、十字正交</figcaption>
+</figure>
 
 <p>需要说明的是：</p>
 
 <blockquote>
   <p>本脚本与论文中所使用的版本略有不同，在实际使用中我发现，让 DCTL 仅执行剪切变换，而将画面整体的旋转校正交由 Resolve 原生的 <code class="language-plaintext highlighter-rouge">Input Sizing → Rotate</code> 完成，操作逻辑更加清晰，也有助于减少不必要的画面裁切。因此，当前公开的版本不包含旋转校正功能。</p>
 </blockquote>
-
-<hr />
 
 <h2 id="5-使用贴士">5. 使用贴士</h2>
 
@@ -340,10 +349,12 @@
   <li>上一步的调整后，画面整体可能仍存在一定倾斜，此部分不在 DCTL 中处理，而应使用 <code class="language-plaintext highlighter-rouge">Input Sizing → Rotate</code> 调整画面旋转角度。</li>
 </ol>
 
-<p><img src="/images/2025-12-18-input-sizing.png" alt="Input Sizing" />
-<em>Input Sizing 是这个</em></p>
+<figure class="thesis-figure thesis-figure--medium">
+  <img style="--image-native-width: 1490px; --image-ratio: 2.257575757576; --image-aspect-ratio: 1490 / 660;" width="1490" height="660" src="/images/2025-12-18-input-sizing.png" alt="Input Sizing" loading="lazy" />
+  <figcaption>Input Sizing 是这个</figcaption>
+</figure>
 
-<ol>
+<ol start="4">
   <li>“偏斜角度”与“旋转”两个参数可能需要配合着，反复微调，直至画面恢复正交关系。</li>
   <li>根据需要手动缩放画面，或开启自动裁切功能。</li>
 </ol>
@@ -351,8 +362,6 @@
 <blockquote>
   <p>在使用专用测试图样，或包含明确正交或对称元素的画面作参考时，上述流程会更加直观、高效和精确。因此，在拍摄现场，如怀疑镜头产生偏斜，建议立即调用测试图样（监视器显示或实体测试卡）进行拍摄测试与记录。</p>
 </blockquote>
-
-<hr />
 
 <h2 id="6-获取及安装">6. 获取及安装</h2>
 
@@ -362,17 +371,13 @@
 
 <p>将下载好的 <code class="language-plaintext highlighter-rouge">.dctl</code> 文件复制到 Resolve 的 LUT 目录，重启软件，然后进入 <code class="language-plaintext highlighter-rouge">Color Page → Effects → DCTL</code>，选择  <code class="language-plaintext highlighter-rouge">Anamorphic Deskew</code> 或简中版的 <code class="language-plaintext highlighter-rouge">Anamorphic Deskew SC</code> 。</p>
 
-<hr />
-
 <h2 id="7-局限性">7. 局限性</h2>
 
-<p>该工具属于<strong>二维几何校正</strong>范畴，无法修复真实光路中的三维偏移问题。因此，它无法校正<strong>变形光晕的歪斜</strong>，也无法处理非线性的像散或其他光学缺陷。基于这一前提，该 DCTL 既不是光学问题的替代方案，也不是万能修复工具，而是在无法重拍或更换镜头的前提下，为前期测试与后期制作提供一种<strong>可控、可量化</strong>的补救手段。</p>
-
-<hr />
+<p>该工具属于<strong>二维几何校正</strong>范畴，无法修复真实光路中的三维偏移问题。因此，它无法校正<strong>变形光晕的偏斜</strong>，也无法处理非线性的像散或其他光学缺陷。基于这一前提，该 DCTL 既不是光学问题的替代方案，也不是万能修复工具，而是在无法重拍或更换镜头的前提下，为前期测试与后期制作提供一种<strong>可控、可量化</strong>的补救手段。</p>
 
 <h2 id="最后">最后</h2>
 
-<p>从原理上看，变宽偏斜的校正非常简单，这个 DCTL 也才百来行代码。我很遗憾的是，这个问题在行业内长期没有被当作一个需要处理的技术问题。如果各位变宽射手在使用中遇到问题，或对工具本身有改进想法，都非常欢迎你：提 issue、提更新建议或分享你的实际案例。</p>
+<p>从原理上看，变宽偏斜的校正非常简单，这个 DCTL 也才百来行代码。很遗憾的是，偏斜在行业内长期没有被当作一个需要处理的技术问题。如果各位变宽射手在使用中遇到问题，或对工具本身有改进想法，都非常欢迎你：提 issue、提更新建议或分享你的实际案例。</p>
 
 <p>这是本站的第一篇更新。后续将不定期分享与影视制作相关的技术问题和小工具，也会记录一些个人项目与创作心得。谢谢你看到这里，祝你天天开心。</p>
 
@@ -398,6 +403,16 @@
         <div class="row">
           <div class="col col-10 col-d-12 push-d-0 push-1">
             <div class="post__navigation animate">
+  
+  <a class="post__prev" href="/blog/anamorphic-1-history">
+    <div class="prev__image">
+      <img loading="lazy" src="/images/anamorphic-fig-1-1-1.jpg" alt="“歪”变宽校正 DCTL">
+    </div>
+    <div class="prev__box">
+      <span class="post__nav post__nav__prev">Prev post</span>
+      <h2 class="post__nav__title">毕业论文分享（一）：变形镜头的历史发展</h2>
+    </div>
+  </a>
   
 
   
@@ -496,6 +511,8 @@
       
       
         
+      
+        
           
           
       
@@ -508,8 +525,8 @@
 
     
     <div class="c-blog-card__image-wrap">
-      <a class="c-blog-card__image" href="/blog/anamorphic-optical-principles">
-        <img loading="lazy" src="/images/anamorphic-1-3-1-2.jpg" alt="毕业论文分享（三）：变形镜头的光学原理">
+      <a class="c-blog-card__image" href="/blog/tie-dyeing">
+        <img loading="lazy" src="/images/td-after_1.jpg" alt="《扎染 Tie-Dyeing》调色手记">
       </a>
     </div>
     
@@ -519,23 +536,21 @@
       
       <div class="c-blog-card__tags-box">
         
-        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        <a href="/tag/调色" class="c-blog-card__tag">调色</a>
         
-        <a href="/tag/学术分享" class="c-blog-card__tag">学术分享</a>
+        <a href="/tag/后期制作" class="c-blog-card__tag">后期制作</a>
         
       </div>
       
 
       <h2 class="c-blog-card__title">
-        <a href="/blog/anamorphic-optical-principles">毕业论文分享（三）：变形镜头的光学原理</a>
+        <a href="/blog/tie-dyeing">《扎染 Tie-Dyeing》调色手记</a>
       </h2>
 
       <p class="c-blog-card__excerpt">
-        同样是变形镜头，前置、后置和中置变形镜组的成像为什么会不同？这一篇继续分享毕业论文第 1.3 节“光学原理”，从柱面透镜与棱镜系统的工作方式入手，梳理变形镜组的位置如何影响视场角、散景和其他光学特性。
+        这次分享 MV《黄之仪 Kyra Zilver - 扎染 Tie-Dyeing》的调色前后对比。项目由杨翰执导，庄富洲担任摄影指导，我担任调色师。
 
-## 1.3 光学原理
-
-最早...
+这支片子的摄影底子很好，前期已经建立了鲜明的风格。导演希望在原有基础上进一步做风格化...
       </p>
 
       <div class="c-blog-card__meta">
@@ -544,7 +559,7 @@
         </div>
         <div class="c-blog-card__info">
           <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
-          <span class="c-blog-card__date"><time datetime="2026-11-20T00:01:00+08:00">20 Nov 2026</time></span>
+          <span class="c-blog-card__date"><time datetime="2026-11-17T00:00:00+08:00">17 Nov 2026</time></span>
         </div>
       </div>
 
@@ -562,6 +577,8 @@
       
       
         
+      
+        
           
           
       
@@ -574,8 +591,8 @@
 
     
     <div class="c-blog-card__image-wrap">
-      <a class="c-blog-card__image" href="/blog/anamorphic-imaging-characteristics">
-        <img loading="lazy" src="/images/anamorphic-1-2-5-1.jpg" alt="毕业论文分享（二）：变形镜头的成像特性">
+      <a class="c-blog-card__image" href="/blog/hu-shuo-chen-yu-xian">
+        <img loading="lazy" src="/images/lz-after_13.jpg" alt="《狐说臣与仙》AIGC 调色手记">
       </a>
     </div>
     
@@ -585,19 +602,23 @@
       
       <div class="c-blog-card__tags-box">
         
-        <a href="/tag/镜头光学" class="c-blog-card__tag">镜头光学</a>
+        <a href="/tag/调色" class="c-blog-card__tag">调色</a>
         
-        <a href="/tag/学术分享" class="c-blog-card__tag">学术分享</a>
+        <a href="/tag/后期制作" class="c-blog-card__tag">后期制作</a>
+        
+        <a href="/tag/aigc" class="c-blog-card__tag">AIGC</a>
         
       </div>
       
 
       <h2 class="c-blog-card__title">
-        <a href="/blog/anamorphic-imaging-characteristics">毕业论文分享（二）：变形镜头的成像特性</a>
+        <a href="/blog/hu-shuo-chen-yu-xian">《狐说臣与仙》AIGC 调色手记</a>
       </h2>
 
       <p class="c-blog-card__excerpt">
-        变形镜头带来的视觉风格，远不止更宽的画幅。接着[上一篇的历史回顾](/blog/anamorphic-lens-history)，这一篇分享毕业论文的 1.2 节“成像特性”：从双平面对称性出发，讨论视场角、景深与散景，再看光晕、畸变...
+        这次分享 AI 动画《音乐剧〈狐说臣与仙〉先导动画》的调色前后对比。项目由脑特执导，直接调色提供调色及完片服务，我担任调色师。
+
+项目采用逐镜头生成的方式，通过反复提供参考素材，维持角色、场景和画面风格的连续性。最终生成的统一性很好，...
       </p>
 
       <div class="c-blog-card__meta">
@@ -606,7 +627,7 @@
         </div>
         <div class="c-blog-card__info">
           <div class="c-blog-card__author-name">Stephen Yang Kaiqi</div>
-          <span class="c-blog-card__date"><time datetime="2026-11-20T00:00:00+08:00">20 Nov 2026</time></span>
+          <span class="c-blog-card__date"><time datetime="2026-11-15T12:00:00+08:00">15 Nov 2026</time></span>
         </div>
       </div>
 
